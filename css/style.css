@@ -1,0 +1,611 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto Mono', monospace
+}
+
+.toc-item {
+    display: block;
+    width: calc(100% - 10px);
+    overflow: hidden;
+    margin-bottom: 3px
+}
+
+.timestamp {
+    font-size: 0.6em;
+    color: #8f8e8e;
+}
+
+a:link {
+    color: #a6fff8
+}
+
+a:visited {
+    color: #8dedab
+}
+
+a:hover {
+    color: #ead595
+}
+
+/* Based on https://www.w3schools.com/css/css3_buttons.asp */
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+}
+
+.action-button {
+    background-color: #078f7b;
+    color: white;
+    border: 2px solid #078f7b
+}
+
+.action-button:hover {
+    background-color: white;
+    color: black;
+    border: 2px solid #078f7b
+}
+
+a.read-more {
+    display: inline-block;
+    border: 1px dashed #a6fff8;
+    color: #a6fff8;
+    padding: 0 5px;
+    margin: auto 2px;
+    font-size: .8em;
+    text-decoration: none;
+}
+
+a.read-more:hover {
+    border: 1px dashed #ead595;
+    background: #3b351b;
+    color: #ead595;
+}
+
+ul {
+    margin-left: 20px
+}
+
+ul > li {
+    margin-left: 10px
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Ubuntu, sans-serif
+}
+
+h1 {
+    margin-top: 15px
+}
+
+h1, h2 {
+    margin-bottom: 10px
+}
+
+body, html {
+    background-color: #323232;
+    color: #aaa;
+    font-size: 1.5em;
+    line-height: 1.35em;
+    width: 100%
+}
+
+.table-of-contents {
+    font-size: .7em;
+    line-height: 1.1em;
+    width: 20%;
+    overflow-y: auto;
+    position: fixed;
+    top: 20px;
+    bottom: 0
+}
+
+.container {
+    width: 100%;
+    display: inline-block;
+    height: 100%
+}
+
+.boxes {
+    width: 80%;
+    float: right;
+    display: inline-block
+}
+
+.box {
+    display: inline-block;
+    width: calc(100% - 4px);
+    padding: 2px;
+    overflow-wrap: anywhere
+}
+
+.content {
+    width: calc(70% - 25px);
+    padding: 0 10px;
+    display: inline-block;
+    float: left;
+    overflow: wrap;
+    overflow-wrap: anywhere
+}
+
+.note {
+    display: inline-block;
+    width: calc(30% - 5px);
+    padding-left: 5px;
+    float: right;
+    font-size: .7em
+}
+
+.box::after {
+    content: "";
+    clear: both;
+    display: table
+}
+
+code {
+    border: 1px dashed #25ffd7;
+    background: #10423c;
+    color: #20ffd6;
+    padding-left: 1px;
+    padding-right: 1px
+}
+
+.highlight {
+    border: 1px dashed gray;
+    background-color: #000
+}
+
+pre {
+    font-size: .6em;
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap;
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap;
+    word-wrap: break-word
+}
+
+hr {
+    border: none;
+    border-top: 1px dashed gray;
+    margin-bottom: 15px
+}
+
+.center-text {
+    margin-bottom: 20px;
+    margin-top: 20px;
+    text-align: center
+}
+
+.blue-status {
+    display: inline-block;
+    border: 1px solid #20deff;
+    background: #103b42;
+    color: #20deff;
+    padding: 0 5px;
+    margin: auto 2px;
+    font-size: .8em
+}
+
+.red-status {
+    display: inline-block;
+    border: 1px solid #ff2323;
+    background: #440101;
+    color: #ff2323;
+    padding: 0 5px;
+    margin: auto 2px;
+    font-size: .8em
+}
+
+.green-status {
+    display: inline-block;
+    border: 1px solid #20ff56;
+    background: #104210;
+    color: #20ff56;
+    padding: 0 5px;
+    margin: auto 2px;
+    font-size: .8em
+}
+
+.yellow-status {
+    display: inline-block;
+    border: 1px solid #ffdd00;
+    background: #544801;
+    color: #ffdd00;
+    padding: 0 5px;
+    margin: auto 2px;
+    font-size: .8em
+}
+
+@media (max-width: 800px) {
+    body, html {
+        font-size: 1em;
+        line-height: 1.2em
+    }
+
+    .note {
+        padding: 0 10px;
+        width: calc(100% - 25px)
+    }
+
+    .content {
+        padding: 0 10px;
+        width: calc(100% - 25px)
+    }
+
+    .boxes {
+        width: 100%
+    }
+
+    .table-of-contents {
+        width: 100%;
+        position: sticky;
+        top: 0;
+        background: #323232;
+        overflow: hidden
+    }
+
+    .table-of-contents .real-toc {
+        display: none
+    }
+}
+
+pre {
+    line-height: 125%
+}
+
+td.linenos .normal {
+    color: #f1fa8c;
+    background-color: #44475a;
+    padding-left: 5px;
+    padding-right: 5px
+}
+
+span.linenos {
+    color: #f1fa8c;
+    background-color: #44475a;
+    padding-left: 5px;
+    padding-right: 5px
+}
+
+td.linenos .special {
+    color: #50fa7b;
+    background-color: #6272a4;
+    padding-left: 5px;
+    padding-right: 5px
+}
+
+span.linenos.special {
+    color: #50fa7b;
+    background-color: #6272a4;
+    padding-left: 5px;
+    padding-right: 5px
+}
+
+.highlight .hll {
+    background-color: #44475a
+}
+
+.highlight {
+    background: #282a36;
+    color: #f8f8f2
+}
+
+.highlight .c {
+    color: #6272a4
+}
+
+.highlight .err {
+    color: #f8f8f2
+}
+
+.highlight .g {
+    color: #f8f8f2
+}
+
+.highlight .k {
+    color: #ff79c6
+}
+
+.highlight .l {
+    color: #f8f8f2
+}
+
+.highlight .n {
+    color: #f8f8f2
+}
+
+.highlight .o {
+    color: #ff79c6
+}
+
+.highlight .x {
+    color: #f8f8f2
+}
+
+.highlight .p {
+    color: #f8f8f2
+}
+
+.highlight .ch {
+    color: #6272a4
+}
+
+.highlight .cm {
+    color: #6272a4
+}
+
+.highlight .cp {
+    color: #ff79c6
+}
+
+.highlight .cpf {
+    color: #9cb2ff
+}
+
+.highlight .c1 {
+    color: #9cb2ff
+}
+
+.highlight .cs {
+    color: #9cb2ff
+}
+
+.highlight .gd {
+    color: #8b080b
+}
+
+.highlight .ge {
+    color: #f8f8f2;
+    text-decoration: underline
+}
+
+.highlight .gr {
+    color: #f8f8f2
+}
+
+.highlight .gh {
+    color: #f8f8f2;
+    font-weight: 700
+}
+
+.highlight .gi {
+    color: #f8f8f2;
+    font-weight: 700
+}
+
+.highlight .go {
+    color: #44475a
+}
+
+.highlight .gp {
+    color: #f8f8f2
+}
+
+.highlight .gs {
+    color: #f8f8f2
+}
+
+.highlight .gu {
+    color: #f8f8f2;
+    font-weight: 700
+}
+
+.highlight .gt {
+    color: #f8f8f2
+}
+
+.highlight .kc {
+    color: #ff79c6
+}
+
+.highlight .kd {
+    color: #8be9fd;
+    font-style: italic
+}
+
+.highlight .kn {
+    color: #ff79c6
+}
+
+.highlight .kp {
+    color: #ff79c6
+}
+
+.highlight .kr {
+    color: #ff79c6
+}
+
+.highlight .kt {
+    color: #8be9fd
+}
+
+.highlight .ld {
+    color: #f8f8f2
+}
+
+.highlight .m {
+    color: #ffb86c
+}
+
+.highlight .s {
+    color: #bd93f9
+}
+
+.highlight .na {
+    color: #50fa7b
+}
+
+.highlight .nb {
+    color: #8be9fd;
+    font-style: italic
+}
+
+.highlight .nc {
+    color: #50fa7b
+}
+
+.highlight .no {
+    color: #f8f8f2
+}
+
+.highlight .nd {
+    color: #f8f8f2
+}
+
+.highlight .ni {
+    color: #f8f8f2
+}
+
+.highlight .ne {
+    color: #f8f8f2
+}
+
+.highlight .nf {
+    color: #50fa7b
+}
+
+.highlight .nl {
+    color: #8be9fd;
+    font-style: italic
+}
+
+.highlight .nn {
+    color: #f8f8f2
+}
+
+.highlight .nx {
+    color: #f8f8f2
+}
+
+.highlight .py {
+    color: #f8f8f2
+}
+
+.highlight .nt {
+    color: #ff79c6
+}
+
+.highlight .nv {
+    color: #8be9fd;
+    font-style: italic
+}
+
+.highlight .ow {
+    color: #ff79c6
+}
+
+.highlight .w {
+    color: #f8f8f2
+}
+
+.highlight .mb {
+    color: #ffb86c
+}
+
+.highlight .mf {
+    color: #ffb86c
+}
+
+.highlight .mh {
+    color: #ffb86c
+}
+
+.highlight .mi {
+    color: #ffb86c
+}
+
+.highlight .mo {
+    color: #ffb86c
+}
+
+.highlight .sa {
+    color: #bd93f9
+}
+
+.highlight .sb {
+    color: #bd93f9
+}
+
+.highlight .sc {
+    color: #bd93f9
+}
+
+.highlight .dl {
+    color: #bd93f9
+}
+
+.highlight .sd {
+    color: #bd93f9
+}
+
+.highlight .s2 {
+    color: #bd93f9
+}
+
+.highlight .se {
+    color: #bd93f9
+}
+
+.highlight .sh {
+    color: #bd93f9
+}
+
+.highlight .si {
+    color: #bd93f9
+}
+
+.highlight .sx {
+    color: #bd93f9
+}
+
+.highlight .sr {
+    color: #bd93f9
+}
+
+.highlight .s1 {
+    color: #bd93f9
+}
+
+.highlight .ss {
+    color: #bd93f9
+}
+
+.highlight .bp {
+    color: #f8f8f2;
+    font-style: italic
+}
+
+.highlight .fm {
+    color: #50fa7b
+}
+
+.highlight .vc {
+    color: #8be9fd;
+    font-style: italic
+}
+
+.highlight .vg {
+    color: #8be9fd;
+    font-style: italic
+}
+
+.highlight .vi {
+    color: #8be9fd;
+    font-style: italic
+}
+
+.highlight .vm {
+    color: #8be9fd;
+    font-style: italic
+}
+
+.highlight .il {
+    color: #ffb86c
+}

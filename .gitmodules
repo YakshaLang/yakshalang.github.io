@@ -1,0 +1,3 @@
+[submodule "docbox"]
+	path = docbox
+	url = https://github.com/YakshaLang/DocBox.git

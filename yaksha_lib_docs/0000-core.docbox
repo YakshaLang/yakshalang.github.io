@@ -1,0 +1,350 @@
+!!!<div class="banner-image"><img alt="Yaksha Programming Language" src="images/yk-banner.png" style="max-width: 100%;" /></div>
+---
+# Core Library
+---
+Core library can be accessed by importing `libs`.
+; This import name is subject to change. 
+---
+## libs
+---
+```
+def version() -> str
+# This returns standard library version
+# (Note: this is hardcoded)
+```
+---
+## libs.c
+---
+```
+class CBool
+class CDouble
+class CInt
+class CLong
+class CShort
+class CStr
+class CUInt
+class CULong
+class CUShort
+class Size
+class VoidPtr
+def acos(x: CDouble) -> CDouble
+def asin(x: CDouble) -> CDouble
+def atan(x: CDouble) -> CDouble
+def atan2(x: CDouble, y: CDouble) -> CDouble
+def calloc(n: Size, size: Size) -> VoidPtr
+def ceil(x: CDouble) -> CDouble
+def cos(x: CDouble) -> CDouble
+def cosh(x: CDouble) -> CDouble
+def fabs(x: CDouble) -> CDouble
+def floor(x: CDouble) -> CDouble
+def fmod(x: CDouble, y: CDouble) -> CDouble
+def free(ptr: VoidPtr) -> None
+def has_command_processor() -> bool
+# Can we run system commands?
+def itosize(i: int) -> Size
+def log(x: CDouble) -> CDouble
+def log10(x: CDouble) -> CDouble
+def log2(x: CDouble) -> CDouble
+def malloc(size: Size) -> VoidPtr
+def memcmp(str1: VoidPtr, str2: VoidPtr, size: Size) -> CInt
+def memcpy(dest: VoidPtr, src: VoidPtr, size: Size) -> VoidPtr
+def memmove(dest: VoidPtr, src: VoidPtr, size: Size) -> VoidPtr
+def memset(dest: VoidPtr, character: CInt, size: Size) -> VoidPtr
+def pow(x: CDouble, y: CDouble) -> CDouble
+def realloc(ptr: VoidPtr, size: Size) -> VoidPtr
+def sin(x: CDouble) -> CDouble
+def sinh(x: CDouble) -> CDouble
+def sqrt(x: CDouble) -> CDouble
+def system(program: CStr) -> None
+# Run a system command without caring what it will do
+# Wait for exit
+def tan(x: CDouble) -> CDouble
+def tanh(x: CDouble) -> CDouble
+```
+---
+## libs.console
+---
+```
+BLUE: Const[int]
+CYAN: Const[int]
+GREEN: Const[int]
+PURPLE: Const[int]
+RED: Const[int]
+REWIND: Const[int]
+# Use rewind with set_colour to stop applying colour
+WHITE: Const[int]
+YELLOW: Const[int]
+def blue(x: str) -> None
+def clear() -> None
+def colour_print(colour: int, x: str) -> None
+# Print in given colour and then rewind
+def cyan(x: str) -> None
+def getch() -> int
+def green(x: str) -> None
+def purple(x: str) -> None
+def red(x: str) -> None
+def set_colour(c: int) -> None
+def white(x: str) -> None
+def yellow(x: str) -> None
+```
+---
+## libs.fileformats.ini
+---
+```
+class Ini
+# INI Object
+def del_ini(object: Ini) -> None
+# Delete INI object
+def from_str(ini_data: str) -> Ini
+# Parse INI file from given string data
+def get(object: Ini, section: str, property: str) -> str
+# Get a property in given section
+```
+---
+## libs.fileformats.toml
+---
+```
+class Table
+# TOML Table object
+# This is like a dictionary
+class TomlArray
+# Array of any type
+def array_len(x: TomlArray) -> int
+# Get length of array
+def bool_at(x: TomlArray, pos: int) -> bool
+# Get bool from array at location or false
+def bool_at_default(x: TomlArray, pos: int, default: bool) -> bool
+# Get bool from array at location or given default
+def del_table(x: Table) -> None
+# Delete a table
+def from_str(x: str) -> Table
+# Parse to a TOML Table from given string
+def get_array(x: Table, name: str) -> TomlArray
+# Get any array from table object
+def get_bool(x: Table, name: str) -> bool
+# Get a bool from table or false if fails
+def get_bool_default(x: Table, name: str, default: bool) -> bool
+# Get a bool from table or given default
+def get_int(x: Table, name: str) -> int
+# Get an int from table or 0 if fails
+def get_int_default(x: Table, name: str, default: int) -> int
+# Get an int from table or given default
+def get_string(x: Table, name: str) -> str
+# Get a string from table or empty if fails
+def get_string_array(x: Table, name: str) -> Array[str]
+# Get an array as native string array
+def get_string_default(x: Table, name: str, default: str) -> str
+# Get a string from table or given default
+def get_table(x: Table, name: str) -> Table
+# Get a Table from given name
+def int_at(x: TomlArray, pos: int) -> int
+# Get int from array at location or 0
+def int_at_default(x: TomlArray, pos: int, default: int) -> int
+# Get int from array at locaiton or given default
+def string_at(x: TomlArray, pos: int) -> str
+# Get string from array at location or empty
+def string_at_default(x: TomlArray, pos: int, default: str) -> str
+# Get string from array at location or given default
+def valid_array(x: TomlArray) -> bool
+# Is this a valid array?
+def valid_table(x: Table) -> bool
+# Is this a valid table?
+```
+---
+## libs.io
+---
+```
+def readfile(fname: str) -> str
+# Read a file to as string, on error returns empty
+def writefile(fname: str, data: str) -> bool
+# Write a file
+```
+---
+## libs.mpc
+---
+```
+class Ast: 
+    tag: libs.c.CStr
+    contents: libs.c.CStr
+    children: Array[Ast]
+    children_num: int
+class Mpc
+class Result: 
+    output: Ast
+def ast_print(r: Result) -> None
+def cleanup(a: int, v: Mpc) -> None
+def del_ast(r: Result) -> None
+def del_err(r: Result) -> None
+def err_print(r: Result) -> None
+def mpca_lang(a: int, b: str, v: Mpc) -> None
+def new(a: str) -> Mpc
+def new_result() -> Result
+def parse(a: str, b: str, v: Mpc, r: Result) -> bool
+```
+---
+## libs.numbers
+---
+```
+def cstr2i(a: libs.c.CStr) -> int
+# Convert a c-string to an integer
+```
+---
+## libs.os
+---
+```
+class ProcessResult: 
+    ok: bool
+    output: str
+    return_code: int
+class arguments
+# UTF-8 converted arguments and argument count
+# Do not delete, Do not modify: 
+    argc: int
+    argv: Array[str]
+def cwd() -> str
+# Get current working directory, or empty string (if failed) on return
+def del_process_result(pr: ProcessResult) -> None
+def exe() -> str
+# Get exe file path, or empty string (if failed) on return
+def exe_path() -> str
+# Get exe directory path, or empty string (if failed) on return
+def get_args() -> arguments
+# Get arguments
+def getenv(name: str) -> str
+# Get environment variable, empty if not found or error
+def is_macos() -> bool
+# Are we running macOS?
+def is_windows() -> bool
+# Are we running Windows?
+def run(args: Array[str]) -> ProcessResult
+def which(binary: str) -> str
+# Try to find full path to binary in $PATH, no need .exe for windows
+# If we cannot find in $PATH, This will fallback to current path and exe path as well
+# 
+# Example find zig compiler path:
+# 
+# os.which("zig")
+```
+---
+## libs.os.path
+---
+```
+def basename(p: str) -> str
+# Get just the filename of given path
+def dirname(p: str) -> str
+# Get dir name of given path
+def end_with_slash(a: str) -> bool
+# Does the given string end with slash?
+def executable(p: str) -> bool
+# Is an executable?
+def exists(p: str) -> bool
+# Does the file exist?
+def forward_slash() -> bool
+# Are we using forward slash or not?
+# Same as using libs.os.is_windows()
+def join(a: str, b: str) -> str
+# Do a path join
+def readable(p: str) -> bool
+# Is a readable?
+def writable(p: str) -> bool
+# Is a writable?
+```
+---
+## libs.strings
+---
+```
+class Utf8IterateState
+# Iterator state for UTF-8 iteration
+# See the codepoint for current character: 
+    step_size: int
+    codepoint: int
+def contains(haystack: str, needle: str) -> bool
+# Does the string needle contain in string haystack?
+def del_cstr(a: libs.c.CStr) -> None
+# Delete a native c-string created from other other functions (calls free)
+def del_iter(s: Utf8IterateState) -> None
+# Delete the iterator object after done
+def del_str(a: libs.c.CStr) -> None
+# Delete a normal string that was cast as a c-str with to_cstr
+# You only need to use this if CStr was cast from standard str
+def from_cstr(a: libs.c.CStr) -> str
+# Create a string from CStr
+def from_cstrlen(a: libs.c.CStr, length: int) -> str
+# Create a string from CStr with a given length
+def from_cstrlen_after(a: libs.c.CStr, length: int, after: int) -> str
+# Create a new string from CStr from given after location for given length
+def get(s: str, pos: int) -> int
+# Get a single byte from given string and position
+# Warning: Does not do a length check
+# Warning: This copies the string to just get a single byte
+def get_cstr(s: libs.c.CStr, pos: int) -> int
+# Get a single byte from given CStr
+# Warning: Does not do a length check
+def isempty(s: str) -> bool
+# Is this string empty?
+def isempty_cstr(s: libs.c.CStr) -> bool
+# Is an empty CStr?
+def iterate(s: Utf8IterateState) -> bool
+# Go to next character
+# Returns false if nothing to read or we ran out of length of string
+def new_iter(s: str) -> Utf8IterateState
+# Create a new iterator from given string
+def ord(s: str) -> int
+# Get first byte of string
+def ord_cstr(s: libs.c.CStr) -> int
+# Get first byte of CStr
+def set_cstr(s: libs.c.CStr, pos: int, v: int) -> None
+# Set a byte to given CStr position
+# Warning: Does not do a length check
+def split(value: str, sep: str) -> Array[str]
+# Split a string to a string array
+def startswith(a: str, b: str) -> bool
+# Does the given string a starts with b
+def to_cstr(a: str) -> libs.c.CStr
+# Yaksha copies managed strings that you pass in so must free this
+def valid_cstr(s: libs.c.CStr) -> bool
+# Is a valid CStr
+```
+---
+## libs.strings.array
+---
+```
+def del_str_array(sa: Array[str]) -> None
+# Delete a string array by deleting individual string objects and array itself
+def extend(a: Array[str], b: Array[str]) -> Array[str]
+# Copy all strings from b to a and return a
+def join(values: Array[str], sep: str) -> str
+# Join given string array with given separator and return a single string
+def new(count: int, s: str) -> Array[str]
+# Create new string array
+# Example:
+# 
+# import libs.strings.array as sarr
+# my_array: Array[str] = sarr.new(4, "A", "B", "C", "D")
+def prefix(sa: Array[str], prefix_str: str) -> Array[str]
+# Mutate all strings in this array by prefixing with prefix_str
+def suffix(sa: Array[str], suffix_str: str) -> Array[str]
+# Mutate all strings in this array by suffixing with suffix_str
+```
+---
+## libs.strings.buffer
+---
+```
+class StringBuffer
+# String buffer object
+def append(buf: StringBuffer, v: str) -> None
+# Append a string to string buffer
+def del_buf(buf: StringBuffer) -> None
+# Delete string buffer object
+def join(buf: StringBuffer, values: Array[str], sep: str) -> None
+# Join given values in array with provided seperator and append this to string
+def new() -> StringBuffer
+# Create a new empty string buffer
+def new_size(s: int) -> StringBuffer
+# Create a string buffer with capacity s
+def prepend(buf: StringBuffer, v: str) -> None
+# Prepend a string to string buffer
+def to_str(buf: StringBuffer) -> str
+# Get a new string out of string buffer
+```
+---

@@ -1,0 +1,100 @@
+# Yaksha library
+---
+Yaksha library uses multiple 3rd party libraries, set of python scripts and few other nuts and bolts to create library sources. 
+---
+All exposed functionality starts with `yk__` or `YK__`. Yaksha programming language preserves anything that starts with `yk__` or `YK__` while prefixing any other name with `yy__`. 
+;This avoids collisions with C standard library functions or keywords.
+---
+## Standard Library Components
+---
+### Core Library
+!!!<p><span class="yellow-status">in progress</span></p>
+Small core library with useful features.
+```yaksha
+import ui
+```
+---
+### UI Library
+!!!<p><span class="red-status">not started</span></p>
+---
+Use nuklear+sokol to create UI applications.
+---
+```yaksha
+import ui
+```
+---
+### Raylib Library
+!!!<p><span class="red-status">not started</span></p>
+---
+Use raylib to build games and such
+---
+```yaksha
+import raylib
+```
+---
+### CL Library
+!!!<p><span class="red-status">not started</span></p>
+---
+Access to OpenCL features and parallel programming.
+---
+```yaksha
+import cl
+
+@device
+def my_program(n: int) -> int:
+    return 1 + 1
+    
+def main() -> int:
+    dvc: cl.device = cl.get_device(0)
+    cl.run(dvc, my_program)
+```
+;Placeholder code, API is not designed yet.
+---
+## How does the Yaksha-lang library get packaged?
+---
+!!
+<div class="banner-image"><img alt="Yaksha Programming Language Runtime" src="images/yk-rt.png" style="max-width: 100%;" /></div>
+!!
+;Multiple sources are packaged into a single header file.
+;Library functionality is exposed by prefixing with `yk__` or `YK__`.
+---
+### Packer components
+---
+*`packer.py` - Run packer DSL scripts and create packaged single header libraries.
+*`inctree.py` - Topological sort `#include` DAG to determine best order for combining headers.
+;DAG - Directed Acyclic Graph.
+*`cids.exe` - Use `stb_c_lexer.h` library to parse C code and extract identifiers.
+*`single_header_packer.py` - ApoorvaJ's single header C code packager. [Repo](https://github.com/ApoorvaJ/libs/blob/master/scripts/single_header_packer.py)
+*`python-patch` - techtonik's patch script. [Repo](https://github.com:techtonik/python-patch) 
+*`fcpp`- Frexx C Preprocessor by Daniel Stenberg. (Patch for Windows compilation was needed, failed to compile with MSVC, works with MingW with patch).
+---
+### Third Party Libraries
+---
+;If you stack few giants, you can stand very tall on top of them.
+*`sds` - Salvatore Sanfilippo's string library. (Needed a patch to support MSVC 2019)
+*`stb` - Single header libraries by Sean Barrett.
+*`sokol` - Useful single header libraries by Andre Weissflog. 
+*`nuklear` - Single header immediate mode UI library by Micha Mettke.
+*`libs` -  Mattias Gustavsson's single header C libraries.
+*`utf8proc` - UTF-8 library - Jan Behrens, Public Software Group and Julia developers.
+;!<br />
+;Note - currently only sds and stb_ds is used. This selection of libraries may change.
+---
+### Packer DSL
+---
+```
+import re
+use_source("libs")
+for lib in ["ini", "thread", "http"]:
+    ids = extract_ids(lib + ".h")
+    P = [x for x in ids if x.startswith(lib)]
+    PU = [x for x in ids if x.startswith(lib.upper())]
+    prefix(lib + ".h", PREFIX, P)
+    prefix(lib + ".h", PREFIX_U, PU)
+    rename(lib + ".h", [[re.escape(r'yk__http://'), 'http://'],
+                        ["YK__THREAD_PRIORITY_HIGHEST", "THREAD_PRIORITY_HIGHEST"]])
+    copy_file(lib + ".h", PREFIX + lib + ".h", is_temp=False)
+    clang_format(PREFIX + lib + ".h", is_temp=False)
+```
+;It is just Python 3.x with extra functions added and evaluated.🤫
+---

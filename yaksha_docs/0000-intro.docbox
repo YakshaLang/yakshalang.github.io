@@ -1,0 +1,97 @@
+!!!<div class="banner-image"><img alt="Yaksha Programming Language" src="images/yk-banner.png" style="max-width: 100%;" /></div>
+---
+# Introduction
+---
+Yaksha – A manual memory managed, compiled to C99, programming language with python like syntax.
+;Please note this is an in progress project. Very early days.
+---
+## Philosophy
+---
+Language syntax is minimalistic and looks like Python in most cases. Manual memory management is required. 
+New developer should be able to pick up full syntax in few hours.
+; However, this is not compatible with Python nor a subset of Python.
+---
+### End Users
+---
+Yaksha aims to be a simple general purpose language with a minimalistic standard library. One goal is to have easy access to GPU/parallel programming (this is not started yet) using OpenCL.
+There will be first class support for Windows. At the moment author plan on using the language (once it reaches usable level) in personal projects.
+;This is a single person project, so any advice, pull-requests/issues, fixes to documentation grammar errors, fixes to spelling errors, well wishes, constructive criticism and/or any other kind of help is welcome.
+---
+## Sample
+---
+### Input code
+---
+
+```yaksha
+def factorial(x: int) -> int:
+    if x <= 0:
+        return 1
+    return x * factorial(x - 1)
+
+
+def main() -> int:
+    a: int = 10
+    b: str = "b"
+    while a > 0:
+        print(factorial(a))
+        print("\n")
+        a = a - 1
+        b = "a" + b
+    print(b)
+    print("\n")
+    return 0
+```
+
+
+;This simple program demonstrate calculating factorial inefficiently using recursion and adding a prefix to a string.
+;`print` is a statement. It takes one expression and does not include a newline.
+---
+
+### Output C code
+---
+
+```c
+// --yaksha header section--
+#include "yk__lib.h"
+int32_t yy__factorial(int32_t);
+int32_t yy__main();
+// --yaksha body section--
+int32_t yy__factorial(int32_t yy__x) {
+  if ((yy__x <= 0)) { return 1; }
+  return (yy__x * yy__factorial((yy__x - 1)));
+}
+int32_t yy__main() {
+  int32_t yy__a = 10;
+  yk__sds t__0 = yk__sdsnew("b");
+  yk__sds yy__b = yk__sdsdup(t__0);
+  while (1) {
+    if (!((yy__a > 0))) { break; }
+    {
+      printf("%d", (yy__factorial(yy__a)));
+      yk__sds t__1 = yk__sdsnew("\n");
+      printf("%s", (t__1));
+      yy__a = (yy__a - 1);
+      yk__sds t__2 = yk__sdsnew("a");
+      yk__sds t__3 = yk__sdscatsds(yk__sdsdup(t__2), yy__b);
+      yk__sdsfree(yy__b);
+      yy__b = yk__sdsdup(t__3);
+      yk__sdsfree(t__3);
+      yk__sdsfree(t__2);
+      yk__sdsfree(t__1);
+    }
+  }
+  printf("%s", (yy__b));
+  yk__sds t__4 = yk__sdsnew("\n");
+  printf("%s", (t__4));
+  yk__sdsfree(t__4);
+  yk__sdsfree(t__0);
+  yk__sdsfree(yy__b);
+  return 0;
+}
+// --yaksha footer section--
+int main(void) { return (int) yy__main(); }
+```
+
+;Notice `yk__sdsfree` is automatically generated for simple string uses. This makes strings immutable. Currently, it is doing a lot of unnecessary processing. 😓
+
+---

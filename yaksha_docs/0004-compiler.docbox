@@ -1,0 +1,98 @@
+# Compiler Internals
+---
+This section describes how compiler works.
+;Total of `11` passes are planned for the compiler.
+---
+## Phases of the compiler
+---
+### Tokenizer
+---
+!!!<p><span class="yellow-status">in progress</span></p>
+---
+*Tokenizer breaks down input to individual tokens and Identifies Keywords.
+*Parsers numbers and strings and check if they are valid according to the grammar.
+;If any error is detected at this point we still continue up to parser.
+---
+### Block analyzer
+---
+!!!<p><span class="yellow-status">in progress</span></p>
+---
+*Convert indentation to `ba_indent`, `ba_dedent` type tokens.
+*Remove comments.
+*Remove extra new lines.
+;Only 2-spaces, 4-spaces or tab based indents are supported. Will try to guess indentation type.
+;Still continue to parser even after errors. 
+---
+### Parser
+---
+!!!<p><span class="yellow-status">in progress</span></p>
+---
+*Parses tokens returned by block analyzer an AST.
+*AST is represented as a `std::vector` of `stmt*`.
+;Any errors from previous stages and parsing stage is printed here and program will exit.
+---
+### Import analyzer
+---
+!!!<p><span class="yellow-status">in progress</span></p>
+---
+!!
+<div class="banner-image"><img alt="Import Analyzer" src="images/yk-imports.png" style="max-width: 100%;" /></div>
+!!
+*Analyzes imports.
+*Parses imported files.
+**This step will use more instances of Tokenizer, Parser and Compiler objects.
+### Def-Struct-Const Visitor
+---
+!!!<p><span class="yellow-status">in progress</span></p>
+---
+*Visit `def` statements and collect functions to a map.
+*Visit `class` statements and collect structures to a map.
+---
+### Return path analyzer
+---
+!!!<p><span class="yellow-status">in progress</span></p>
+*Analyzes return paths.
+*Ensure all functions return.
+---
+### Type checker
+---
+!!!<p><span class="yellow-status">in progress</span></p>
+---
+*Type checker visits AST and check for invalid types.
+*Checks for undefined variables.
+*Checks for undefined functions.
+*Checks for undefined structures.
+*Check all return types are same as that of the encapsulating functions.
+---
+### Generic rewriter
+---
+!!!<p><span class="red-status">not started</span></p>
+---
+*Rewrite generics to be normal functions based on what's passed to them.
+*Rewrite `fncall` expressions to use newly created functions.
+---
+### Optimizer
+---
+!!!<p><span class="red-status">not started</span>
+---
+*Remove dead code.
+*Basic constant folding.
+---
+### CL-Compiler
+---
+!!!<p><span class="red-status">not started</span><span class="blue-status">planned for v0.5</span></p>
+---
+*Convert `@device` code to OpenCL program code.
+*Copy necessary structures.
+*Check validity - no generics, no str, no allocations.
+---
+### C-Compiler
+---
+!!!<p><span class="yellow-status">in progress</span></p>
+---
+*Writes `C` code from AST.
+*Do any simple optimizations.
+*Handle `defer` statements.
+*Handle `str` deletions.
+*Create `struct` and function declarations.
+---
