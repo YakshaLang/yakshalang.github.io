@@ -1,5 +1,4 @@
-# Personal website 
+# Yaksha Lang Website & Docs Site
 
-View here -> https://jadogg.github.io/
-
-require `css-minify` and `html-minifier` in path.
+Require `css-minify` and `html-minifier` in path.
+Uses Python to build the documentation.
