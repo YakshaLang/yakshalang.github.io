@@ -10,8 +10,8 @@ This section describes how compiler works.
 !!!<p><span class="yellow-status">in progress</span></p>
 ---
 *Tokenizer breaks down input to individual tokens and Identifies Keywords.
-*Parsers numbers and strings and check if they are valid according to the grammar.
-;If any error is detected at this point we still continue up to parser.
+*Parse numbers and strings and check if they are valid according to the grammar.
+;If any error is detected at this point we still continue up to parser so we can identify maximum number of errors.
 ---
 ### Block analyzer
 ---
@@ -47,6 +47,7 @@ This section describes how compiler works.
 ---
 *Visit `def` statements and collect functions to a map.
 *Visit `class` statements and collect structures to a map.
+*Visit global constants.
 ---
 ### Return path analyzer
 ---
@@ -64,11 +65,11 @@ This section describes how compiler works.
 *Checks for undefined structures.
 *Check all return types are same as that of the encapsulating functions.
 ---
-### Generic rewriter
+### Template Compiler
 ---
 !!!<p><span class="red-status">not started</span></p>
 ---
-*Rewrite generics to be normal functions based on what's passed to them.
+*Rewrite @template to be normal functions based on what's passed to them.
 *Rewrite `fncall` expressions to use newly created functions.
 ---
 ### Optimizer
@@ -78,7 +79,7 @@ This section describes how compiler works.
 *Remove dead code.
 *Basic constant folding.
 ---
-### CL-Compiler
+### To-CL-Compiler
 ---
 !!!<p><span class="red-status">not started</span><span class="blue-status">planned for v0.5</span></p>
 ---
@@ -86,7 +87,7 @@ This section describes how compiler works.
 *Copy necessary structures.
 *Check validity - no generics, no str, no allocations.
 ---
-### C-Compiler
+### To-C-Compiler
 ---
 !!!<p><span class="yellow-status">in progress</span></p>
 ---
@@ -95,4 +96,11 @@ This section describes how compiler works.
 *Handle `defer` statements.
 *Handle `str` deletions.
 *Create `struct` and function declarations.
+---
+### C-To-C Compiler
+---
+!!!<p><span class="red-status">not started</span></p>
+---
+*We generate code to a single `C` file which can then be further optimized.
+*Parse and optimize subset of generated `C` code.
 ---

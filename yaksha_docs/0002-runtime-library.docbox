@@ -11,7 +11,7 @@ All exposed functionality starts with `yk__` or `YK__`. Yaksha programming langu
 !!!<p><span class="yellow-status">in progress</span></p>
 Small core library with useful features.
 ```yaksha
-import ui
+import libs
 ```
 ---
 ### UI Library

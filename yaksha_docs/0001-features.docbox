@@ -2,27 +2,51 @@
 ---
 ## Data Types
 ---
-### Managed Strings
+### (Semi)Managed Strings
 !!!<p><span class="yellow-status">in progress</span></p>
 ---
-*String allocations and de-allocations are abstracted away, so strings are immutable and automatically freed.
-*Strings are also duplicated everytime you create a new variable or pass it to a function.
-*All string literals fall to this kind.
+*String allocations and de-allocations are abstracted away, so strings are immutable and automatically deleted.
+*Assignment copy values and automatically delete previous value.
+*Strings are also copied everytime you create a new variable or pass it to a function or assign it to a container (object, array, etc).
 *It is not meant to be fast. It is meant to be easily usable.
 *At C code level `yk__sds` data structure will be used. (`yk__sds` is a `char*` with special header placed just before).
-*Limitations - To keep compiler simple, managed strings cannot be used in arrays, maps, or objects.
-*Supports `+` operator to join two `mstr` values.
-*Assignment copy values and automatically defer deletions.
-;Data Type - `mstr`
+*💀️ Managed strings are not deleted when used in arrays, maps, or objects. 
+**You need to manage deletion of `str` object in this case.
+**Use `libs.strings.array.del_str_array()` to delete a string array.
+*Supports `+` operator to join two `str` values.
+;Data Type - `str`
 ;Internally this is a binary string. 
 ;`sds` library (part of runtime lib) takes care of the heavy lifting.
+---
+### String literals
+!!!<p><span class="red-status">not started</span></p>
+---
+*String literals are of type `Const[strlit]`.
+```yaksha
+# String literals requires no deletion.
+a: Const[strlit] = "Hello World"
+# Below results in a copy of string literal
+# b will be auto deleted.
+b: str = a
+# Below will create an unmanaged string from string literal
+# This is also copied
+c: ustr = a
+# You need to however delete `c`
+del c
+```
+*Cannot be changed.
+*Only string datatype that can be used as a global constant.
+;Data Type `Const[strlit]`.
 ---
 ### Unmanaged Strings
 !!!<p><span class="red-status">not started</span></p>
 ---
 *Unmanaged strings need to be manually deleted using `del` expression.
-*At C code level `yk__sds` data structure will be used same as for `mstr`
-;Data Type - `str`
+*At C code level `yk__sds` data structure will be used same as for `str`
+*If you pass in an `str` for where `ustr` is expected, then original pointer is passed instead (no copy).
+*Always passes pointer instead of a copy.
+*Cannot copy by assignment.
+;Data Type - `ustr`
 ;Internally this is a binary string. 
 ;`sds` library (part of runtime lib) takes care of the heavy lifting.
 ---
@@ -304,16 +328,15 @@ def main() -> int:
 * ✅ `println` - A `print` function that suffix a new line character.
 * ✅ `len` - Get length of strings and other data structures provided by the language.
 * ❌ `sizeof` - Size of structures or C data types.
-* ❌ `iterutf8` - Enumerate utf8 code points of a `str`, `strvw`, or `mstr`
-* ❌ `readfile` - Read a whole file and return an `mstr`. Empty string is returned if file cannot be read for some reason. This is a convenient function that pretends world is nice and fluffy.
-* ❌ `writefile` - Save a `str`, `strvw` or `mstr` to a file. `bool` is returned to show success or failure for any reason to write the file.
 * ❌ `slice` - Create a string view from a string with given start and end positions.
-* ❌ `tostr` - Converts `strvw` or `int` types to string (base 10). If input is a `str` it is duplicated. `float` types will be formatted with 2 decimal places.
-* ❌ `tomstr` - Same as `tostr` but it is converted to a managed strings.
+* ❌ `tostr` - Converts `strvw` or `int` types to string (base 10). 
+** If input is a `str`, `ustr` or `strvw` it is copied. 
+** `float` types will be formatted with 2 decimal places.
+* ❌ `toustr` - Same as `tostr` but it is converted to an unmanaged string.
 * ❌ `ftostr` - Converts a `float` to `str` with given decimal points.
 * ❌ `itostr` - Converts an `int` to `str` with given base up to 16.
-* ❌ `ftomstr` - Converts a `float` to `mstr` with given decimal points.
-* ❌ `itomstr` - Converts an `int` to `mstr` with given base up to 16.
+* ❌ `ftoustr` - Converts a `float` to `ustr` with given decimal points.
+* ❌ `itoustr` - Converts an `int` to `ustr` with given base up to 16.
 * ✅ `arrput` - Put item to an array.
 * ✅ `arrpop` - Remove last item from an array and return it.
 * ❌ `arrfree` - Free an array. Used by `del`.

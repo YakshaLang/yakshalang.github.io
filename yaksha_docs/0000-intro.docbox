@@ -1,23 +1,7 @@
 !!!<div class="banner-image"><img alt="Yaksha Programming Language" src="images/yk-banner.png" style="max-width: 100%;" /></div>
 ---
-# Introduction
----
-Yaksha – A manual memory managed, compiled to C99, programming language with python like syntax.
-;Please note this is an in progress project. Very early days.
----
-## Philosophy
----
-Language syntax is minimalistic and looks like Python in most cases. Manual memory management is required. 
-New developer should be able to pick up full syntax in few hours.
-; However, this is not compatible with Python nor a subset of Python.
----
-### End Users
----
-Yaksha aims to be a simple general purpose language with a minimalistic standard library. One goal is to have easy access to GPU/parallel programming (this is not started yet) using OpenCL.
-There will be first class support for Windows. At the moment author plan on using the language (once it reaches usable level) in personal projects.
-;This is a single person project, so any advice, pull-requests/issues, fixes to documentation grammar errors, fixes to spelling errors, well wishes, constructive criticism and/or any other kind of help is welcome.
----
-## Sample
+# How does it work?
+## Let's look at the sample from home page
 ---
 ### Input code
 ---
@@ -41,10 +25,6 @@ def main() -> int:
     print("\n")
     return 0
 ```
-
-
-;This simple program demonstrate calculating factorial inefficiently using recursion and adding a prefix to a string.
-;`print` is a statement. It takes one expression and does not include a newline.
 ---
 
 ### Output C code
