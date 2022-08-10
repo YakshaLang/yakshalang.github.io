@@ -17,12 +17,13 @@ Yaksha aims to be a simple general purpose language with a minimalistic standard
 There will be first class support for Windows. At the moment author plan on using the language (once it reaches usable level) in personal projects.
 ;This is a single person project, so any advice, pull-requests/issues, fixes to documentation grammar errors, fixes to spelling errors, well wishes, constructive criticism and/or any other kind of help is welcome.
 ---
-## Sample
+## Sample Programs
 ---
-### Input code
+### Factorial
 ---
-
 ```yaksha
+import libs.console
+
 def factorial(x: int) -> int:
     if x <= 0:
         return 1
@@ -30,20 +31,18 @@ def factorial(x: int) -> int:
 
 
 def main() -> int:
-    a: int = 10
-    b: str = "b"
-    while a > 0:
-        print(factorial(a))
-        print("\n")
-        a = a - 1
-        b = "a" + b
-    print(b)
-    print("\n")
+    a: int = 0
+    while a < 10:
+        console.cyan("factorial")
+        console.red("(")
+        print(a)
+        console.red(") = ")
+        println(factorial(a))
+        a = a + 1
     return 0
 ```
-
-
+#### Output
+!!!<div class="banner-image"><img alt="Factorial 0 - 9 output screenshot" src="images/yk-sample1.png" style="max-width: 100%;" /></div>
 ;This simple program demonstrate calculating factorial inefficiently using recursion and adding a prefix to a string.
-;`print` is a statement. It takes one expression and does not include a newline.
 ---
 ---
