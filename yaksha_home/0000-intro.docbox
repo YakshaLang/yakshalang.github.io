@@ -43,6 +43,5 @@ def main() -> int:
 ```
 #### Output
 !!!<div class="banner-image"><img alt="Factorial 0 - 9 output screenshot" src="images/yk-sample1.png" style="max-width: 100%;" /></div>
-;This simple program demonstrate calculating factorial inefficiently using recursion and adding a prefix to a string.
----
+;This simple program demonstrate calculating factorial inefficiently using recursion and printing results to console.
 ---

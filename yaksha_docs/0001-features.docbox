@@ -10,7 +10,7 @@
 *Strings are also copied everytime you create a new variable or pass it to a function or assign it to a container (object, array, etc).
 *It is not meant to be fast. It is meant to be easily usable.
 *At C code level `yk__sds` data structure will be used. (`yk__sds` is a `char*` with special header placed just before).
-*💀️ Managed strings are not deleted when used in arrays, maps, or objects. 
+*💀️ Managed strings are not deleted when used in arrays, maps, or objects. (This is intentional and not a bug.)
 **You need to manage deletion of `str` object in this case.
 **Use `libs.strings.array.del_str_array()` to delete a string array.
 *Supports `+` operator to join two `str` values.
@@ -179,13 +179,14 @@ def calculate(n: int) -> int:
 ---
 ### Defer statement
 ---
-!!!<p><span class="green-status">done</span></p>
+!!!<p><span class="yellow-status">in progress</span></p>
 ---
 *Defer something to happen at the end of the scope.
 *Before any `return` from a function.
 *Before `break`, `continue` or end of `while` loop body.
 **This behaviour is different from what you see in go-lang.
 *Before end of `if` body or end of `else` body.
+*💀 Currently if you use `return some_function(a)` and deletion of `a` is deferred this will happen before calling, some_function. This is a bug that require fixing.
 ;`defer` works as a stack.
 ;That means deferred expressions are executed in last deferred first executed order. 
 ---
