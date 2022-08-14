@@ -17,11 +17,14 @@ def version() -> str
 ---
 ```
 class CBool
+class CChar
 class CDouble
+class CFloat
 class CInt
 class CLong
 class CShort
 class CStr
+class CUChar
 class CUInt
 class CULong
 class CUShort
@@ -185,8 +188,30 @@ def parse(a: str, b: str, v: Mpc, r: Result) -> bool
 ## libs.numbers
 ---
 ```
+def cdbl2d(a: libs.c.CDouble) -> f64
+# c.CDouble to f64 (double precision)
 def cstr2i(a: libs.c.CStr) -> int
 # Convert a c-string to an integer
+def d2cdbl(a: f64) -> libs.c.CDouble
+# f64 (double precision) to c.CDouble
+def d2f(a: float) -> f64
+# float/f32 (single precision) to f64 (double precision)
+# Warning: precision might be lost/truncated
+def d2i(a: f64) -> int
+# f64 (double precision) to int/i32
+# Warning: value is truncated
+def d2uu(a: f64) -> u64
+# int/i32 to a u64
+def f2d(a: float) -> f64
+# float/f32 (single precision) to f64 (double precision)
+def i2d(a: int) -> f64
+# int/i32 to f64 (double precision)
+def i2uu(a: int) -> u64
+# int/i32 to a u64
+def uu2d(a: u64) -> f64
+# int/i32 to a u64
+def uu2i(a: u64) -> int
+# int/i32 to a u64
 ```
 ---
 ## libs.os
@@ -233,6 +258,8 @@ def basename(p: str) -> str
 # Get just the filename of given path
 def dirname(p: str) -> str
 # Get dir name of given path
+def end_with_dot(a: str) -> bool
+# Does the given string end with slash?
 def end_with_slash(a: str) -> bool
 # Does the given string end with slash?
 def executable(p: str) -> bool
@@ -244,10 +271,40 @@ def forward_slash() -> bool
 # Same as using libs.os.is_windows()
 def join(a: str, b: str) -> str
 # Do a path join
+def mkdir(p: str) -> bool
+# Create given folder. (Linux uses 0755 permissions)
+# Returns True if successful
 def readable(p: str) -> bool
 # Is a readable?
+def remove_extension(p: str) -> str
+# Remove extension
 def writable(p: str) -> bool
 # Is a writable?
+```
+---
+## libs.perlin
+---
+```
+def noise1d(x: f64) -> f64
+# Get perlin noise in 1d (Calls 3d noise with hardcoded y, z values)
+def noise2d(x: f64, y: f64) -> f64
+# Get perlin noise in 2d
+def noise3d(x: f64, y: f64, z: f64) -> f64
+# Get perlin noise in 3d
+```
+---
+## libs.random
+---
+```
+def init_random() -> u64
+# Set a seed to random number generator using time (crypto unsafe)
+def random() -> f64
+# Get a random value between 0 - 1 (crypto unsafe)
+def random_between(a: f64, b: f64) -> f64
+# Get a random value between a and b (crypto unsafe)
+def random_u64() -> u64
+def set_seed(seed: u64) -> None
+# Set a seed to random number generator (crypto unsafe)
 ```
 ---
 ## libs.strings
