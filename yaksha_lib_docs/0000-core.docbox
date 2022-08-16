@@ -204,11 +204,24 @@ def d2uu(a: f64) -> u64
 # int/i32 to a u64
 def f2d(a: float) -> f64
 # float/f32 (single precision) to f64 (double precision)
+def f2i(a: float) -> int
+# f64 (double precision) to int/i32
+# Warning: value is truncated
+def f2uu(a: float) -> u64
+# int/i32 to a u64
 def i2d(a: int) -> f64
 # int/i32 to f64 (double precision)
+def i2f(a: int) -> float
+# int/i32 to f64 (double precision)
+def i2u(a: int) -> u32
+# int/i32 to a u64
 def i2uu(a: int) -> u64
 # int/i32 to a u64
+def u2i(a: u32) -> int
+# int/i32 to a u64
 def uu2d(a: u64) -> f64
+# int/i32 to a u64
+def uu2f(a: u64) -> float
 # int/i32 to a u64
 def uu2i(a: u64) -> int
 # int/i32 to a u64
@@ -287,9 +300,14 @@ def writable(p: str) -> bool
 ```
 def noise1d(x: f64) -> f64
 # Get perlin noise in 1d (Calls 3d noise with hardcoded y, z values)
+def noise1df(x: float) -> float
 def noise2d(x: f64, y: f64) -> f64
 # Get perlin noise in 2d
+def noise2df(x: float, y: float) -> float
+# Get perlin noise in 2d
 def noise3d(x: f64, y: f64, z: f64) -> f64
+# Get perlin noise in 3d
+def noise3df(x: float, y: float, z: float) -> float
 # Get perlin noise in 3d
 ```
 ---
@@ -302,7 +320,11 @@ def random() -> f64
 # Get a random value between 0 - 1 (crypto unsafe)
 def random_between(a: f64, b: f64) -> f64
 # Get a random value between a and b (crypto unsafe)
+def random_betweenf(a: float, b: float) -> float
+# Get a random value between a and b (crypto unsafe)
 def random_u64() -> u64
+def randomf() -> float
+# Get a random value between 0 - 1 (crypto unsafe)
 def set_seed(seed: u64) -> None
 # Set a seed to random number generator (crypto unsafe)
 ```
