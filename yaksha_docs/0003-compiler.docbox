@@ -1,3 +1,4 @@
+---
 # Compiler Internals
 ---
 This section describes how compiler works.
@@ -110,7 +111,7 @@ int main(void) { return (int) yy__main(); }
 !!
 *Analyzes imports.
 *Parses imported files.
-**This step will use more instances of Tokenizer, Parser and Compiler objects.
+*This step will use more instances of Tokenizer, Parser and Compiler objects.
 ### Def-Struct-Const Visitor
 ---
 !!!<p><span class="yellow-status">in progress</span></p>
