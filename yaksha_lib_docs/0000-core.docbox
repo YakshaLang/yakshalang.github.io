@@ -7,7 +7,7 @@ Core library can be accessed by importing `libs`.
 ---
 ## libs
 ---
-```
+```yaksha
 def version() -> str
 # This returns standard library version
 # (Note: this is hardcoded)
@@ -15,7 +15,7 @@ def version() -> str
 ---
 ## libs.c
 ---
-```
+```yaksha
 class CBool
 class CChar
 class CDouble
@@ -67,7 +67,7 @@ def tanh(x: CDouble) -> CDouble
 ---
 ## libs.console
 ---
-```
+```yaksha
 BLUE: Const[int]
 CYAN: Const[int]
 GREEN: Const[int]
@@ -93,7 +93,7 @@ def yellow(x: str) -> None
 ---
 ## libs.fileformats.ini
 ---
-```
+```yaksha
 class Ini
 # INI Object
 def del_ini(object: Ini) -> None
@@ -106,7 +106,7 @@ def get(object: Ini, section: str, property: str) -> str
 ---
 ## libs.fileformats.toml
 ---
-```
+```yaksha
 class Table
 # TOML Table object
 # This is like a dictionary
@@ -156,7 +156,7 @@ def valid_table(x: Table) -> bool
 ---
 ## libs.io
 ---
-```
+```yaksha
 def readfile(fname: str) -> str
 # Read a file to as string, on error returns empty
 def writefile(fname: str, data: str) -> bool
@@ -165,7 +165,7 @@ def writefile(fname: str, data: str) -> bool
 ---
 ## libs.mpc
 ---
-```
+```yaksha
 class Ast: 
     tag: libs.c.CStr
     contents: libs.c.CStr
@@ -187,7 +187,7 @@ def parse(a: str, b: str, v: Mpc, r: Result) -> bool
 ---
 ## libs.numbers
 ---
-```
+```yaksha
 def cdbl2d(a: libs.c.CDouble) -> f64
 # c.CDouble to f64 (double precision)
 def cstr2i(a: libs.c.CStr) -> int
@@ -229,7 +229,7 @@ def uu2i(a: u64) -> int
 ---
 ## libs.os
 ---
-```
+```yaksha
 class ProcessResult: 
     ok: bool
     output: str
@@ -266,7 +266,7 @@ def which(binary: str) -> str
 ---
 ## libs.os.path
 ---
-```
+```yaksha
 def basename(p: str) -> str
 # Get just the filename of given path
 def dirname(p: str) -> str
@@ -297,7 +297,7 @@ def writable(p: str) -> bool
 ---
 ## libs.perlin
 ---
-```
+```yaksha
 def noise1d(x: f64) -> f64
 # Get perlin noise in 1d (Calls 3d noise with hardcoded y, z values)
 def noise1df(x: float) -> float
@@ -313,7 +313,7 @@ def noise3df(x: float, y: float, z: float) -> float
 ---
 ## libs.random
 ---
-```
+```yaksha
 def init_random() -> u64
 # Set a seed to random number generator using time (crypto unsafe)
 def random() -> f64
@@ -331,7 +331,7 @@ def set_seed(seed: u64) -> None
 ---
 ## libs.strings
 ---
-```
+```yaksha
 class Utf8IterateState
 # Iterator state for UTF-8 iteration
 # See the codepoint for current character: 
@@ -387,7 +387,7 @@ def valid_cstr(s: libs.c.CStr) -> bool
 ---
 ## libs.strings.array
 ---
-```
+```yaksha
 def del_str_array(sa: Array[str]) -> None
 # Delete a string array by deleting individual string objects and array itself
 def extend(a: Array[str], b: Array[str]) -> Array[str]
@@ -408,7 +408,7 @@ def suffix(sa: Array[str], suffix_str: str) -> Array[str]
 ---
 ## libs.strings.buffer
 ---
-```
+```yaksha
 class StringBuffer
 # String buffer object
 def append(buf: StringBuffer, v: str) -> None

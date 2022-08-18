@@ -1,9 +1,11 @@
+!!!<div class="banner-image"><img alt="Yaksha Programming Language" src="images/yk-banner.png" style="max-width: 100%;" /></div>
+---
 # Language Features
 ---
 ## Data Types
 ---
 ### (Semi)Managed Strings
-!!!<p><span class="yellow-status">in progress</span></p>
+!!!<p><span class="green-status">done</span></p>
 ---
 *String allocations and de-allocations are abstracted away, so strings are immutable and automatically deleted.
 *Assignment copy values and automatically delete previous value.
@@ -17,47 +19,11 @@
 ;Data Type - `str`
 ;Internally this is a binary string. 
 ;`sds` library (part of runtime lib) takes care of the heavy lifting.
----
-### String literals
-!!!<p><span class="red-status">not started</span></p>
----
-*String literals are of type `Const[strlit]`.
 ```yaksha
-# String literals requires no deletion.
-a: Const[strlit] = "Hello World"
-# Below results in a copy of string literal
-# b will be auto deleted.
-b: str = a
-# Below will create an unmanaged string from string literal
-# This is also copied
-c: ustr = a
-# You need to however delete `c`
-del c
+a: str = "hello world"
+# support -> datatype ✅ | literal ✅
+println(a)
 ```
-*Cannot be changed.
-*Only string datatype that can be used as a global constant.
-;Data Type `Const[strlit]`.
----
-### Unmanaged Strings
-!!!<p><span class="red-status">not started</span></p>
----
-*Unmanaged strings need to be manually deleted using `del` expression.
-*At C code level `yk__sds` data structure will be used same as for `str`
-*If you pass in an `str` for where `ustr` is expected, then original pointer is passed instead (no copy).
-*Always passes pointer instead of a copy.
-*Cannot copy by assignment.
-;Data Type - `ustr`
-;Internally this is a binary string. 
-;`sds` library (part of runtime lib) takes care of the heavy lifting.
----
-### String View
-!!!<p><span class="red-status">not started</span><span class="blue-status">planned for v0.2</span></p>
----
-*Idea of string view is to avoid duplicating strings.
-*Read only.
-*Let there be dragons, if referred string goes out of scope this will point to invalid memory. 
-*If you assign a new value to the string, then string view is invalid as original string is freed. In this case `strvw` will refer to invalid memory.
-;Data Type - `strvw`
 ---
 ### Standard integers 
 ---
@@ -66,26 +32,51 @@ del c
 *Default integer is a 32bit signed integer. 
 *This is compiled to `int32_t` on all platforms.
 ;Data Type - `int` or `i32`
+```yaksha
+a: int = 4       # datatype ✅ | literal ✅
+print("Four =")
+println(a)
+```
 ---
 ### Integer types
 ---
-!!!<p><span class="red-status">not started</span></p>
+!!!<p><span class="yellow-status">in progress</span></p>
 ---
 *Signed types - `i8`, `i16`, `i32`, `i64`
 *Unsigned types - `u8`, `u16`, `u32`, `u64`
+```yaksha
+# Default integer type is i32
+a: int = 1       # datatype ✅ | literal ✅
+b: i32 = 2       # datatype ✅ | literal ✅
+c: i8 = 3i8      # datatype ✅ | literal ❌
+d: i16 = 4i16    # datatype ✅ | literal ❌
+e: i32 = 5i32    # datatype ✅ | literal ❌
+f: i64 = 6i64    # datatype ✅ | literal ❌
+
+# Unsigned
+g: u8 = 3u8      # datatype ✅ | literal ❌
+h: u16 = 4u16    # datatype ✅ | literal ❌
+i: u32 = 4u32    # datatype ✅ | literal ❌
+j: u64 = 5u64    # datatype ✅ | literal ❌
+```
 ---
 ### Float types
 ---
-!!!<p><span class="red-status">not started</span></p>
+!!!<p><span class="green-status">done</span></p>
 ---
 *`f32` or `float` - single precision floats.
 ;Data Type - `f32`, `float` and `f64`
 *`f64` - double precision floats.
+```yaksha
+a: f32 = 1.0f    # datatype ✅ | literal ✅
+b: f64 = 2.0     # datatype ✅ | literal ✅
+c: float = 3.0f  # datatype ✅ | literal ✅
+```
 ---
 ## Syntax features
 ---
 ### Let statement
-!!!<p><span class="yellow-status">in progress</span></p>
+!!!<p><span class="green-status">done</span></p>
 ---
 *Create a new variable.
 *If you want to assign to a variable, it needs to be created.
@@ -103,9 +94,10 @@ def main() -> int:
 ---
 #### Basic functions
 ---
-!!!<p><span class="yellow-status">in progress</span></p>
+!!!<p><span class="green-status">done</span></p>
 ---
-*Has a return type if return type is `None` it will be converted to `void`.
+*Return type must be mentioned always.
+*If return type is `None` it means no data is returned. (`void` in C world.)
 ---
 ```yaksha
 def main() -> int:
@@ -113,33 +105,88 @@ def main() -> int:
     return 0
 ```
 ---
-#### Exposing C library functions
+#### Exposing C functions
 ---
-!!!<p><span class="red-status">not started</span></p>
+*💀 You can only call `@nativexxx` functions from normal functions. 
+*💀 `@nativexxx` functions cannot call each other or normal functions.
 ---
-*Useful to expose C library code.
+!!!<p><span class="green-status">done</span></p>
+---
+##### @native - native functions
+---
 ```yaksha
 @native("getarg")
-def getarg(n: int) -> str:
+def get_arg(n: int) -> str:
     pass
-```
-;Compiles to:
-;`#define yy__getarg getarg`
-;This is because all Yaksha lang identifiers are prefixed with `yy__` by default.
----
-C macros can be created as explained below.
----
-```yaksha
+
 @native
-def getarg(n: int) -> str:
+def get_global_arg(n: int) -> str:
     ccode "yk__sdsdup(global_args[yy__n])"
 ```
----
-If `ccode` is there instead of a pass statement, it compiles to a macro.
----
+;If `ccode` is there instead of an argument, then it is used as the message body.
+!!!<details>
+!!!<summary>Click to see output C code</summary>
 ```c
-#define yy__getarg(yy_n) (yk__sdsdup(global_args[yy__n]))
+yk__sds yy__get_arg(int32_t nn__n) { return getarg(nn__n); }
+yk__sds yy__get_global_arg(int32_t nn__n) 
+{
+    yk__sdsdup(global_args[yy__n]);
+}
 ```
+!!!</details>
+---
+##### @nativemacro - macros with arguments
+---
+```yaksha
+@nativemacro
+def min_int(a: int, b:int) -> int:
+    ccode "((nn__a < nn__b) ? nn__a : nn__b)"
+
+@nativemacro("((nn__a > nn__b) ? nn__a : nn__b)")
+def max_int(a: int, b:int) -> int:
+    pass
+```
+!!!<details>
+!!!<summary>Click to see output C code</summary>
+```c
+#define yy__min_int(nn__a, nn__b) ((nn__a < nn__b) ? nn__a : nn__b)
+#define yy__max_int(nn__a, nn__b) ((nn__a > nn__b) ? nn__a : nn__b)
+```
+!!!</details>
+---
+##### @nativedefine - simple #define
+---
+```yaksha
+@nativedefine("banana")
+def banana(a: int, b: int, c:int) -> int:
+    pass
+```
+!!!<details>
+!!!<summary>Click to see output C code</summary>
+```c
+#define yy__banana banana
+```
+!!!</details>
+---
+##### @varargs - variable argument functions
+---
+*💀 Can only be used with `@nativedefine`.
+---
+```yaksha
+@nativedefine("yk__newsdsarray")
+@varargs
+def new(count: int, s: str) -> Array[str]:
+    pass
+```
+!!!<details>
+!!!<summary>Click to see output C code</summary>
+```c
+#define yy__new yk__newsdsarray
+// Assume that yk__newsdsarray is something like below
+// yk__sds *yk__newsdsarray(size_t count, ...)
+```
+!!!</details>
+---
 ---
 #### Template functions
 ---
@@ -152,12 +199,12 @@ If `ccode` is there instead of a pass statement, it compiles to a macro.
 ```yaksha
 @native("yk__arrput")
 @template("T")
-def arrput(a: Array[T], v: T) -> bool:
+def arrput(a: Array[T], v: T) -> None:
     pass
 
 @native("yk__hmput")
 @template("K,V")
-def hmput(a: HashMap[K,V], key: K, value: V) -> bool:
+def hmput(a: HashMap[K,V], key: K, value: V) -> None:
     pass
 
 @native("yk__hmget")
@@ -179,14 +226,13 @@ def calculate(n: int) -> int:
 ---
 ### Defer statement
 ---
-!!!<p><span class="yellow-status">in progress</span></p>
+!!!<p><span class="green-status">done</span></p>
 ---
 *Defer something to happen at the end of the scope.
 *Before any `return` from a function.
 *Before `break`, `continue` or end of `while` loop body.
 **This behaviour is different from what you see in go-lang.
 *Before end of `if` body or end of `else` body.
-*💀 Currently if you use `return some_function(a)` and deletion of `a` is deferred this will happen before calling, some_function. This is a bug that require fixing.
 ;`defer` works as a stack.
 ;That means deferred expressions are executed in last deferred first executed order. 
 ---
@@ -228,27 +274,22 @@ def main() -> int:
 ---
 ### Class statement
 ---
-!!!<p><span class="red-status">not started</span></p>
+!!!<p><span class="yellow-status">in progress</span></p>
 ---
 *Create a custom data structure.
-*Generic structures are not supported yet.
-*Inheritance is not supported yet.
+*💀 Templated structures are not supported yet.
+*💀 Inheritance is not supported yet.
 ---
 ```yaksha
-class student:
+class Student:
     student_id: int
     name: str
     address: str
 
-class teacher:
+class Teacher:
     teacher_id: int
     name: str
     address: str
-    
-def main() -> int:
-    print("Size of student structure is ")
-    println(sizeof(student))
-    return 0    
 ```
 ---
 #### Creating and freeing objects
@@ -256,10 +297,10 @@ def main() -> int:
 ```yaksha
 def main() -> int:
     # Non primitive types are initialized to None 
-    john: student
+    john: Student
     # Creating an instance, will be allocated in heap
     # Results in a malloc
-    john = student()
+    john = Student()
     defer del john
     # Set fields
     john.student_id = 10
@@ -274,13 +315,13 @@ def main() -> int:
 It might be better to create a custom function to delete custom objects.
 ---
 ```yaksha
-def del_student(st: student) -> None:
+def del_student(st: Student) -> None:
     del st.name
     del st.address
     del st 
 
 def main() -> int:
-    john: student = student()
+    john: Student = Student()
     defer del_student(john)
     
     john.student_id = 10
@@ -292,12 +333,25 @@ def main() -> int:
 #### Exposing native structures
 ---
 ```yaksha
-@native("something")
-struct something:
+@nativedefine("something")
+class Something:
     something_id: int
+
+# Use @dotaccess for purely stack allocated structs
+@nativedefine("Color")
+@dotaccess
+class Color:
+    r: int
+    g: int
+    b: int
 ```
-;Compiles to
-;`#define yy__something something`
+!!!<details>
+!!!<summary>Click to see output C code</summary>
+```c
+#define yy__Something something
+#define yy__Color Color
+```
+!!!</details>
 ---
 ### Import statement
 ---
@@ -329,23 +383,23 @@ def main() -> int:
 * ✅ `println` - A `print` function that suffix a new line character.
 * ✅ `len` - Get length of strings and other data structures provided by the language.
 * ❌ `sizeof` - Size of structures or C data types.
-* ❌ `slice` - Create a string view from a string with given start and end positions.
-* ❌ `tostr` - Converts `strvw` or `int` types to string (base 10). 
-** If input is a `str`, `ustr` or `strvw` it is copied. 
-** `float` types will be formatted with 2 decimal places.
-* ❌ `toustr` - Same as `tostr` but it is converted to an unmanaged string.
-* ❌ `ftostr` - Converts a `float` to `str` with given decimal points.
-* ❌ `itostr` - Converts an `int` to `str` with given base up to 16.
-* ❌ `ftoustr` - Converts a `float` to `ustr` with given decimal points.
-* ❌ `itoustr` - Converts an `int` to `ustr` with given base up to 16.
+* ❌ `tostr` - If it is a string, copy is created. Floats are converted to 2 decimal places. 
 * ✅ `arrput` - Put item to an array.
 * ✅ `arrpop` - Remove last item from an array and return it.
-* ❌ `arrfree` - Free an array. Used by `del`.
-* ❌ `smput` - Put item to a StringHashMap.
-* ❌ `smget` - Get item from a StringHashMap.
-* ❌ `smfree` - Free StringHashMap and all string keys. Used by `del`.
+* ✅ `getref` - Get a pointer to given object.
+* ✅ `unref` - Dereference a pointer.
+* ✅ `charat` - Get a character at a specific location in string.
+* ✅ `shnew` - Initialize `Array[SMEntry[T]]` object .
+* ✅ `shput` - Put item to a `Array[SMEntry[T]]`.
+* ✅ `shget` - Get item from a `Array[SMEntry[T]]`.
+* ✅ `shgeti` - Get item index from a `Array[SMEntry[T]]` (-1 if not found).
+* ✅ `hmnew` - Initialize `Array[MEntry[T]]` object.
+* ✅ `hmput` - Put item to a `Array[MEntry[T]]`.
+* ✅ `hmget` - Get item from a `Array[MEntry[T]]`.
+* ✅ `hmgeti` - Get item index from a `Array[MEntry[T]]` (-1 if not found).
 * ❌ `reversed` - Reverse an array creating a new array. New array need to be deleted.
 * ❌ `sorted` - Sort an array creating a new array. New array need to be deleted.
+* ❌ `format` - String formatting.
 ;Builtin functions may call different implementations in `C` based on input.
 ---
 ## Non primitive data types
@@ -360,7 +414,7 @@ This section describes other essential types of builtin structures.
 def main() -> int:
     a: Array[i32]
     # Prior to calling arrput pointer is set to None
-    defer arrfree(a)
+    defer del a
     arrput(a, 1)
     arrput(a, 2)
     # Array access works with `[]`
@@ -371,19 +425,23 @@ def main() -> int:
 ---
 ### String Hash Map
 ---
-!!!<p><span class="red-status">not started</span></p>
+!!!<p><span class="yellow-status">in progress</span></p>
 ---
-String hashmaps allow `mstr` keys and any `values`. Values need to be deleted when no longer needed.
+HashMap with str keys and given data type values.
+Values need to be deleted when no longer needed.
 ---
 ```yaksha
 def main() -> int:
-    m: StringHashMap[int]
-    defer smfree(m)
-    smput(m, "banana", 10)
-    return 0
+    m: Array[SMEntry[int]]
+    # shnew must be called before using the array as a String Hash Map
+    shnew(m)
+    defer del m
+    shput(m, "banana", 10)
+    r: int = shget(m, "banana")
+    return r
 ```
-;`StringHashMap` keys are deleted automatically when `smfree` is invoked.
-;`del` statement also acts as `smfree`.
+;`Array[SMEntry[?]]` keys are deleted automatically when `del` is invoked.
+;`len` will give the total number of elements of the String Hash Map.
 ---
 ### Hash Map
 ---
@@ -391,12 +449,5 @@ def main() -> int:
 ---
 Simple single key single value hashmaps.
 ---
-### Hash Set
----
-!!!<p><span class="red-status">not started</span><span class="blue-status">planned for v0.2</span></p>
----
-### String Hash Set
----
-!!!<p><span class="red-status">not started</span><span class="blue-status">planned for v0.2</span></p>
----
----
+;Data type `Array[MEntry[?]]`.
+;key and value both need to be deleted.

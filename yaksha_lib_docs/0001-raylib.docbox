@@ -7,7 +7,7 @@ Raylib can be accessed by importing `raylib`.
 ---
 ## raylib
 ---
-```
+```yaksha
 BLEND_ADDITIVE: Const[int]
 # Blend textures adding colors
 BLEND_ADD_COLORS: Const[int]
@@ -1836,7 +1836,7 @@ def window_should_close() -> bool
 ---
 ## raylib.gl
 ---
-```
+```yaksha
 OPENGL_11: Const[int]
 OPENGL_21: Const[int]
 OPENGL_33: Const[int]
@@ -2315,7 +2315,7 @@ def rlgl_init(width: int, height: int) -> None
 ---
 ## raylib.gui
 ---
-```
+```yaksha
 ARROWS_SIZE: Const[int]
 ARROWS_VISIBLE: Const[int]
 ARROW_PADDING: Const[int]
@@ -2792,7 +2792,7 @@ def gui_window_box(bounds: raylib.Rectangle, title: str) -> bool
 ---
 ## raylib.math
 ---
-```
+```yaksha
 class float16
 class float3
 # NOTE: Helper types to be used instead of array return types for *ToFloat functions
@@ -2911,7 +2911,7 @@ def wrap(value: float, min: float, max: float) -> float
 ---
 ## raylib.utils
 ---
-```
+```yaksha
 def clear() -> None
 # Clear background with RAYWHITE colour
 def cos_deg(x: float) -> float

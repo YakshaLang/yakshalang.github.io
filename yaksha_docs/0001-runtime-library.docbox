@@ -1,0 +1,53 @@
+# Yaksha library
+---
+Yaksha library uses multiple 3rd party libraries, set of python scripts and few other nuts and bolts to create library sources. 
+---
+Core parts of runtime library functionaly starts with `yk__` or `YK__`.
+Yaksha programming language preserves anything that starts with `yk__` or `YK__` while prefixing any other name with `yy__`. 
+;This avoids collisions with C standard library functions or keywords.
+---
+## Standard Library Components
+---
+### Core Library
+!!!<p><span class="yellow-status">in progress</span></p>
+Small core library with useful features.
+```yaksha
+import libs
+```
+---
+### UI Library
+!!!<p><span class="yellow-status">in progress</span></p>
+---
+Use raygui with raylib.
+---
+```yaksha
+import raylib.gui
+```
+---
+### raylib - Graphics/Game/Audio Library
+!!!<p><span class="yellow-status">in progress</span></p>
+---
+Use raylib to build games and such
+---
+```yaksha
+import raylib
+```
+---
+### CL Library
+!!!<p><span class="red-status">not started</span></p>
+---
+Access to OpenCL features and parallel programming.
+---
+```yaksha
+import cl
+
+@device
+def my_program(n: int) -> int:
+    return 1 + 1
+    
+def main() -> int:
+    dvc: cl.device = cl.get_device(0)
+    cl.run(dvc, my_program)
+```
+;Placeholder code, API is not designed yet.
+---
