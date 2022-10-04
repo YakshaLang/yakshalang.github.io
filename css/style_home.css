@@ -934,15 +934,39 @@ body {
     }
 
     .nav__bar__links {
-        gap: 1rem;
+        gap: 0.5rem;
     }
 
     .nav__bar__link {
-        font-size: 1.2rem;
+        font-size: 0.9rem;
     }
 
     .footer__link {
         padding: 1.5rem;
     }
 
+}
+
+/* Smaller screens - less than 510px */
+@media screen and (max-width: 510px) {
+    .nav__bar {
+        flex-direction: column;
+    }
+
+    .nav__bar__links {
+        gap: 0;
+    }
+
+    .nav__bar__item {
+        margin: auto 1rem;
+    }
+
+    .nav__bar__link {
+        font-size: 0.9rem;
+    }
+
+    .program__tab {
+        font-size: 0.9rem;
+        padding: 1rem 0.5rem;
+    }
 }
