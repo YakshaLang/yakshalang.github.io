@@ -651,7 +651,7 @@ class GlyphInfo
     image: Image
 class Image
 # Image, pixel data stored in CPU memory (RAM): 
-    data: libs.c.VoidPtr
+    data: AnyPtr
     width: libs.c.CInt
     height: libs.c.CInt
     mipmaps: libs.c.CInt
@@ -693,7 +693,7 @@ class Music
     frameCount: libs.c.CUInt
     looping: bool
     ctxType: libs.c.CInt
-    ctxData: libs.c.VoidPtr
+    ctxData: AnyPtr
 class NPatchInfo
 # NPatchInfo, n-patch layout info: 
     source: Rectangle
@@ -793,7 +793,7 @@ class Wave
     sampleRate: libs.c.CUInt
     sampleSize: libs.c.CUInt
     channels: libs.c.CUInt
-    data: libs.c.VoidPtr
+    data: AnyPtr
 def begin_blend_mode(mode: int) -> None
 # Begin blending mode (alpha, additive, multiplied, subtract, custom)
 def begin_drawing() -> None
@@ -850,7 +850,7 @@ def close_audio_device() -> None
 # Close the audio device and context
 def close_window() -> None
 # Close window and unload OpenGL context
-def codepoint_to_utf8(codepoint: int, byte_size: Ptr[libs.c.CInt]) -> Const[libs.c.CStr]
+def codepoint_to_utf8(codepoint: int, byte_size: Ptr[libs.c.CInt]) -> Ptr[Const[libs.c.CChar]]
 # Encode one codepoint into UTF-8 byte array (array length returned as parameter)
 def color(r: int, g: int, b: int, a: int) -> Color
 # Factory function for: Color
@@ -868,11 +868,11 @@ def color_to_hsv(p_color: Color) -> Vector3
 # Get HSV values for a Color, hue [0..360], saturation/value [0..1]
 def color_to_int(p_color: Color) -> int
 # Get hexadecimal value for a Color
-def compress_data(data: Const[Ptr[libs.c.CUChar]], data_size: int, comp_data_size: Ptr[libs.c.CInt]) -> Ptr[libs.c.CUChar]
+def compress_data(data: Ptr[Const[libs.c.CUChar]], data_size: int, comp_data_size: Ptr[libs.c.CInt]) -> Ptr[libs.c.CUChar]
 # Compress data (DEFLATE algorithm), memory must be MemFree()
-def decode_data_base64(data: Const[Ptr[libs.c.CUChar]], output_size: Ptr[libs.c.CInt]) -> Ptr[libs.c.CUChar]
+def decode_data_base64(data: Ptr[Const[libs.c.CUChar]], output_size: Ptr[libs.c.CInt]) -> Ptr[libs.c.CUChar]
 # Decode Base64 string data, memory must be MemFree()
-def decompress_data(comp_data: Const[Ptr[libs.c.CUChar]], comp_data_size: int, data_size: Ptr[libs.c.CInt]) -> Ptr[libs.c.CUChar]
+def decompress_data(comp_data: Ptr[Const[libs.c.CUChar]], comp_data_size: int, data_size: Ptr[libs.c.CInt]) -> Ptr[libs.c.CUChar]
 # Decompress data (DEFLATE algorithm), memory must be MemFree()
 def directory_exists(dir_path: str) -> bool
 # Check if a directory path exists
@@ -948,7 +948,7 @@ def draw_line_v(start_pos: Vector2, end_pos: Vector2, p_color: Color) -> None
 # Draw a line (Vector version)
 def draw_mesh(mesh: Mesh, material: Material, p_transform: Matrix) -> None
 # Draw a 3d mesh with material and transform
-def draw_mesh_instanced(mesh: Mesh, material: Material, transforms: Const[Ptr[Matrix]], instances: int) -> None
+def draw_mesh_instanced(mesh: Mesh, material: Material, transforms: Ptr[Const[Matrix]], instances: int) -> None
 # Draw multiple mesh instances with material and different transforms
 def draw_model(model: Model, position: Vector3, scale: float, tint: Color) -> None
 # Draw a model (with texture if set)
@@ -1010,7 +1010,7 @@ def draw_text(text: str, pos_x: int, pos_y: int, font_size: int, p_color: Color)
 # Draw text (using default font)
 def draw_text_codepoint(p_font: Font, codepoint: int, position: Vector2, font_size: float, tint: Color) -> None
 # Draw one character (codepoint)
-def draw_text_codepoints(p_font: Font, codepoints: Const[Ptr[libs.c.CInt]], count: int, position: Vector2, font_size: float, spacing: float, tint: Color) -> None
+def draw_text_codepoints(p_font: Font, codepoints: Ptr[Const[libs.c.CInt]], count: int, position: Vector2, font_size: float, spacing: float, tint: Color) -> None
 # Draw multiple character (codepoint)
 def draw_text_ex(p_font: Font, text: str, position: Vector2, font_size: float, spacing: float, tint: Color) -> None
 # Draw text using font and additional parameters
@@ -1050,7 +1050,7 @@ def enable_cursor() -> None
 # Enables cursor (unlock cursor)
 def enable_event_waiting() -> None
 # Enable waiting for events on EndDrawing(), no automatic event polling
-def encode_data_base64(data: Const[Ptr[libs.c.CUChar]], data_size: int, output_size: Ptr[libs.c.CInt]) -> libs.c.CStr
+def encode_data_base64(data: Ptr[Const[libs.c.CUChar]], data_size: int, output_size: Ptr[libs.c.CInt]) -> libs.c.CStr
 # Encode data to Base64 string, memory must be MemFree()
 def end_blend_mode() -> None
 # End blending mode (reset to default: alpha blending)
@@ -1094,7 +1094,7 @@ def gen_image_checked(width: int, height: int, checks_x: int, checks_y: int, col
 # Generate image: checked
 def gen_image_color(width: int, height: int, p_color: Color) -> Image
 # Generate image: plain color
-def gen_image_font_atlas(chars: Const[Ptr[GlyphInfo]], recs: Ptr[Ptr[Rectangle]], glyph_count: int, font_size: int, padding: int, pack_method: int) -> Image
+def gen_image_font_atlas(chars: Ptr[Const[GlyphInfo]], recs: Ptr[Ptr[Rectangle]], glyph_count: int, font_size: int, padding: int, pack_method: int) -> Image
 # Generate image font atlas using chars info
 def gen_image_gradient_h(width: int, height: int, left: Color, right: Color) -> Image
 # Generate image: horizontal gradient
@@ -1130,7 +1130,7 @@ def gen_mesh_torus(radius: float, size: float, rad_seg: int, sides: int) -> Mesh
 # Generate torus mesh
 def gen_texture_mipmaps(p_texture: Ptr[Texture2D]) -> None
 # Generate GPU mipmaps for a texture
-def get_application_directory() -> Const[libs.c.CStr]
+def get_application_directory() -> Ptr[Const[libs.c.CChar]]
 # Get the directory if the running application (uses static string)
 def get_camera_matrix(p_camera: Camera) -> Matrix
 # Get camera transform matrix (view matrix)
@@ -1138,7 +1138,7 @@ def get_camera_matrix_2d(p_camera: Camera2D) -> Matrix
 # Get camera 2d transform matrix
 def get_char_pressed() -> int
 # Get char pressed (unicode), call it multiple times for chars queued, returns 0 when the queue is empty
-def get_clipboard_text() -> Const[libs.c.CStr]
+def get_clipboard_text() -> Ptr[Const[libs.c.CChar]]
 # Get clipboard text content
 def get_codepoint(text: str, bytes_processed: Ptr[libs.c.CInt]) -> int
 # Get next codepoint in a UTF-8 encoded string, 0x3f('?') is returned on failure
@@ -1150,17 +1150,17 @@ def get_color(hex_value: u32) -> Color
 # Get Color structure from hexadecimal value
 def get_current_monitor() -> int
 # Get current connected monitor
-def get_directory_path(file_path: str) -> Const[libs.c.CStr]
+def get_directory_path(file_path: str) -> Ptr[Const[libs.c.CChar]]
 # Get full path for a given fileName with path (uses static string)
-def get_file_extension(file_name: str) -> Const[libs.c.CStr]
+def get_file_extension(file_name: str) -> Ptr[Const[libs.c.CChar]]
 # Get pointer to extension for a filename string (includes dot: '.png')
 def get_file_length(file_name: str) -> int
 # Get file length in bytes (NOTE: GetFileSize() conflicts with windows.h)
 def get_file_mod_time(file_name: str) -> i64
 # Get file modification time (last write time)
-def get_file_name(file_path: str) -> Const[libs.c.CStr]
+def get_file_name(file_path: str) -> Ptr[Const[libs.c.CChar]]
 # Get pointer to filename for a path string
-def get_file_name_without_ext(file_path: str) -> Const[libs.c.CStr]
+def get_file_name_without_ext(file_path: str) -> Ptr[Const[libs.c.CChar]]
 # Get filename string without extension (uses static string)
 def get_font_default() -> Font
 # Get the default Font
@@ -1174,7 +1174,7 @@ def get_gamepad_axis_movement(gamepad: int, axis: int) -> float
 # Get axis movement value for a gamepad axis
 def get_gamepad_button_pressed() -> int
 # Get the last gamepad button pressed
-def get_gamepad_name(gamepad: int) -> Const[libs.c.CStr]
+def get_gamepad_name(gamepad: int) -> Ptr[Const[libs.c.CChar]]
 # Get gamepad internal name id
 def get_gesture_detected() -> int
 # Get latest detected gesture
@@ -1208,7 +1208,7 @@ def get_monitor_count() -> int
 # Get number of connected monitors
 def get_monitor_height(monitor: int) -> int
 # Get specified monitor height (current video mode used by monitor)
-def get_monitor_name(monitor: int) -> Const[libs.c.CStr]
+def get_monitor_name(monitor: int) -> Ptr[Const[libs.c.CChar]]
 # Get the human-readable, UTF-8 encoded name of the primary monitor
 def get_monitor_physical_height(monitor: int) -> int
 # Get specified monitor physical height in millimetres
@@ -1242,7 +1242,7 @@ def get_pixel_color(src_ptr: libs.c.VoidPtr, format: int) -> Color
 # Get Color from a source pixel pointer of certain format
 def get_pixel_data_size(width: int, height: int, format: int) -> int
 # Get pixel data size in bytes for certain format
-def get_prev_directory_path(dir_path: str) -> Const[libs.c.CStr]
+def get_prev_directory_path(dir_path: str) -> Ptr[Const[libs.c.CChar]]
 # Get previous directory path for a given path (uses static string)
 def get_random_value(min: int, max: int) -> int
 # Get a random value between min and max (both included)
@@ -1290,7 +1290,7 @@ def get_window_position() -> Vector2
 # Get window position XY on monitor
 def get_window_scale_dpi() -> Vector2
 # Get window scale DPI factor
-def get_working_directory() -> Const[libs.c.CStr]
+def get_working_directory() -> Ptr[Const[libs.c.CChar]]
 # Get current working directory (uses static string)
 def get_world_to_screen(position: Vector3, p_camera: Camera) -> Vector2
 # Get the screen space position for a 3d world space position
@@ -1470,13 +1470,13 @@ def load_file_text(file_name: str) -> libs.c.CStr
 # Load text data from file (read), returns a '\0' terminated string
 def load_font(file_name: str) -> Font
 # Load font from file into GPU memory (VRAM)
-def load_font_data(file_data: Const[Ptr[libs.c.CUChar]], data_size: int, font_size: int, font_chars: Ptr[libs.c.CInt], glyph_count: int, type: int) -> Ptr[GlyphInfo]
+def load_font_data(file_data: Ptr[Const[libs.c.CUChar]], data_size: int, font_size: int, font_chars: Ptr[libs.c.CInt], glyph_count: int, type: int) -> Ptr[GlyphInfo]
 # Load font data for further use
 def load_font_ex(file_name: str, font_size: int, font_chars: Ptr[libs.c.CInt], glyph_count: int) -> Font
 # Load font from file with extended parameters, use NULL for fontChars and 0 for glyphCount to load the default character set
 def load_font_from_image(p_image: Image, key: Color, first_char: int) -> Font
 # Load font from Image (XNA style)
-def load_font_from_memory(file_type: str, file_data: Const[Ptr[libs.c.CUChar]], data_size: int, font_size: int, font_chars: Ptr[libs.c.CInt], glyph_count: int) -> Font
+def load_font_from_memory(file_type: str, file_data: Ptr[Const[libs.c.CUChar]], data_size: int, font_size: int, font_chars: Ptr[libs.c.CInt], glyph_count: int) -> Font
 # Load font from memory buffer, fileType refers to extension: i.e. '.ttf'
 def load_image(file_name: str) -> Image
 # Load image from file into CPU memory (RAM)
@@ -1484,7 +1484,7 @@ def load_image_anim(file_name: str, frames: Ptr[libs.c.CInt]) -> Image
 # Load image sequence from file (frames appended to image.data)
 def load_image_colors(p_image: Image) -> Ptr[Color]
 # Load color data from image as a Color array (RGBA - 32bit)
-def load_image_from_memory(file_type: str, file_data: Const[Ptr[libs.c.CUChar]], data_size: int) -> Image
+def load_image_from_memory(file_type: str, file_data: Ptr[Const[libs.c.CUChar]], data_size: int) -> Image
 # Load image from memory buffer, fileType refers to extension: i.e. '.png'
 def load_image_from_screen() -> Image
 # Load image from screen buffer and (screenshot)
@@ -1506,7 +1506,7 @@ def load_model_from_mesh(mesh: Mesh) -> Model
 # Load model from generated mesh (default material)
 def load_music_stream(file_name: str) -> Music
 # Load music stream from file
-def load_music_stream_from_memory(file_type: str, data: Const[Ptr[libs.c.CUChar]], data_size: int) -> Music
+def load_music_stream_from_memory(file_type: str, data: Ptr[Const[libs.c.CUChar]], data_size: int) -> Music
 # Load music stream from data
 def load_render_texture(width: int, height: int) -> RenderTexture2D
 # Load texture for rendering (framebuffer)
@@ -1528,7 +1528,7 @@ def load_vr_stereo_config(device: VrDeviceInfo) -> VrStereoConfig
 # Load VR stereo config for VR simulator device parameters
 def load_wave(file_name: str) -> Wave
 # Load wave data from file
-def load_wave_from_memory(file_type: str, file_data: Const[Ptr[libs.c.CUChar]], data_size: int) -> Wave
+def load_wave_from_memory(file_type: str, file_data: Ptr[Const[libs.c.CUChar]], data_size: int) -> Wave
 # Load wave from memory buffer, fileType refers to extension: i.e. '.wav'
 def load_wave_samples(p_wave: Wave) -> Ptr[libs.c.CFloat]
 # Load samples data from wave as a 32bit float data array
@@ -1650,13 +1650,13 @@ def set_pixel_color(dst_ptr: libs.c.VoidPtr, p_color: Color, format: int) -> Non
 # Set color formatted into destination pixel pointer
 def set_random_seed(seed: u32) -> None
 # Set the seed for the random number generator
-def set_shader_value(shader: Shader, loc_index: int, value: Const[libs.c.VoidPtr], uniform_type: int) -> None
+def set_shader_value(shader: Shader, loc_index: int, value: AnyPtrToConst, uniform_type: int) -> None
 # Set shader uniform value
 def set_shader_value_matrix(shader: Shader, loc_index: int, mat: Matrix) -> None
 # Set shader uniform value (matrix 4x4)
 def set_shader_value_texture(shader: Shader, loc_index: int, p_texture: Texture2D) -> None
 # Set shader uniform value for texture (sampler2d)
-def set_shader_value_v(shader: Shader, loc_index: int, value: Const[libs.c.VoidPtr], uniform_type: int, count: int) -> None
+def set_shader_value_v(shader: Shader, loc_index: int, value: AnyPtrToConst, uniform_type: int, count: int) -> None
 # Set shader uniform value vector
 def set_shapes_texture(p_texture: Texture2D, source: Rectangle) -> None
 # Set texture and rectangle to be used on shapes drawing
@@ -1708,7 +1708,7 @@ def take_screenshot(file_name: str) -> None
 # Takes a screenshot of current screen (filename extension defines format)
 def text_append(text: str, append: str, position: Ptr[libs.c.CInt]) -> None
 # Append text at specific position and move cursor!
-def text_codepoints_to_utf8(codepoints: Const[Ptr[libs.c.CInt]], length: int) -> libs.c.CStr
+def text_codepoints_to_utf8(codepoints: Ptr[Const[libs.c.CInt]], length: int) -> libs.c.CStr
 # Encode text as codepoints array into UTF-8 text string (WARNING: memory must be freed!)
 def text_copy(dst: str, src: str) -> int
 # Copy one string to another, returns bytes copied
@@ -1718,23 +1718,23 @@ def text_insert(text: str, insert: str, position: int) -> libs.c.CStr
 # Insert text in a position (WARNING: memory must be freed!)
 def text_is_equal(text1: str, text2: str) -> bool
 # Check if two text string are equal
-def text_join(text_list: Const[Ptr[Ptr[libs.c.CChar]]], count: int, delimiter: str) -> Const[libs.c.CStr]
+def text_join(text_list: Ptr[Ptr[Const[libs.c.CChar]]], count: int, delimiter: str) -> Ptr[Const[libs.c.CChar]]
 # Join text strings with delimiter
 def text_length(text: str) -> u32
 # Get text length, checks for '\0' ending
 def text_replace(text: str, replace: str, by: str) -> libs.c.CStr
 # Replace text string (WARNING: memory must be freed!)
-def text_split(text: str, delimiter: int, count: Ptr[libs.c.CInt]) -> Const[Ptr[Ptr[libs.c.CChar]]]
+def text_split(text: str, delimiter: int, count: Ptr[libs.c.CInt]) -> Ptr[Ptr[Const[libs.c.CChar]]]
 # Split text into multiple strings
-def text_subtext(text: str, position: int, length: int) -> Const[libs.c.CStr]
+def text_subtext(text: str, position: int, length: int) -> Ptr[Const[libs.c.CChar]]
 # Get a piece of a text string
 def text_to_integer(text: str) -> int
 # Get integer value from text (negative values not supported)
-def text_to_lower(text: str) -> Const[libs.c.CStr]
+def text_to_lower(text: str) -> Ptr[Const[libs.c.CChar]]
 # Get lower case version of provided string
-def text_to_pascal(text: str) -> Const[libs.c.CStr]
+def text_to_pascal(text: str) -> Ptr[Const[libs.c.CChar]]
 # Get Pascal case notation version of provided string
-def text_to_upper(text: str) -> Const[libs.c.CStr]
+def text_to_upper(text: str) -> Ptr[Const[libs.c.CChar]]
 # Get upper case version of provided string
 def texture(id: u32, width: int, height: int, mipmaps: int, format: int) -> Texture
 # Factory function for: Texture
@@ -1796,21 +1796,21 @@ def unload_wave(p_wave: Wave) -> None
 # Unload wave data
 def unload_wave_samples(samples: Ptr[libs.c.CFloat]) -> None
 # Unload samples data loaded with LoadWaveSamples()
-def update_audio_stream(stream: AudioStream, data: Const[libs.c.VoidPtr], frame_count: int) -> None
+def update_audio_stream(stream: AudioStream, data: AnyPtrToConst, frame_count: int) -> None
 # Update audio stream buffers with data
 def update_camera(p_camera: Ptr[Camera]) -> None
 # Update camera position for selected mode
-def update_mesh_buffer(mesh: Mesh, index: int, data: Const[libs.c.VoidPtr], data_size: int, offset: int) -> None
+def update_mesh_buffer(mesh: Mesh, index: int, data: AnyPtrToConst, data_size: int, offset: int) -> None
 # Update mesh vertex data in GPU for a specific buffer index
 def update_model_animation(model: Model, anim: ModelAnimation, frame: int) -> None
 # Update model animation pose
 def update_music_stream(p_music: Music) -> None
 # Updates buffers for music streaming
-def update_sound(p_sound: Sound, data: Const[libs.c.VoidPtr], sample_count: int) -> None
+def update_sound(p_sound: Sound, data: AnyPtrToConst, sample_count: int) -> None
 # Update sound buffer with new data
-def update_texture(p_texture: Texture2D, pixels: Const[libs.c.VoidPtr]) -> None
+def update_texture(p_texture: Texture2D, pixels: AnyPtrToConst) -> None
 # Update GPU texture with new data
-def update_texture_rec(p_texture: Texture2D, rec: Rectangle, pixels: Const[libs.c.VoidPtr]) -> None
+def update_texture_rec(p_texture: Texture2D, rec: Rectangle, pixels: AnyPtrToConst) -> None
 # Update GPU texture rectangle with new data
 def upload_mesh(mesh: Ptr[Mesh], dynamic: bool) -> None
 # Upload mesh vertex data in GPU and provide VAO/VBO ids
@@ -2108,8 +2108,8 @@ def rl_draw_render_batch(batch: Ptr[raylib.rlRenderBatch]) -> None
 def rl_draw_render_batch_active() -> None
 # Update and draw internal render batch
 def rl_draw_vertex_array(offset: int, count: int) -> None
-def rl_draw_vertex_array_elements(offset: int, count: int, buffer: Const[libs.c.VoidPtr]) -> None
-def rl_draw_vertex_array_elements_instanced(offset: int, count: int, buffer: Const[libs.c.VoidPtr], instances: int) -> None
+def rl_draw_vertex_array_elements(offset: int, count: int, buffer: AnyPtrToConst) -> None
+def rl_draw_vertex_array_elements_instanced(offset: int, count: int, buffer: AnyPtrToConst, instances: int) -> None
 def rl_draw_vertex_array_instanced(offset: int, count: int, instances: int) -> None
 def rl_enable_backface_culling() -> None
 # Enable backface culling
@@ -2176,7 +2176,7 @@ def rl_get_matrix_transform() -> raylib.Matrix
 # Get internal accumulated transform matrix
 def rl_get_matrix_view_offset_stereo(eye: int) -> raylib.Matrix
 # Get internal view offset matrix for stereo render (selected eye)
-def rl_get_pixel_format_name(format: u32) -> Const[libs.c.CStr]
+def rl_get_pixel_format_name(format: u32) -> Ptr[Const[libs.c.CChar]]
 # Get name string for pixel format
 def rl_get_shader_id_default() -> u32
 # Get default shader id
@@ -2206,17 +2206,17 @@ def rl_load_shader_code(vs_code: str, fs_code: str) -> u32
 # Load shader from code strings
 def rl_load_shader_program(v_shader_id: u32, f_shader_id: u32) -> u32
 # Load custom shader program
-def rl_load_texture(data: Const[libs.c.VoidPtr], width: int, height: int, format: int, mipmap_count: int) -> u32
+def rl_load_texture(data: AnyPtrToConst, width: int, height: int, format: int, mipmap_count: int) -> u32
 # Load texture in GPU
-def rl_load_texture_cubemap(data: Const[libs.c.VoidPtr], size: int, format: int) -> u32
+def rl_load_texture_cubemap(data: AnyPtrToConst, size: int, format: int) -> u32
 # Load texture cubemap
 def rl_load_texture_depth(width: int, height: int, use_render_buffer: bool) -> u32
 # Load depth texture/renderbuffer (to be attached to fbo)
 def rl_load_vertex_array() -> u32
 # Load vertex array (vao) if supported
-def rl_load_vertex_buffer(buffer: Const[libs.c.VoidPtr], size: int, dynamic: bool) -> u32
+def rl_load_vertex_buffer(buffer: AnyPtrToConst, size: int, dynamic: bool) -> u32
 # Load a vertex buffer attribute
-def rl_load_vertex_buffer_element(buffer: Const[libs.c.VoidPtr], size: int, dynamic: bool) -> u32
+def rl_load_vertex_buffer_element(buffer: AnyPtrToConst, size: int, dynamic: bool) -> u32
 # Load a new attributes element buffer
 def rl_matrix_mode(mode: int) -> None
 # Choose the current matrix to be transformed
@@ -2265,14 +2265,14 @@ def rl_set_shader(id: u32, locs: Ptr[libs.c.CInt]) -> None
 # Set shader currently active (id and locations)
 def rl_set_texture(id: u32) -> None
 # Set current texture for render batch and check buffers limits
-def rl_set_uniform(loc_index: int, value: Const[libs.c.VoidPtr], uniform_type: int, count: int) -> None
+def rl_set_uniform(loc_index: int, value: AnyPtrToConst, uniform_type: int, count: int) -> None
 # Set shader value uniform
 def rl_set_uniform_matrix(loc_index: int, mat: raylib.Matrix) -> None
 # Set shader value matrix
 def rl_set_uniform_sampler(loc_index: int, texture_id: u32) -> None
 # Set shader value sampler
-def rl_set_vertex_attribute(index: u32, comp_size: int, type: int, normalized: bool, stride: int, pointer: Const[libs.c.VoidPtr]) -> None
-def rl_set_vertex_attribute_default(loc_index: int, value: Const[libs.c.VoidPtr], attrib_type: int, count: int) -> None
+def rl_set_vertex_attribute(index: u32, comp_size: int, type: int, normalized: bool, stride: int, pointer: AnyPtrToConst) -> None
+def rl_set_vertex_attribute_default(loc_index: int, value: AnyPtrToConst, attrib_type: int, count: int) -> None
 # Set vertex attribute default value
 def rl_set_vertex_attribute_divisor(index: u32, divisor: int) -> None
 def rl_tex_coord2f(x: float, y: float) -> None
@@ -2293,11 +2293,11 @@ def rl_unload_texture(id: u32) -> None
 # Unload texture from GPU memory
 def rl_unload_vertex_array(vao_id: u32) -> None
 def rl_unload_vertex_buffer(vbo_id: u32) -> None
-def rl_update_texture(id: u32, offset_x: int, offset_y: int, width: int, height: int, format: int, data: Const[libs.c.VoidPtr]) -> None
+def rl_update_texture(id: u32, offset_x: int, offset_y: int, width: int, height: int, format: int, data: AnyPtrToConst) -> None
 # Update GPU texture with new data
-def rl_update_vertex_buffer(buffer_id: u32, data: Const[libs.c.VoidPtr], data_size: int, offset: int) -> None
+def rl_update_vertex_buffer(buffer_id: u32, data: AnyPtrToConst, data_size: int, offset: int) -> None
 # Update GPU buffer with new data
-def rl_update_vertex_buffer_elements(id: u32, data: Const[libs.c.VoidPtr], data_size: int, offset: int) -> None
+def rl_update_vertex_buffer_elements(id: u32, data: AnyPtrToConst, data_size: int, offset: int) -> None
 # Update vertex buffer elements with new data
 def rl_vertex2f(x: float, y: float) -> None
 # Define one vertex (position) - 2 float
@@ -2722,7 +2722,7 @@ def gui_grid(bounds: raylib.Rectangle, text: str, spacing: float, subdivs: int) 
 # Grid control, returns mouse cell position
 def gui_group_box(bounds: raylib.Rectangle, text: str) -> None
 # Group Box control with text name
-def gui_icon_text(icon_id: int, text: str) -> Const[libs.c.CStr]
+def gui_icon_text(icon_id: int, text: str) -> Ptr[Const[libs.c.CChar]]
 # Get text with icon id prepended (if supported)
 def gui_is_locked() -> bool
 # Check if gui is locked (global state)
@@ -2734,7 +2734,7 @@ def gui_line(bounds: raylib.Rectangle, text: str) -> None
 # Line separator control, could contain text
 def gui_list_view(bounds: raylib.Rectangle, text: str, scroll_index: Ptr[libs.c.CInt], active: int) -> int
 # List View control, returns selected list item index
-def gui_list_view_ex(bounds: raylib.Rectangle, text: Const[Ptr[Ptr[libs.c.CChar]]], count: int, focus: Ptr[libs.c.CInt], scroll_index: Ptr[libs.c.CInt], active: int) -> int
+def gui_list_view_ex(bounds: raylib.Rectangle, text: Ptr[Ptr[Const[libs.c.CChar]]], count: int, focus: Ptr[libs.c.CInt], scroll_index: Ptr[libs.c.CInt], active: int) -> int
 # List View with extended parameters
 def gui_load_style(file_name: str) -> None
 # Load style file over global style variable (.rgs)
@@ -2912,14 +2912,26 @@ def wrap(value: float, min: float, max: float) -> float
 ## raylib.utils
 ---
 ```yaksha
+class Data
+# Arbitary data (void*)
 def clear() -> None
 # Clear background with RAYWHITE colour
 def cos_deg(x: float) -> float
+def is_desktop() -> bool
+# Are we running in raylib in desktop
+def is_web() -> bool
+# Are we running in raylib WASM/Web
 def lerp_color(a: raylib.Color, b: raylib.Color, fraction: float) -> raylib.Color
 def pi() -> float
 # Get approximate PI value
 def remap(x: float, a: float, b: float, c: float, d: float) -> float
 # Map x to be from 'a to b' range to 'c to d' range
+def run_game_loop(fps: int, data: Data) -> int
+# Run def game_step(d: utils.Data) in a loop
+# Warning! this assumes you have def game_step(d: utils.Data) present in code
+# Warning! game_step def must be present in same file as main()
+# See wind_tree_gs.yaka for a sample of how to use this.
+# Use only if you run into slowness with standard while loop
 def sin_deg(x: float) -> float
 def tan_deg(x: float) -> float
 def todeg(radians: float) -> float

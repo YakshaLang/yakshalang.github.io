@@ -13,6 +13,64 @@ def version() -> str
 # (Note: this is hardcoded)
 ```
 ---
+## libs.argparse
+---
+```yaksha
+ARGPARSE_DEFAULT: Const[int]
+# Default behaviour of argparse
+ARGPARSE_IGNORE_UNKNOWN_ARGS: Const[int]
+# Ignore unknown arguments
+ARGPARSE_STOP_AT_NON_AND_IGNORE_UNKNWON: Const[int]
+# Do both stopping at unknown options and ignoring unknown arguments
+ARGPARSE_STOP_AT_NON_OPTION: Const[int]
+# Stop at non option
+class ArgParse
+# Arg parse state object
+class ArgParseRemainder
+# Remaining arguments after parsing given arguments: 
+    argc: int
+    remainder: Array[str]
+class ArgParseWrapper
+# Argument parser wrapper: 
+    state: ArgParse
+class Option
+# An argparse option
+# These objects are deleted when del_argparse() is called
+# However, Array[Option] is not
+def del_argparse(object: ArgParseWrapper) -> None
+# Delete arg parser
+def del_remainder(a: ArgParseRemainder) -> None
+# Delete given argparse remainder object
+def new(options: Array[Option], usages: Array[str]) -> ArgParseWrapper
+# Initialize a new argument parser
+# Note: options array last element must be opt_end()
+def new_ex(options: Array[Option], usages: Array[str], flag: int) -> ArgParseWrapper
+# Initialize a new argument parser (with flags)
+# Note: options array last element must be opt_end()
+def opt_boolean(short: str, large: str, result: Ptr[int], help: str) -> Option
+# create a boolean option
+def opt_end() -> Option
+# End of options
+def opt_float(short: str, large: str, result: Ptr[f32], help: str) -> Option
+# create a float option
+def opt_group(name: str) -> Option
+# Create a command group here
+def opt_help() -> Option
+# Help option
+def opt_integer(short: str, large: str, result: Ptr[int], help: str) -> Option
+# create an integer option
+def opt_string(short: str, large: str, result: Ptr[libs.c.CStr], help: str) -> Option
+# create a boolean option
+def parse(argp: ArgParse, arguments: Array[str]) -> ArgParseRemainder
+# Parse given arguments with given argparser object
+# Any remaining values are returned
+# You need to delete the remainder with del_argparse_remainder()
+def set_description(argp: ArgParse, description: str, epilog: str) -> None
+# Set description for help message
+def usage(argp: ArgParse) -> None
+# Disaplay usage
+```
+---
 ## libs.c
 ---
 ```yaksha
@@ -24,12 +82,16 @@ class CInt
 class CLong
 class CShort
 class CStr
+# A char* string
 class CUChar
 class CUInt
 class CULong
 class CUShort
 class Size
+# size_t in C code
 class VoidPtr
+# Any pointer type
+# void* in C
 def acos(x: CDouble) -> CDouble
 def asin(x: CDouble) -> CDouble
 def atan(x: CDouble) -> CDouble
@@ -69,26 +131,44 @@ def tanh(x: CDouble) -> CDouble
 ---
 ```yaksha
 BLUE: Const[int]
+# Apply blue foreground color
 CYAN: Const[int]
+# Apply cyan foreground color
 GREEN: Const[int]
+# Apply green foreground color
 PURPLE: Const[int]
+# Apply purple foreground color
 RED: Const[int]
+# Apply red foreground color
 REWIND: Const[int]
-# Use rewind with set_colour to stop applying colour
+# Use rewind with set_color to stop applying any color
 WHITE: Const[int]
+# Apply white foreground color
 YELLOW: Const[int]
+# Apply yellow foreground color
 def blue(x: str) -> None
+# Print text in console, in blue color
 def clear() -> None
-def colour_print(colour: int, x: str) -> None
-# Print in given colour and then rewind
+# Clear console
+def color_print(color: int, x: str) -> None
+# Print in given color and then rewind
 def cyan(x: str) -> None
+# Print text in console, in cyan color
 def getch() -> int
+# Get a single character / key press
+# Can be used as a pause
 def green(x: str) -> None
+# Print text in console, in green color
 def purple(x: str) -> None
+# Print text in console, in purple color
 def red(x: str) -> None
-def set_colour(c: int) -> None
+# Print text in console, in red color
+def set_color(c: int) -> None
+# Set given color
 def white(x: str) -> None
+# Print text in console, in white color
 def yellow(x: str) -> None
+# Print text in console, in yellow color
 ```
 ---
 ## libs.fileformats.ini
@@ -102,6 +182,7 @@ def from_str(ini_data: str) -> Ini
 # Parse INI file from given string data
 def get(object: Ini, section: str, property: str) -> str
 # Get a property in given section
+# Empty string is returned if we cannot find the section
 ```
 ---
 ## libs.fileformats.toml
@@ -119,7 +200,7 @@ def bool_at(x: TomlArray, pos: int) -> bool
 def bool_at_default(x: TomlArray, pos: int, default: bool) -> bool
 # Get bool from array at location or given default
 def del_table(x: Table) -> None
-# Delete a table
+# Delete a table. Note that you do not need to delete child tables
 def from_str(x: str) -> Table
 # Parse to a TOML Table from given string
 def get_array(x: Table, name: str) -> TomlArray
@@ -163,28 +244,6 @@ def writefile(fname: str, data: str) -> bool
 # Write a file
 ```
 ---
-## libs.mpc
----
-```yaksha
-class Ast: 
-    tag: libs.c.CStr
-    contents: libs.c.CStr
-    children: Array[Ast]
-    children_num: int
-class Mpc
-class Result: 
-    output: Ast
-def ast_print(r: Result) -> None
-def cleanup(a: int, v: Mpc) -> None
-def del_ast(r: Result) -> None
-def del_err(r: Result) -> None
-def err_print(r: Result) -> None
-def mpca_lang(a: int, b: str, v: Mpc) -> None
-def new(a: str) -> Mpc
-def new_result() -> Result
-def parse(a: str, b: str, v: Mpc, r: Result) -> bool
-```
----
 ## libs.numbers
 ---
 ```yaksha
@@ -194,67 +253,64 @@ def cstr2i(a: libs.c.CStr) -> int
 # Convert a c-string to an integer
 def d2cdbl(a: f64) -> libs.c.CDouble
 # f64 (double precision) to c.CDouble
-def d2f(a: float) -> f64
-# float/f32 (single precision) to f64 (double precision)
+def d2f(a: f64) -> float
+# f64 (double precision) to float/f32 (single precision)
 # Warning: precision might be lost/truncated
 def d2i(a: f64) -> int
 # f64 (double precision) to int/i32
 # Warning: value is truncated
 def d2uu(a: f64) -> u64
-# int/i32 to a u64
 def f2d(a: float) -> f64
 # float/f32 (single precision) to f64 (double precision)
 def f2i(a: float) -> int
-# f64 (double precision) to int/i32
+# f32 (single precision) to int/i32
 # Warning: value is truncated
 def f2uu(a: float) -> u64
-# int/i32 to a u64
 def i2d(a: int) -> f64
 # int/i32 to f64 (double precision)
 def i2f(a: int) -> float
-# int/i32 to f64 (double precision)
+# int/i32 to f32 (single precision)
+def i2s(a: int) -> str
 def i2u(a: int) -> u32
-# int/i32 to a u64
 def i2uu(a: int) -> u64
-# int/i32 to a u64
 def u2i(a: u32) -> int
-# int/i32 to a u64
 def uu2d(a: u64) -> f64
-# int/i32 to a u64
 def uu2f(a: u64) -> float
-# int/i32 to a u64
 def uu2i(a: u64) -> int
-# int/i32 to a u64
 ```
 ---
 ## libs.os
 ---
 ```yaksha
-class ProcessResult: 
-    ok: bool
-    output: str
-    return_code: int
-class arguments
+class Arguments
 # UTF-8 converted arguments and argument count
 # Do not delete, Do not modify: 
     argc: int
     argv: Array[str]
+class ProcessResult
+# Results of run() execution
+# Must be deleted: 
+    ok: bool
+    output: str
+    return_code: int
 def cwd() -> str
 # Get current working directory, or empty string (if failed) on return
 def del_process_result(pr: ProcessResult) -> None
+# Delete process result object
 def exe() -> str
 # Get exe file path, or empty string (if failed) on return
 def exe_path() -> str
 # Get exe directory path, or empty string (if failed) on return
-def get_args() -> arguments
+def get_args() -> Arguments
 # Get arguments
 def getenv(name: str) -> str
 # Get environment variable, empty if not found or error
 def is_macos() -> bool
-# Are we running macOS?
+# Are we running MacOS?
 def is_windows() -> bool
 # Are we running Windows?
 def run(args: Array[str]) -> ProcessResult
+# Run give [process, arg1, arg2] command line
 def which(binary: str) -> str
 # Try to find full path to binary in $PATH, no need .exe for windows
 # If we cannot find in $PATH, This will fallback to current path and exe path as well
@@ -323,6 +379,8 @@ def random_between(a: f64, b: f64) -> f64
 def random_betweenf(a: float, b: float) -> float
 # Get a random value between a and b (crypto unsafe)
 def random_u64() -> u64
+# Random unsigned 64bit
+# Uses rand() (crypto unsafe)
 def randomf() -> float
 # Get a random value between 0 - 1 (crypto unsafe)
 def set_seed(seed: u64) -> None
@@ -332,20 +390,19 @@ def set_seed(seed: u64) -> None
 ## libs.strings
 ---
 ```yaksha
-class Utf8IterateState
-# Iterator state for UTF-8 iteration
-# See the codepoint for current character: 
-    step_size: int
-    codepoint: int
 def contains(haystack: str, needle: str) -> bool
 # Does the string needle contain in string haystack?
+def cut_from(a: str, position: int) -> str
+# Cut a string from given position
 def del_cstr(a: libs.c.CStr) -> None
 # Delete a native c-string created from other other functions (calls free)
-def del_iter(s: Utf8IterateState) -> None
-# Delete the iterator object after done
 def del_str(a: libs.c.CStr) -> None
 # Delete a normal string that was cast as a c-str with to_cstr
 # You only need to use this if CStr was cast from standard str
+def endswith(a: str, b: str) -> bool
+# Does string a ends with string b
+def find_char(value: str, ch: int) -> int
+# Find first occurance of given character
 def from_cstr(a: libs.c.CStr) -> str
 # Create a string from CStr
 def from_cstrlen(a: libs.c.CStr, length: int) -> str
@@ -363,18 +420,23 @@ def isempty(s: str) -> bool
 # Is this string empty?
 def isempty_cstr(s: libs.c.CStr) -> bool
 # Is an empty CStr?
-def iterate(s: Utf8IterateState) -> bool
-# Go to next character
-# Returns false if nothing to read or we ran out of length of string
-def new_iter(s: str) -> Utf8IterateState
-# Create a new iterator from given string
+def lpad(a: str, count: int) -> str
+# Pad string to left to ensure string length is large or equal to count
+def mid(a: str, position: int, number: int) -> str
+# Cut a string from given position for number characters
+# Returns empty() if input is invalid
+def null_cstr() -> libs.c.CStr
 def ord(s: str) -> int
 # Get first byte of string
 def ord_cstr(s: libs.c.CStr) -> int
 # Get first byte of CStr
+def rpad(a: str, count: int) -> str
+# Pad string to right to ensure string length is large or equal to count
 def set_cstr(s: libs.c.CStr, pos: int, v: int) -> None
 # Set a byte to given CStr position
 # Warning: Does not do a length check
+def spaces(count: int) -> str
+# Get a spaces only string of given count
 def split(value: str, sep: str) -> Array[str]
 # Split a string to a string array
 def startswith(a: str, b: str) -> bool
@@ -390,8 +452,12 @@ def valid_cstr(s: libs.c.CStr) -> bool
 ```yaksha
 def del_str_array(sa: Array[str]) -> None
 # Delete a string array by deleting individual string objects and array itself
+def dup(sa: Array[str]) -> Array[str]
+# Duplicate given array to a new array
+# Both new array and string copies are created
 def extend(a: Array[str], b: Array[str]) -> Array[str]
 # Copy all strings from b to a and return a
+# Warning! You must assign this back to a (as 'a' might be reallocated to a new address)
 def join(values: Array[str], sep: str) -> str
 # Join given string array with given separator and return a single string
 def new(count: int, s: str) -> Array[str]
@@ -425,5 +491,129 @@ def prepend(buf: StringBuffer, v: str) -> None
 # Prepend a string to string buffer
 def to_str(buf: StringBuffer) -> str
 # Get a new string out of string buffer
+```
+---
+## libs.strings.utf8
+---
+```yaksha
+class Utf8IterateState
+# Iterator state for UTF-8 iteration
+# See the codepoint for current character: 
+    step_size: int
+    codepoint: int
+def del_iter(s: Utf8IterateState) -> None
+# Delete the iterator object after done
+def iterate(s: Utf8IterateState) -> bool
+# Go to next character
+# Returns false if nothing to read or we ran out of length of string
+def new_iter(s: str) -> Utf8IterateState
+# Create a new iterator from given string
+```
+---
+## libs.thread
+---
+```yaksha
+BUSY: Const[int]
+# The requested operation failed because a tesource requested by a test and return function is already in use
+ERROR: Const[int]
+# The requested operation failed
+NOMEM: Const[int]
+# The requested operation failed because it was unable to allocate memory
+SLEEP_SUCCES: Const[int]
+# Sleep is successful
+SUCCESS: Const[int]
+# The requested operation succeeded
+TIMEOUT: Const[int]
+# The time specified in the call was reached without acquiring the requested resource
+class Data
+# Any data
+class Thread
+# Thread Object
+def create(thr: Ptr[Thread], func: Function[In[Data], Out[int]]) -> int
+# Create a thread with None data. Otherwise same as create_with_data()
+def create_with_data(thr: Ptr[Thread], func: Function[In[Data], Out[int]], data: Data) -> int
+# Create a new thread with given reference to Thread and a function that takes Data and return int
+def current() -> Thread
+# Get current thread object
+def detach(thr: Thread) -> int
+def equal(thr1: Thread, thr2: Thread) -> int
+# Are these two equal?
+def exit(res: int) -> None
+# Exit current thread giving result value
+def join(thr: Thread) -> int
+def join_with_result(thr: Thread, res: Ptr[int]) -> int
+def sleep(seconds: int) -> int
+# Sleep for given seconds
+# SLEEP_SUCCES is returned if successful
+def sleep_ex(duration: Ptr[libs.timespec.TimeSpec], remainder: Ptr[libs.timespec.TimeSpec]) -> int
+# remainder - this parameter will hold the remaining time until time_point upon return
+# SLEEP_SUCCES is returned if successful
+def yield() -> None
+```
+---
+## libs.thread.condition
+---
+```yaksha
+class Condition
+# Condition Object
+def broadcast(cnd: Ptr[Condition]) -> int
+def destroy(cnd: Ptr[Condition]) -> None
+def init(cnd: Ptr[Condition]) -> int
+def signal(cnd: Ptr[Condition]) -> int
+def timed_wait(cnd: Ptr[Condition], mtx: Ptr[libs.thread.mutex.Mutex], ts: Ptr[libs.timespec.TimeSpec]) -> int
+def wait(cnd: Ptr[Condition], mtx: Ptr[libs.thread.mutex.Mutex]) -> int
+```
+---
+## libs.thread.mutex
+---
+```yaksha
+PLAIN: Const[int]
+RECURSIVE: Const[int]
+TIMED: Const[int]
+class Mutex
+# Mutex Object
+def destroy(mtx: Ptr[Mutex]) -> None
+def init(mtx: Ptr[Mutex], type: int) -> int
+def lock(mtx: Ptr[Mutex]) -> int
+def trylock(mtx: Ptr[Mutex]) -> int
+def unlock(mtx: Ptr[Mutex]) -> int
+```
+---
+## libs.thread.tss
+---
+```yaksha
+class Key
+# Key to access/create thread specific storage
+# Declare a variable and use with getref() when calling create()
+def create(key: Ptr[Key]) -> int
+def create_with_deleter(key: Ptr[Key], deleter: Function[In[libs.thread.Data], Out]) -> int
+def del_data(key: Key) -> None
+def get(key: Key) -> libs.thread.Data
+def set(key: Key, data: libs.thread.Data) -> int
+```
+---
+## libs.timespec
+---
+```yaksha
+class TimeSpec
+def add_nanoseconds(a: Ptr[TimeSpec], n: i64) -> None
+def add_seconds(a: Ptr[TimeSpec], n: int) -> None
+def compare_ex(a: Ptr[TimeSpec], b: Ptr[TimeSpec]) -> i64
+def create() -> TimeSpec
+def create_ex(seconds: int) -> TimeSpec
+def equal(a: TimeSpec, b: TimeSpec) -> bool
+# is a == b
+def get_nanoseconds(t: TimeSpec) -> i64
+def get_seconds(t: TimeSpec) -> int
+def get_utc_now(t: Ptr[TimeSpec]) -> bool
+# Load UTC now into given pointer
+# If successful True is returned
+def greater(a: TimeSpec, b: TimeSpec) -> bool
+# is a > b ?
+def in_future(seconds: int) -> TimeSpec
+def in_future_ex(seconds: int, nanoseconds: i64) -> TimeSpec
+def lessser(a: TimeSpec, b: TimeSpec) -> bool
+# is a < b ?
+def now() -> TimeSpec
 ```
 ---
