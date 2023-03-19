@@ -273,6 +273,8 @@ def i2f(a: int) -> float
 def i2s(a: int) -> str
 def i2u(a: int) -> u32
 def i2uu(a: int) -> u64
+def s2i(s: str) -> int
+# Convert a str to integer
 def u2i(a: u32) -> int
 def uu2d(a: u64) -> f64
 def uu2f(a: u64) -> float
@@ -318,6 +320,18 @@ def which(binary: str) -> str
 # Example find zig compiler path:
 # 
 # os.which("zig")
+```
+---
+## libs.os.cpu
+---
+```yaksha
+class Cpu
+# Extracted CPU information: 
+    n_processors: int
+    n_processors_max: int
+    is_guess: bool
+def info() -> Cpu
+# Extract CPU information
 ```
 ---
 ## libs.os.path
@@ -525,14 +539,12 @@ SUCCESS: Const[int]
 # The requested operation succeeded
 TIMEOUT: Const[int]
 # The time specified in the call was reached without acquiring the requested resource
-class Data
-# Any data
 class Thread
 # Thread Object
-def create(thr: Ptr[Thread], func: Function[In[Data], Out[int]]) -> int
+def create(thr: Ptr[Thread], func: Function[In[AnyPtr], Out[int]]) -> int
 # Create a thread with None data. Otherwise same as create_with_data()
-def create_with_data(thr: Ptr[Thread], func: Function[In[Data], Out[int]], data: Data) -> int
-# Create a new thread with given reference to Thread and a function that takes Data and return int
+def create_with_data(thr: Ptr[Thread], func: Function[In[AnyPtr], Out[int]], data: AnyPtr) -> int
+# Create a new thread with given reference to Thread and a function that takes AnyPtr and return int
 def current() -> Thread
 # Get current thread object
 def detach(thr: Thread) -> int
@@ -579,6 +591,52 @@ def trylock(mtx: Ptr[Mutex]) -> int
 def unlock(mtx: Ptr[Mutex]) -> int
 ```
 ---
+## libs.thread.pool
+---
+```yaksha
+ERROR_INVALID: Const[int]
+ERROR_LOCK_FAILURE: Const[int]
+ERROR_QUEUE_FULL: Const[int]
+ERROR_SHUTDOWN: Const[int]
+ERROR_THREAD_FAILURE: Const[int]
+GRACEFUL_SHUTDOWN: Const[int]
+# We are waiting for tasks to be completed
+IMMEDIATE_SHUTDOWN: Const[int]
+# Default (shutdown all threads forcefully) and close the pool
+MAX_QUEUE_SIZE: Const[u32]
+# Maximum queue size for thread pool
+MAX_THREAD_SIZE: Const[u8]
+# Maximum threads we can create is 64
+NO_SHUTDOWN: Const[int]
+# Not going to shutdown
+SUCCESS: Const[int]
+class ThreadPool
+# Thread pool object: 
+    lock: libs.thread.mutex.Mutex
+    notify: libs.thread.condition.Condition
+    threads: Array[libs.thread.Thread]
+    queue: Array[Tuple[Function[In[AnyPtr], Out], AnyPtr]]
+    thread_count: int
+    queue_size: int
+    head: int
+    tail: int
+    count: int
+    shutdown: int
+    started: int
+def add(tpool: ThreadPool, func: Function[In[AnyPtr], Out], arg: AnyPtr) -> int
+# Add given task to the thread pool to be executed
+# returns SUCCESS if successful
+def create(thread_count: u8, queue_size: u32) -> ThreadPool
+# Create a new thread pool with given thread count and queue size
+# On success ThreadPool is returned else, it should be equal to None
+def destroy(tpool: ThreadPool, graceful: bool) -> int
+# Attempt to destroy thread pool, if SUCCESS is returned pool is deallocated as well
+def internal_del_pool(tpool: ThreadPool) -> int
+# Clean up thread pool data
+def internal_tpool_work(tpool_obj: AnyPtr) -> int
+# Perform work as a thread in the managed thread pool
+```
+---
 ## libs.thread.tss
 ---
 ```yaksha
@@ -586,10 +644,12 @@ class Key
 # Key to access/create thread specific storage
 # Declare a variable and use with getref() when calling create()
 def create(key: Ptr[Key]) -> int
-def create_with_deleter(key: Ptr[Key], deleter: Function[In[libs.thread.Data], Out]) -> int
+# Create with no auto deletion
+def create_with_deleter(key: Ptr[Key], deleter: Function[In[AnyPtr], Out]) -> int
+# Create TSS with a custom deleter function
 def del_data(key: Key) -> None
-def get(key: Key) -> libs.thread.Data
-def set(key: Key, data: libs.thread.Data) -> int
+def get(key: Key) -> AnyPtr
+def set(key: Key, data: AnyPtr) -> int
 ```
 ---
 ## libs.timespec

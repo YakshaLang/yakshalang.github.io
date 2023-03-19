@@ -2918,9 +2918,11 @@ def clear() -> None
 # Clear background with RAYWHITE colour
 def cos_deg(x: float) -> float
 def is_desktop() -> bool
-# Are we running in raylib in desktop
+# Are we running in raylib in desktop?
+def is_hot_reload() -> bool
+# Are we running in raylib with hot reload?
 def is_web() -> bool
-# Are we running in raylib WASM/Web
+# Are we running in raylib WASM/Web?
 def lerp_color(a: raylib.Color, b: raylib.Color, fraction: float) -> raylib.Color
 def pi() -> float
 # Get approximate PI value

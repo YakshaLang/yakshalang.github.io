@@ -135,6 +135,12 @@ body {
     height: 17.15rem;
 }
 
+.header__icon,
+.header__text {
+  vertical-align: middle;
+  display: inline-block;
+}
+
 /* END OF HEADER SECTION */
 
 /********************************************************/
@@ -157,6 +163,30 @@ body {
     border: none;
     border-radius: 10rem;
     cursor: pointer;
+}
+
+.program__tab--link-1 {
+    background-color: var(--color-primary);
+    color: var(--color-bg-primary);
+    text-decoration: none;
+}
+
+.program__tab--link-2 {
+    background-color: var(--color-secondary);
+    color: var(--color-bg-primary);
+    text-decoration: none;
+}
+
+.program__tab--link-1:hover {
+    background-color: var(--color-primary-lighter);
+    color: var(--color-tertiary);
+    text-decoration: none;
+}
+
+.program__tab--link-2:hover {
+    background-color: var(--color-secondary-lighter);
+    color: var(--color-tertiary);
+    text-decoration: none;
 }
 
 .program__tab--1 {
