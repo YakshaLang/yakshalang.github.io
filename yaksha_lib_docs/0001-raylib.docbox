@@ -17,7 +17,9 @@ BLEND_ALPHA: Const[int]
 BLEND_ALPHA_PREMULTIPLY: Const[int]
 # Blend premultiplied textures considering alpha
 BLEND_CUSTOM: Const[int]
-# Blend textures using custom src/dst factors (use rlSetBlendMode())
+# Blend textures using custom src/dst factors (use rlSetBlendFactors())
+BLEND_CUSTOM_SEPARATE: Const[int]
+# Blend textures using custom rgb/alpha separate src/dst factors (use rlSetBlendFactorsSeparate())
 BLEND_MULTIPLIED: Const[int]
 # Blend textures multiplying colors
 BLEND_SUBTRACT_COLORS: Const[int]
@@ -43,11 +45,11 @@ CUBEMAP_LAYOUT_CROSS_FOUR_BY_THREE: Const[int]
 CUBEMAP_LAYOUT_CROSS_THREE_BY_FOUR: Const[int]
 # Layout is defined by a 3x4 cross with cubemap faces
 CUBEMAP_LAYOUT_LINE_HORIZONTAL: Const[int]
-# Layout is defined by an horizontal line with faces
+# Layout is defined by a horizontal line with faces
 CUBEMAP_LAYOUT_LINE_VERTICAL: Const[int]
 # Layout is defined by a vertical line with faces
 CUBEMAP_LAYOUT_PANORAMA: Const[int]
-# Layout is defined by a panorama image (equirectangular map)
+# Layout is defined by a panorama image (equirrectangular map)
 FLAG_FULLSCREEN_MODE: Const[int]
 # Set to run program in fullscreen
 FLAG_INTERLACED_HINT: Const[int]
@@ -417,7 +419,7 @@ MOUSE_BUTTON_BACK: Const[int]
 MOUSE_BUTTON_EXTRA: Const[int]
 # Mouse button extra (advanced mouse device)
 MOUSE_BUTTON_FORWARD: Const[int]
-# Mouse button fordward (advanced mouse device)
+# Mouse button forward (advanced mouse device)
 MOUSE_BUTTON_LEFT: Const[int]
 # Mouse button left
 MOUSE_BUTTON_MIDDLE: Const[int]
@@ -439,7 +441,7 @@ MOUSE_CURSOR_NOT_ALLOWED: Const[int]
 MOUSE_CURSOR_POINTING_HAND: Const[int]
 # Pointing hand cursor
 MOUSE_CURSOR_RESIZE_ALL: Const[int]
-# The omni-directional resize/move cursor shape
+# The omnidirectional resize/move cursor shape
 MOUSE_CURSOR_RESIZE_EW: Const[int]
 # Horizontal resize/move arrow shape
 MOUSE_CURSOR_RESIZE_NESW: Const[int]
@@ -664,7 +666,7 @@ class MaterialMap
     color: Color
     value: float
 class Matrix
-# Matrix, 4x4 components, column major, OpenGL style, right handed: 
+# Matrix, 4x4 components, column major, OpenGL style, right-handed: 
     m0: float
     m4: float
     m8: float
@@ -764,7 +766,7 @@ class TextureCubemap
     mipmaps: libs.c.CInt
     format: libs.c.CInt
 class Transform
-# Transform, vectex transformation data: 
+# Transform, vertex transformation data: 
     translation: Vector3
     rotation: Quaternion
     scale: Vector3
@@ -834,6 +836,8 @@ def check_collision_point_circle(point: Vector2, center: Vector2, radius: float)
 # Check if point is inside circle
 def check_collision_point_line(point: Vector2, p1: Vector2, p2: Vector2, threshold: int) -> bool
 # Check if point belongs to line created between two points [p1] and [p2] with defined margin in pixels [threshold]
+def check_collision_point_poly(point: Vector2, points: Ptr[Vector2], point_count: int) -> bool
+# Check if point is within a polygon described by array of vertices
 def check_collision_point_rec(point: Vector2, rec: Rectangle) -> bool
 # Check if point is inside rectangle
 def check_collision_point_triangle(point: Vector2, p1: Vector2, p2: Vector2, p3: Vector2) -> bool
@@ -850,7 +854,7 @@ def close_audio_device() -> None
 # Close the audio device and context
 def close_window() -> None
 # Close window and unload OpenGL context
-def codepoint_to_utf8(codepoint: int, byte_size: Ptr[libs.c.CInt]) -> Ptr[Const[libs.c.CChar]]
+def codepoint_to_utf8(codepoint: int, utf8_size: Ptr[libs.c.CInt]) -> Ptr[Const[libs.c.CChar]]
 # Encode one codepoint into UTF-8 byte array (array length returned as parameter)
 def color(r: int, g: int, b: int, a: int) -> Color
 # Factory function for: Color
@@ -858,12 +862,18 @@ def color_alpha(p_color: Color, alpha: float) -> Color
 # Get color with alpha applied, alpha goes from 0.0f to 1.0f
 def color_alpha_blend(dst: Color, src: Color, tint: Color) -> Color
 # Get src alpha-blended into dst color with tint
+def color_brightness(p_color: Color, factor: float) -> Color
+# Get color with brightness correction, brightness factor goes from -1.0f to 1.0f
+def color_contrast(p_color: Color, contrast: float) -> Color
+# Get color with contrast correction, contrast values between -1.0f and 1.0f
 def color_from_hsv(hue: float, saturation: float, value: float) -> Color
 # Get a Color from HSV values, hue [0..360], saturation/value [0..1]
 def color_from_normalized(normalized: Vector4) -> Color
 # Get Color from normalized values [0..1]
 def color_normalize(p_color: Color) -> Vector4
 # Get Color normalized as float [0..1]
+def color_tint(p_color: Color, tint: Color) -> Color
+# Get color multiplied with another color
 def color_to_hsv(p_color: Color) -> Vector3
 # Get HSV values for a Color, hue [0..360], saturation/value [0..1]
 def color_to_int(p_color: Color) -> int
@@ -888,6 +898,10 @@ def draw_billboard_rec(p_camera: Camera, p_texture: Texture2D, source: Rectangle
 # Draw a billboard texture defined by source
 def draw_bounding_box(box: BoundingBox, p_color: Color) -> None
 # Draw bounding box (wires)
+def draw_capsule(start_pos: Vector3, end_pos: Vector3, radius: float, slices: int, rings: int, p_color: Color) -> None
+# Draw a capsule with the center of its sphere caps at startPos and endPos
+def draw_capsule_wires(start_pos: Vector3, end_pos: Vector3, radius: float, slices: int, rings: int, p_color: Color) -> None
+# Draw capsule wireframe with the center of its sphere caps at startPos and endPos
 def draw_circle(center_x: int, center_y: int, radius: float, p_color: Color) -> None
 # Draw a color-filled circle
 def draw_circle_3d(center: Vector3, radius: float, rotation_axis: Vector3, rotation_angle: float, p_color: Color) -> None
@@ -904,10 +918,6 @@ def draw_circle_v(center: Vector2, radius: float, p_color: Color) -> None
 # Draw a color-filled circle (Vector version)
 def draw_cube(position: Vector3, width: float, height: float, length: float, p_color: Color) -> None
 # Draw cube
-def draw_cube_texture(p_texture: Texture2D, position: Vector3, width: float, height: float, length: float, p_color: Color) -> None
-# Draw cube textured
-def draw_cube_texture_rec(p_texture: Texture2D, source: Rectangle, position: Vector3, width: float, height: float, length: float, p_color: Color) -> None
-# Draw cube with a region of a texture
 def draw_cube_v(position: Vector3, size: Vector3, p_color: Color) -> None
 # Draw cube (Vector version)
 def draw_cube_wires(position: Vector3, width: float, height: float, length: float, p_color: Color) -> None
@@ -1022,16 +1032,10 @@ def draw_texture_ex(p_texture: Texture2D, position: Vector2, rotation: float, sc
 # Draw a Texture2D with extended parameters
 def draw_texture_n_patch(p_texture: Texture2D, p_n_patch_info: NPatchInfo, dest: Rectangle, origin: Vector2, rotation: float, tint: Color) -> None
 # Draws a texture (or part of it) that stretches or shrinks nicely
-def draw_texture_poly(p_texture: Texture2D, center: Vector2, points: Ptr[Vector2], texcoords: Ptr[Vector2], point_count: int, tint: Color) -> None
-# Draw a textured polygon
 def draw_texture_pro(p_texture: Texture2D, source: Rectangle, dest: Rectangle, origin: Vector2, rotation: float, tint: Color) -> None
 # Draw a part of a texture defined by a rectangle with 'pro' parameters
-def draw_texture_quad(p_texture: Texture2D, tiling: Vector2, offset: Vector2, quad: Rectangle, tint: Color) -> None
-# Draw texture quad with tiling and offset parameters
 def draw_texture_rec(p_texture: Texture2D, source: Rectangle, position: Vector2, tint: Color) -> None
 # Draw a part of a texture defined by a rectangle
-def draw_texture_tiled(p_texture: Texture2D, source: Rectangle, dest: Rectangle, origin: Vector2, rotation: float, scale: float, tint: Color) -> None
-# Draw part of a texture (defined by a rectangle) with rotation and scale tiled into dest.
 def draw_texture_v(p_texture: Texture2D, position: Vector2, tint: Color) -> None
 # Draw a Texture2D with position defined as Vector2
 def draw_triangle(v1: Vector2, v2: Vector2, v3: Vector2, p_color: Color) -> None
@@ -1068,7 +1072,7 @@ def end_texture_mode() -> None
 # Ends drawing to render texture
 def end_vr_stereo_mode() -> None
 # End stereo rendering (requires VR simulator)
-def export_data_as_code(data: str, size: u32, file_name: str) -> bool
+def export_data_as_code(data: Ptr[Const[libs.c.CUChar]], size: u32, file_name: str) -> bool
 # Export data to code (.h), returns true on success
 def export_font_as_code(p_font: Font, file_name: str) -> bool
 # Export font as code file, returns true on success
@@ -1102,6 +1106,10 @@ def gen_image_gradient_radial(width: int, height: int, density: float, inner: Co
 # Generate image: radial gradient
 def gen_image_gradient_v(width: int, height: int, top: Color, bottom: Color) -> Image
 # Generate image: vertical gradient
+def gen_image_perlin_noise(width: int, height: int, offset_x: int, offset_y: int, scale: float) -> Image
+# Generate image: perlin noise
+def gen_image_text(width: int, height: int, text: str) -> Image
+# Generate image: grayscale image from text data
 def gen_image_white_noise(width: int, height: int, factor: float) -> Image
 # Generate image: white noise
 def gen_mesh_cone(radius: float, height: float, slices: int) -> Mesh
@@ -1140,10 +1148,14 @@ def get_char_pressed() -> int
 # Get char pressed (unicode), call it multiple times for chars queued, returns 0 when the queue is empty
 def get_clipboard_text() -> Ptr[Const[libs.c.CChar]]
 # Get clipboard text content
-def get_codepoint(text: str, bytes_processed: Ptr[libs.c.CInt]) -> int
+def get_codepoint(text: str, codepoint_size: Ptr[libs.c.CInt]) -> int
 # Get next codepoint in a UTF-8 encoded string, 0x3f('?') is returned on failure
 def get_codepoint_count(text: str) -> int
 # Get total number of codepoints in a UTF-8 encoded string
+def get_codepoint_next(text: str, codepoint_size: Ptr[libs.c.CInt]) -> int
+# Get next codepoint in a UTF-8 encoded string, 0x3f('?') is returned on failure
+def get_codepoint_previous(text: str, codepoint_size: Ptr[libs.c.CInt]) -> int
+# Get previous codepoint in a UTF-8 encoded string, 0x3f('?') is returned on failure
 def get_collision_rec(rec1: Rectangle, rec2: Rectangle) -> Rectangle
 # Get collision rectangle for two rectangles collision
 def get_color(hex_value: u32) -> Color
@@ -1238,7 +1250,7 @@ def get_music_time_length(p_music: Music) -> float
 # Get music time length (in seconds)
 def get_music_time_played(p_music: Music) -> float
 # Get current music time played (in seconds)
-def get_pixel_color(src_ptr: libs.c.VoidPtr, format: int) -> Color
+def get_pixel_color(src_ptr: AnyPtr, format: int) -> Color
 # Get Color from a source pixel pointer of certain format
 def get_pixel_data_size(width: int, height: int, format: int) -> int
 # Get pixel data size in bytes for certain format
@@ -1270,8 +1282,6 @@ def get_shader_location(shader: Shader, uniform_name: str) -> int
 # Get shader uniform location
 def get_shader_location_attrib(shader: Shader, attrib_name: str) -> int
 # Get shader attribute location
-def get_sounds_playing() -> int
-# Get number of sounds playing in the multichannel
 def get_time() -> f64
 # Get elapsed time in seconds since InitWindow()
 def get_touch_point_count() -> int
@@ -1284,7 +1294,7 @@ def get_touch_x() -> int
 # Get touch position X for touch point 0 (relative to screen size)
 def get_touch_y() -> int
 # Get touch position Y for touch point 0 (relative to screen size)
-def get_window_handle() -> libs.c.VoidPtr
+def get_window_handle() -> AnyPtr
 # Get native window handle
 def get_window_position() -> Vector2
 # Get window position XY on monitor
@@ -1302,7 +1312,7 @@ def glyph_info(value: int, offset_x: int, offset_y: int, advance_x: int, p_image
 # Factory function for: GlyphInfo
 def hide_cursor() -> None
 # Hides cursor
-def image(data: libs.c.VoidPtr, width: int, height: int, mipmaps: int, format: int) -> Image
+def image(data: AnyPtr, width: int, height: int, mipmaps: int, format: int) -> Image
 # Factory function for: Image
 def image_alpha_clear(p_image: Ptr[Image], p_color: Color, threshold: float) -> None
 # Clear alpha channel to desired color
@@ -1312,6 +1322,8 @@ def image_alpha_mask(p_image: Ptr[Image], alpha_mask: Image) -> None
 # Apply alpha mask to image
 def image_alpha_premultiply(p_image: Ptr[Image]) -> None
 # Premultiply alpha channel
+def image_blur_gaussian(p_image: Ptr[Image], blur_size: int) -> None
+# Apply Gaussian blur using a box blur approximation
 def image_clear_background(dst: Ptr[Image], p_color: Color) -> None
 # Clear image background with given color
 def image_color_brightness(p_image: Ptr[Image], brightness: int) -> None
@@ -1335,9 +1347,13 @@ def image_dither(p_image: Ptr[Image], r_bpp: int, g_bpp: int, b_bpp: int, a_bpp:
 def image_draw(dst: Ptr[Image], src: Image, src_rec: Rectangle, dst_rec: Rectangle, tint: Color) -> None
 # Draw a source image within a destination image (tint applied to source)
 def image_draw_circle(dst: Ptr[Image], center_x: int, center_y: int, radius: int, p_color: Color) -> None
-# Draw circle within an image
+# Draw a filled circle within an image
+def image_draw_circle_lines(dst: Ptr[Image], center_x: int, center_y: int, radius: int, p_color: Color) -> None
+# Draw circle outline within an image
+def image_draw_circle_lines_v(dst: Ptr[Image], center: Vector2, radius: int, p_color: Color) -> None
+# Draw circle outline within an image (Vector version)
 def image_draw_circle_v(dst: Ptr[Image], center: Vector2, radius: int, p_color: Color) -> None
-# Draw circle within an image (Vector version)
+# Draw a filled circle within an image (Vector version)
 def image_draw_line(dst: Ptr[Image], start_pos_x: int, start_pos_y: int, end_pos_x: int, end_pos_y: int, p_color: Color) -> None
 # Draw line within an image
 def image_draw_line_v(dst: Ptr[Image], start: Vector2, end: Vector2, p_color: Color) -> None
@@ -1394,6 +1410,8 @@ def is_audio_stream_playing(stream: AudioStream) -> bool
 # Check if audio stream is playing
 def is_audio_stream_processed(stream: AudioStream) -> bool
 # Check if any audio stream buffers requires refill
+def is_audio_stream_ready(stream: AudioStream) -> bool
+# Checks if an audio stream is ready
 def is_cursor_hidden() -> bool
 # Check if cursor is not visible
 def is_cursor_on_screen() -> bool
@@ -1402,6 +1420,8 @@ def is_file_dropped() -> bool
 # Check if a file has been dropped into window
 def is_file_extension(file_name: str, ext: str) -> bool
 # Check file extension (including point: .png, .wav)
+def is_font_ready(p_font: Font) -> bool
+# Check if a font is ready
 def is_gamepad_available(gamepad: int) -> bool
 # Check if a gamepad is available
 def is_gamepad_button_down(gamepad: int, button: int) -> bool
@@ -1414,6 +1434,8 @@ def is_gamepad_button_up(gamepad: int, button: int) -> bool
 # Check if a gamepad button is NOT being pressed
 def is_gesture_detected(gesture: int) -> bool
 # Check if a gesture have been detected
+def is_image_ready(p_image: Image) -> bool
+# Check if an image is ready
 def is_key_down(key: int) -> bool
 # Check if a key is being pressed
 def is_key_pressed(key: int) -> bool
@@ -1422,8 +1444,12 @@ def is_key_released(key: int) -> bool
 # Check if a key has been released once
 def is_key_up(key: int) -> bool
 # Check if a key is NOT being pressed
+def is_material_ready(material: Material) -> bool
+# Check if a material is ready
 def is_model_animation_valid(model: Model, anim: ModelAnimation) -> bool
 # Check model animation skeleton match
+def is_model_ready(model: Model) -> bool
+# Check if a model is ready
 def is_mouse_button_down(button: int) -> bool
 # Check if a mouse button is being pressed
 def is_mouse_button_pressed(button: int) -> bool
@@ -1432,12 +1458,24 @@ def is_mouse_button_released(button: int) -> bool
 # Check if a mouse button has been released once
 def is_mouse_button_up(button: int) -> bool
 # Check if a mouse button is NOT being pressed
+def is_music_ready(p_music: Music) -> bool
+# Checks if a music stream is ready
 def is_music_stream_playing(p_music: Music) -> bool
 # Check if music is playing
 def is_path_file(path: str) -> bool
 # Check if a given path is a file or a directory
+def is_render_texture_ready(target: RenderTexture2D) -> bool
+# Check if a render texture is ready
+def is_shader_ready(shader: Shader) -> bool
+# Check if a shader is ready
 def is_sound_playing(p_sound: Sound) -> bool
 # Check if a sound is currently playing
+def is_sound_ready(p_sound: Sound) -> bool
+# Checks if a sound is ready
+def is_texture_ready(p_texture: Texture2D) -> bool
+# Check if a texture is ready
+def is_wave_ready(p_wave: Wave) -> bool
+# Checks if wave data is ready
 def is_window_focused() -> bool
 # Check if window is currently focused (only PLATFORM_DESKTOP)
 def is_window_fullscreen() -> bool
@@ -1524,6 +1562,8 @@ def load_texture_cubemap(p_image: Image, layout: int) -> TextureCubemap
 # Load cubemap from image, multiple image cubemap layouts supported
 def load_texture_from_image(p_image: Image) -> Texture2D
 # Load texture from image data
+def load_utf8(codepoints: Ptr[Const[libs.c.CInt]], length: int) -> libs.c.CStr
+# Load UTF-8 text encoded from codepoints array
 def load_vr_stereo_config(device: VrDeviceInfo) -> VrStereoConfig
 # Load VR stereo config for VR simulator device parameters
 def load_wave(file_name: str) -> Wave
@@ -1542,15 +1582,15 @@ def measure_text(text: str, font_size: int) -> int
 # Measure string width for default font
 def measure_text_ex(p_font: Font, text: str, font_size: float, spacing: float) -> Vector2
 # Measure string size for Font
-def mem_alloc(size: int) -> libs.c.VoidPtr
+def mem_alloc(size: u32) -> AnyPtr
 # Internal memory allocator
-def mem_free(ptr: libs.c.VoidPtr) -> None
+def mem_free(ptr: AnyPtr) -> None
 # Internal memory free
-def mem_realloc(ptr: libs.c.VoidPtr, size: int) -> libs.c.VoidPtr
+def mem_realloc(ptr: AnyPtr, size: u32) -> AnyPtr
 # Internal memory reallocator
 def minimize_window() -> None
 # Set window state: minimized, if resizable (only PLATFORM_DESKTOP)
-def music(stream: AudioStream, frame_count: u32, looping: bool, ctx_type: int, ctx_data: libs.c.VoidPtr) -> Music
+def music(stream: AudioStream, frame_count: u32, looping: bool, ctx_type: int, ctx_data: AnyPtr) -> Music
 # Factory function for: Music
 def n_patch_info(source: Rectangle, left: int, top: int, right: int, bottom: int, layout: int) -> NPatchInfo
 # Factory function for: NPatchInfo
@@ -1568,8 +1608,6 @@ def play_music_stream(p_music: Music) -> None
 # Start music playing
 def play_sound(p_sound: Sound) -> None
 # Play a sound
-def play_sound_multi(p_sound: Sound) -> None
-# Play a sound (using multichannel buffer pool)
 def poll_input_events() -> None
 # Register all input events
 def quaternion(x: float, y: float, z: float, w: float) -> Quaternion
@@ -1592,7 +1630,7 @@ def resume_music_stream(p_music: Music) -> None
 # Resume playing paused music
 def resume_sound(p_sound: Sound) -> None
 # Resume a paused sound
-def save_file_data(file_name: str, data: libs.c.VoidPtr, bytes_to_write: u32) -> bool
+def save_file_data(file_name: str, data: AnyPtr, bytes_to_write: u32) -> bool
 # Save data to file from byte array (write), returns true on success
 def save_file_text(file_name: str, text: str) -> bool
 # Save text data to file (write), string must be '\0' terminated, returns true on success
@@ -1606,16 +1644,6 @@ def set_audio_stream_pitch(stream: AudioStream, pitch: float) -> None
 # Set pitch for audio stream (1.0 is base level)
 def set_audio_stream_volume(stream: AudioStream, volume: float) -> None
 # Set volume for audio stream (1.0 is max level)
-def set_camera_alt_control(key_alt: int) -> None
-# Set camera alt key to combine with mouse movement (free camera)
-def set_camera_mode(p_camera: Camera, mode: int) -> None
-# Set camera mode (multiple camera modes available)
-def set_camera_move_controls(key_front: int, key_back: int, key_right: int, key_left: int, key_up: int, key_down: int) -> None
-# Set camera move controls (1st person and 3rd person cameras)
-def set_camera_pan_control(key_pan: int) -> None
-# Set camera pan key to combine with mouse movement (free camera)
-def set_camera_smooth_zoom_control(key_smooth_zoom: int) -> None
-# Set camera smooth zoom key to combine with mouse (free camera)
 def set_clipboard_text(text: str) -> None
 # Set clipboard text content
 def set_config_flags(flags: u32) -> None
@@ -1646,7 +1674,7 @@ def set_music_pitch(p_music: Music, pitch: float) -> None
 # Set pitch for a music (1.0 is base level)
 def set_music_volume(p_music: Music, volume: float) -> None
 # Set volume for music (1.0 is max level)
-def set_pixel_color(dst_ptr: libs.c.VoidPtr, p_color: Color, format: int) -> None
+def set_pixel_color(dst_ptr: AnyPtr, p_color: Color, format: int) -> None
 # Set color formatted into destination pixel pointer
 def set_random_seed(seed: u32) -> None
 # Set the seed for the random number generator
@@ -1675,7 +1703,9 @@ def set_texture_wrap(p_texture: Texture2D, wrap: int) -> None
 def set_trace_log_level(log_level: int) -> None
 # Set the current threshold (minimum) log level
 def set_window_icon(p_image: Image) -> None
-# Set icon for window (only PLATFORM_DESKTOP)
+# Set icon for window (single image, RGBA 32bit, only PLATFORM_DESKTOP)
+def set_window_icons(images: Ptr[Image], count: int) -> None
+# Set icon for window (multiple images, RGBA 32bit, only PLATFORM_DESKTOP)
 def set_window_min_size(width: int, height: int) -> None
 # Set window minimum dimensions (for FLAG_WINDOW_RESIZABLE)
 def set_window_monitor(monitor: int) -> None
@@ -1700,16 +1730,12 @@ def stop_music_stream(p_music: Music) -> None
 # Stop music playing
 def stop_sound(p_sound: Sound) -> None
 # Stop playing a sound
-def stop_sound_multi() -> None
-# Stop any sound playing (using multichannel buffer pool)
 def swap_screen_buffer() -> None
 # Swap back buffer with front buffer (screen drawing)
 def take_screenshot(file_name: str) -> None
 # Takes a screenshot of current screen (filename extension defines format)
 def text_append(text: str, append: str, position: Ptr[libs.c.CInt]) -> None
 # Append text at specific position and move cursor!
-def text_codepoints_to_utf8(codepoints: Ptr[Const[libs.c.CInt]], length: int) -> libs.c.CStr
-# Encode text as codepoints array into UTF-8 text string (WARNING: memory must be freed!)
 def text_copy(dst: str, src: str) -> int
 # Copy one string to another, returns bytes copied
 def text_find_index(text: str, find: str) -> int
@@ -1778,8 +1804,6 @@ def unload_model_animation(anim: ModelAnimation) -> None
 # Unload animation data
 def unload_model_animations(animations: Ptr[ModelAnimation], count: u32) -> None
 # Unload animation array data
-def unload_model_keep_meshes(model: Model) -> None
-# Unload model (but not meshes) from memory (RAM and/or VRAM)
 def unload_music_stream(p_music: Music) -> None
 # Unload music stream
 def unload_render_texture(target: RenderTexture2D) -> None
@@ -1790,6 +1814,8 @@ def unload_sound(p_sound: Sound) -> None
 # Unload sound
 def unload_texture(p_texture: Texture2D) -> None
 # Unload texture from GPU memory (VRAM)
+def unload_utf8(text: str) -> None
+# Unload UTF-8 text encoded from codepoints array
 def unload_vr_stereo_config(config: VrStereoConfig) -> None
 # Unload VR stereo config
 def unload_wave(p_wave: Wave) -> None
@@ -1798,8 +1824,10 @@ def unload_wave_samples(samples: Ptr[libs.c.CFloat]) -> None
 # Unload samples data loaded with LoadWaveSamples()
 def update_audio_stream(stream: AudioStream, data: AnyPtrToConst, frame_count: int) -> None
 # Update audio stream buffers with data
-def update_camera(p_camera: Ptr[Camera]) -> None
+def update_camera(p_camera: Ptr[Camera], mode: int) -> None
 # Update camera position for selected mode
+def update_camera_pro(p_camera: Ptr[Camera], movement: Vector3, rotation: Vector3, zoom: float) -> None
+# Update camera movement/rotation
 def update_mesh_buffer(mesh: Mesh, index: int, data: AnyPtrToConst, data_size: int, offset: int) -> None
 # Update mesh vertex data in GPU for a specific buffer index
 def update_model_animation(model: Model, anim: ModelAnimation, frame: int) -> None
@@ -1822,7 +1850,7 @@ def vector4(x: float, y: float, z: float, w: float) -> Vector4
 # Factory function for: Vector4
 def wait_time(seconds: f64) -> None
 # Wait for some time (halt program execution)
-def wave(frame_count: u32, sample_rate: u32, sample_size: u32, channels: u32, data: libs.c.VoidPtr) -> Wave
+def wave(frame_count: u32, sample_rate: u32, sample_size: u32, channels: u32, data: AnyPtr) -> Wave
 # Factory function for: Wave
 def wave_copy(p_wave: Wave) -> Wave
 # Copy a wave to a new wave
@@ -1837,29 +1865,42 @@ def window_should_close() -> bool
 ## raylib.gl
 ---
 ```yaksha
-OPENGL_11: Const[int]
-OPENGL_21: Const[int]
-OPENGL_33: Const[int]
-OPENGL_43: Const[int]
-OPENGL_ES_20: Const[int]
 RL_ATTACHMENT_COLOR_CHANNEL0: Const[int]
+# Framebuffer attachment type: color 0
 RL_ATTACHMENT_COLOR_CHANNEL1: Const[int]
+# Framebuffer attachment type: color 1
 RL_ATTACHMENT_COLOR_CHANNEL2: Const[int]
+# Framebuffer attachment type: color 2
 RL_ATTACHMENT_COLOR_CHANNEL3: Const[int]
+# Framebuffer attachment type: color 3
 RL_ATTACHMENT_COLOR_CHANNEL4: Const[int]
+# Framebuffer attachment type: color 4
 RL_ATTACHMENT_COLOR_CHANNEL5: Const[int]
+# Framebuffer attachment type: color 5
 RL_ATTACHMENT_COLOR_CHANNEL6: Const[int]
+# Framebuffer attachment type: color 6
 RL_ATTACHMENT_COLOR_CHANNEL7: Const[int]
+# Framebuffer attachment type: color 7
 RL_ATTACHMENT_CUBEMAP_NEGATIVE_X: Const[int]
+# Framebuffer texture attachment type: cubemap, -X side
 RL_ATTACHMENT_CUBEMAP_NEGATIVE_Y: Const[int]
+# Framebuffer texture attachment type: cubemap, -Y side
 RL_ATTACHMENT_CUBEMAP_NEGATIVE_Z: Const[int]
+# Framebuffer texture attachment type: cubemap, -Z side
 RL_ATTACHMENT_CUBEMAP_POSITIVE_X: Const[int]
+# Framebuffer texture attachment type: cubemap, +X side
 RL_ATTACHMENT_CUBEMAP_POSITIVE_Y: Const[int]
+# Framebuffer texture attachment type: cubemap, +Y side
 RL_ATTACHMENT_CUBEMAP_POSITIVE_Z: Const[int]
+# Framebuffer texture attachment type: cubemap, +Z side
 RL_ATTACHMENT_DEPTH: Const[int]
+# Framebuffer attachment type: depth
 RL_ATTACHMENT_RENDERBUFFER: Const[int]
+# Framebuffer texture attachment type: renderbuffer
 RL_ATTACHMENT_STENCIL: Const[int]
+# Framebuffer attachment type: stencil
 RL_ATTACHMENT_TEXTURE2D: Const[int]
+# Framebuffer texture attachment type: texture2d
 RL_BLEND_ADDITIVE: Const[int]
 # Blend textures adding colors
 RL_BLEND_ADD_COLORS: Const[int]
@@ -1870,10 +1911,14 @@ RL_BLEND_ALPHA_PREMULTIPLY: Const[int]
 # Blend premultiplied textures considering alpha
 RL_BLEND_CUSTOM: Const[int]
 # Blend textures using custom src/dst factors (use rlSetBlendFactors())
+RL_BLEND_CUSTOM_SEPARATE: Const[int]
+# Blend textures using custom src/dst factors (use rlSetBlendFactorsSeparate())
 RL_BLEND_MULTIPLIED: Const[int]
 # Blend textures multiplying colors
 RL_BLEND_SUBTRACT_COLORS: Const[int]
 # Blend textures subtracting colors (alternative)
+RL_CULL_FACE_BACK: Const[int]
+RL_CULL_FACE_FRONT: Const[int]
 RL_LOG_ALL: Const[int]
 # Display all logs
 RL_LOG_DEBUG: Const[int]
@@ -1890,6 +1935,16 @@ RL_LOG_TRACE: Const[int]
 # Trace logging, intended for internal use only
 RL_LOG_WARNING: Const[int]
 # Warning logging, used on recoverable failures
+RL_OPENGL_11: Const[int]
+# OpenGL 1.1
+RL_OPENGL_21: Const[int]
+# OpenGL 2.1 (GLSL 120)
+RL_OPENGL_33: Const[int]
+# OpenGL 3.3 (GLSL 330)
+RL_OPENGL_43: Const[int]
+# OpenGL 4.3 (using GLSL 330)
+RL_OPENGL_ES_20: Const[int]
+# OpenGL ES 2.0 (GLSL 100)
 RL_PIXELFORMAT_COMPRESSED_ASTC_4x4_RGBA: Const[int]
 # 8 bpp
 RL_PIXELFORMAT_COMPRESSED_ASTC_8x8_RGBA: Const[int]
@@ -2045,10 +2100,10 @@ def rl_active_texture_slot(slot: int) -> None
 # Select and active a texture slot
 def rl_begin(mode: int) -> None
 # Initialize drawing mode (how to organize vertex)
-def rl_bind_image_texture(id: u32, index: u32, format: u32, readonly: int) -> None
+def rl_bind_image_texture(id: u32, index: u32, format: int, readonly: bool) -> None
 # Bind image texture
 def rl_bind_shader_buffer(id: u32, index: u32) -> None
-# Copy SSBO buffer data
+# Bind SSBO buffer
 def rl_check_errors() -> None
 # Check and log OpenGL error codes
 def rl_check_render_batch_limit(v_count: int) -> bool
@@ -2066,7 +2121,11 @@ def rl_color4ub(r: int, g: int, b: int, a: int) -> None
 def rl_compile_shader(shader_code: str, type: int) -> u32
 # Compile custom shader and return shader id (type: RL_VERTEX_SHADER, RL_FRAGMENT_SHADER, RL_COMPUTE_SHADER)
 def rl_compute_shader_dispatch(group_x: u32, group_y: u32, group_z: u32) -> None
-# Dispatch compute shader (equivalent to *draw* for graphics pilepine)
+# Dispatch compute shader (equivalent to *draw* for graphics pipeline)
+def rl_copy_shader_buffer(dest_id: u32, src_id: u32, dest_offset: u32, src_offset: u32, count: u32) -> None
+# Copy SSBO data between buffers
+def rl_cubemap_parameters(id: u32, param: int, value: int) -> None
+# Set cubemap parameters (filter, wrap)
 def rl_disable_backface_culling() -> None
 # Disable backface culling
 def rl_disable_color_blend() -> None
@@ -2127,7 +2186,7 @@ def rl_enable_shader(id: u32) -> None
 # Enable shader program
 def rl_enable_smooth_lines() -> None
 # Enable line aliasing
-def rl_enable_state_pointer(vertex_attrib_type: int, buffer: libs.c.VoidPtr) -> None
+def rl_enable_state_pointer(vertex_attrib_type: int, buffer: AnyPtr) -> None
 # Enable attribute state pointer
 def rl_enable_stereo_render() -> None
 # Enable stereo rendering
@@ -2178,6 +2237,8 @@ def rl_get_matrix_view_offset_stereo(eye: int) -> raylib.Matrix
 # Get internal view offset matrix for stereo render (selected eye)
 def rl_get_pixel_format_name(format: u32) -> Ptr[Const[libs.c.CChar]]
 # Get name string for pixel format
+def rl_get_shader_buffer_size(id: u32) -> u32
+# Get SSBO buffer size
 def rl_get_shader_id_default() -> u32
 # Get default shader id
 def rl_get_shader_locs_default() -> Ptr[libs.c.CInt]
@@ -2194,7 +2255,7 @@ def rl_load_draw_cube() -> None
 # Load and draw a cube
 def rl_load_draw_quad() -> None
 # Load and draw a quad
-def rl_load_extensions(loader: libs.c.VoidPtr) -> None
+def rl_load_extensions(loader: AnyPtr) -> None
 # Load OpenGL extensions (loader function required)
 def rl_load_framebuffer(width: int, height: int) -> u32
 # Load an empty framebuffer
@@ -2202,6 +2263,8 @@ def rl_load_identity() -> None
 # Reset current matrix to identity matrix
 def rl_load_render_batch(num_buffers: int, buffer_elements: int) -> raylib.rlRenderBatch
 # Load a render batch system
+def rl_load_shader_buffer(size: u32, data: AnyPtrToConst, usage_hint: int) -> u32
+# Load shader storage buffer object (SSBO)
 def rl_load_shader_code(vs_code: str, fs_code: str) -> u32
 # Load shader from code strings
 def rl_load_shader_program(v_shader_id: u32, f_shader_id: u32) -> u32
@@ -2220,18 +2283,18 @@ def rl_load_vertex_buffer_element(buffer: AnyPtrToConst, size: int, dynamic: boo
 # Load a new attributes element buffer
 def rl_matrix_mode(mode: int) -> None
 # Choose the current matrix to be transformed
-def rl_mult_matrixf(matf: Ptr[libs.c.CFloat]) -> None
-# Multiply the current matrix by another matrix
 def rl_normal3f(x: float, y: float, z: float) -> None
 # Define one vertex (normal) - 3 float
 def rl_ortho(left: f64, right: f64, bottom: f64, top: f64, znear: f64, zfar: f64) -> None
 def rl_pop_matrix() -> None
-# Pop lattest inserted matrix from stack
+# Pop latest inserted matrix from stack
 def rl_push_matrix() -> None
 # Push the current matrix to stack
 def rl_read_screen_pixels(width: int, height: int) -> Ptr[libs.c.CUChar]
 # Read screen pixel data (color buffer)
-def rl_read_texture_pixels(id: u32, width: int, height: int, format: int) -> libs.c.VoidPtr
+def rl_read_shader_buffer(id: u32, dest: AnyPtr, count: u32, offset: u32) -> None
+# Read SSBO buffer data (GPU->CPU)
+def rl_read_texture_pixels(id: u32, width: int, height: int, format: int) -> AnyPtr
 # Read texture pixel data
 def rl_render_batch(buffer_count: int, current_buffer: int, vertex_buffer: Ptr[raylib.rlVertexBuffer], draws: Ptr[raylib.rlDrawCall], draw_counter: int, current_depth: float) -> rlRenderBatch
 # Factory function for: rlRenderBatch
@@ -2243,8 +2306,12 @@ def rl_scissor(x: int, y: int, width: int, height: int) -> None
 # Scissor test
 def rl_set_blend_factors(gl_src_factor: int, gl_dst_factor: int, gl_equation: int) -> None
 # Set blending mode factor and equation (using OpenGL factors)
+def rl_set_blend_factors_separate(gl_src_rgb: int, gl_dst_rgb: int, gl_src_alpha: int, gl_dst_alpha: int, gl_eq_rgb: int, gl_eq_alpha: int) -> None
+# Set blending mode factors and equations separately (using OpenGL factors)
 def rl_set_blend_mode(mode: int) -> None
 # Set blending mode
+def rl_set_cull_face(mode: int) -> None
+# Set face culling mode
 def rl_set_framebuffer_height(height: int) -> None
 # Set current framebuffer height
 def rl_set_framebuffer_width(width: int) -> None
@@ -2293,6 +2360,8 @@ def rl_unload_texture(id: u32) -> None
 # Unload texture from GPU memory
 def rl_unload_vertex_array(vao_id: u32) -> None
 def rl_unload_vertex_buffer(vbo_id: u32) -> None
+def rl_update_shader_buffer(id: u32, data: AnyPtrToConst, data_size: u32, offset: u32) -> None
+# Update SSBO buffer data
 def rl_update_texture(id: u32, offset_x: int, offset_y: int, width: int, height: int, format: int, data: AnyPtrToConst) -> None
 # Update GPU texture with new data
 def rl_update_vertex_buffer(buffer_id: u32, data: AnyPtrToConst, data_size: int, offset: int) -> None
@@ -2308,7 +2377,7 @@ def rl_vertex3f(x: float, y: float, z: float) -> None
 def rl_viewport(x: int, y: int, width: int, height: int) -> None
 # Set the viewport area
 def rlgl_close() -> None
-# De-inititialize rlgl (buffers, shaders, textures)
+# De-initialize rlgl (buffers, shaders, textures)
 def rlgl_init(width: int, height: int) -> None
 # Initialize rlgl (buffers, shaders, textures, states)
 ```
@@ -2357,19 +2426,6 @@ HUEBAR_SELECTOR_OVERFLOW: Const[int]
 HUEBAR_WIDTH: Const[int]
 # ColorPicker right hue bar width
 ICON_1UP: Const[int]
-ICON_206: Const[int]
-ICON_207: Const[int]
-ICON_208: Const[int]
-ICON_209: Const[int]
-ICON_210: Const[int]
-ICON_211: Const[int]
-ICON_212: Const[int]
-ICON_213: Const[int]
-ICON_214: Const[int]
-ICON_215: Const[int]
-ICON_216: Const[int]
-ICON_217: Const[int]
-ICON_218: Const[int]
 ICON_219: Const[int]
 ICON_220: Const[int]
 ICON_221: Const[int]
@@ -2439,14 +2495,19 @@ ICON_BOX_RIGHT: Const[int]
 ICON_BOX_TOP: Const[int]
 ICON_BOX_TOP_LEFT: Const[int]
 ICON_BOX_TOP_RIGHT: Const[int]
+ICON_BREAKPOINT_OFF: Const[int]
+ICON_BREAKPOINT_ON: Const[int]
 ICON_BRUSH_CLASSIC: Const[int]
 ICON_BRUSH_PAINTER: Const[int]
+ICON_BURGER_MENU: Const[int]
 ICON_CAMERA: Const[int]
+ICON_CASE_SENSITIVE: Const[int]
 ICON_CLOCK: Const[int]
 ICON_COIN: Const[int]
 ICON_COLOR_BUCKET: Const[int]
 ICON_COLOR_PICKER: Const[int]
 ICON_CORNER: Const[int]
+ICON_CPU: Const[int]
 ICON_CRACK: Const[int]
 ICON_CRACK_POINTS: Const[int]
 ICON_CROP: Const[int]
@@ -2481,6 +2542,7 @@ ICON_EXIT: Const[int]
 ICON_EXPLOSION: Const[int]
 ICON_EYE_OFF: Const[int]
 ICON_EYE_ON: Const[int]
+ICON_FILE: Const[int]
 ICON_FILETYPE_ALPHA: Const[int]
 ICON_FILETYPE_AUDIO: Const[int]
 ICON_FILETYPE_BINARY: Const[int]
@@ -2504,6 +2566,7 @@ ICON_FILTER: Const[int]
 ICON_FILTER_BILINEAR: Const[int]
 ICON_FILTER_POINT: Const[int]
 ICON_FILTER_TOP: Const[int]
+ICON_FOLDER: Const[int]
 ICON_FOLDER_ADD: Const[int]
 ICON_FOLDER_FILE_OPEN: Const[int]
 ICON_FOLDER_OPEN: Const[int]
@@ -2564,11 +2627,14 @@ ICON_POT: Const[int]
 ICON_PRINTER: Const[int]
 ICON_REDO: Const[int]
 ICON_REDO_FILL: Const[int]
+ICON_REG_EXP: Const[int]
 ICON_REPEAT: Const[int]
 ICON_REPEAT_FILL: Const[int]
 ICON_REREDO: Const[int]
 ICON_REREDO_FILL: Const[int]
 ICON_RESIZE: Const[int]
+ICON_RESTART: Const[int]
+ICON_ROM: Const[int]
 ICON_ROTATE: Const[int]
 ICON_ROTATE_FILL: Const[int]
 ICON_RUBBER: Const[int]
@@ -2579,6 +2645,9 @@ ICON_SHUFFLE_FILL: Const[int]
 ICON_SPECIAL: Const[int]
 ICON_SQUARE_TOGGLE: Const[int]
 ICON_STAR: Const[int]
+ICON_STEP_INTO: Const[int]
+ICON_STEP_OUT: Const[int]
+ICON_STEP_OVER: Const[int]
 ICON_SUITCASE: Const[int]
 ICON_SUITCASE_ZIP: Const[int]
 ICON_SYMMETRY: Const[int]
@@ -2683,10 +2752,6 @@ def gui_button(bounds: raylib.Rectangle, text: str) -> bool
 # Button control, returns true when clicked
 def gui_check_box(bounds: raylib.Rectangle, text: str, checked: bool) -> bool
 # Check Box control, returns true when active
-def gui_check_icon_pixel(icon_id: int, x: int, y: int) -> bool
-# Check icon pixel value
-def gui_clear_icon_pixel(icon_id: int, x: int, y: int) -> None
-# Clear icon pixel value
 def gui_color_bar_alpha(bounds: raylib.Rectangle, text: str, alpha: float) -> float
 # Color Bar Alpha control
 def gui_color_bar_hue(bounds: raylib.Rectangle, text: str, value: float) -> float
@@ -2699,6 +2764,8 @@ def gui_combo_box(bounds: raylib.Rectangle, text: str, active: int) -> int
 # Combo Box control, returns selected item index
 def gui_disable() -> None
 # Disable gui controls (global state)
+def gui_disable_tooltip() -> None
+# Disable gui tooltips (global state)
 def gui_draw_icon(icon_id: int, pos_x: int, pos_y: int, pixel_size: int, p_color: raylib.Color) -> None
 def gui_dropdown_box(bounds: raylib.Rectangle, text: str, active: Ptr[libs.c.CInt], edit_mode: bool) -> bool
 # Dropdown Box control, returns selected item
@@ -2706,14 +2773,14 @@ def gui_dummy_rec(bounds: raylib.Rectangle, text: str) -> None
 # Dummy control for placeholders
 def gui_enable() -> None
 # Enable gui controls (global state)
+def gui_enable_tooltip() -> None
+# Enable gui tooltips (global state)
 def gui_fade(alpha: float) -> None
 # Set gui controls alpha (global state), alpha goes from 0.0f to 1.0f
 def gui_get_font() -> raylib.Font
 # Get gui custom font (global state)
-def gui_get_icon_data(icon_id: int) -> Ptr[libs.c.CUInt]
-# Get icon bit data
 def gui_get_icons() -> Ptr[libs.c.CUInt]
-# Get full icons data pointer
+# Get raygui icons data pointer
 def gui_get_state() -> int
 # Get gui state (global state)
 def gui_get_style(control: int, property: int) -> int
@@ -2736,6 +2803,8 @@ def gui_list_view(bounds: raylib.Rectangle, text: str, scroll_index: Ptr[libs.c.
 # List View control, returns selected list item index
 def gui_list_view_ex(bounds: raylib.Rectangle, text: Ptr[Ptr[Const[libs.c.CChar]]], count: int, focus: Ptr[libs.c.CInt], scroll_index: Ptr[libs.c.CInt], active: int) -> int
 # List View with extended parameters
+def gui_load_icons(file_name: str, load_icons_name: bool) -> Ptr[Ptr[libs.c.CChar]]
+# Load raygui icons file (.rgi) into internal icons data
 def gui_load_style(file_name: str) -> None
 # Load style file over global style variable (.rgs)
 def gui_load_style_default() -> None
@@ -2752,16 +2821,14 @@ def gui_scroll_panel(bounds: raylib.Rectangle, text: str, content: raylib.Rectan
 # Scroll Panel control
 def gui_set_font(p_font: raylib.Font) -> None
 # Set gui custom font (global state)
-def gui_set_icon_data(icon_id: int, data: Ptr[libs.c.CUInt]) -> None
-# Set icon bit data
-def gui_set_icon_pixel(icon_id: int, x: int, y: int) -> None
-# Set icon pixel value
-def gui_set_icon_scale(scale: u32) -> None
-# Set icon scale (1 by default)
+def gui_set_icon_scale(scale: int) -> None
+# Set icon drawing size
 def gui_set_state(state: int) -> None
 # Set gui state (global state)
 def gui_set_style(control: int, property: int, value: int) -> None
 # Set one style property
+def gui_set_tooltip(tooltip: str) -> None
+# Set tooltip string
 def gui_slider(bounds: raylib.Rectangle, text_left: str, text_right: str, value: float, min_value: float, max_value: float) -> float
 # Slider control, returns selected value
 def gui_slider_bar(bounds: raylib.Rectangle, text_left: str, text_right: str, value: float, min_value: float, max_value: float) -> float
@@ -2772,6 +2839,8 @@ def gui_status_bar(bounds: raylib.Rectangle, text: str) -> None
 # Status Bar control, shows info text
 def gui_style_prop(control_id: int, property_id: int, property_value: u32) -> GuiStyleProp
 # Factory function for: GuiStyleProp
+def gui_tab_bar(bounds: raylib.Rectangle, text: Ptr[Ptr[Const[libs.c.CChar]]], count: int, active: Ptr[libs.c.CInt]) -> int
+# Tab Bar control, returns TAB to be closed or -1
 def gui_text_box(bounds: raylib.Rectangle, text: str, text_size: int, edit_mode: bool) -> bool
 # Text Box control, updates input text
 def gui_text_box_multi(bounds: raylib.Rectangle, text: str, text_size: int, edit_mode: bool) -> bool
@@ -2859,6 +2928,7 @@ def vector2_invert(v: raylib.Vector2) -> raylib.Vector2
 def vector2_length(v: raylib.Vector2) -> float
 def vector2_length_sqr(v: raylib.Vector2) -> float
 def vector2_lerp(v1: raylib.Vector2, v2: raylib.Vector2, amount: float) -> raylib.Vector2
+def vector2_line_angle(start: raylib.Vector2, end: raylib.Vector2) -> float
 def vector2_move_towards(v: raylib.Vector2, target: raylib.Vector2, max_distance: float) -> raylib.Vector2
 def vector2_multiply(v1: raylib.Vector2, v2: raylib.Vector2) -> raylib.Vector2
 def vector2_negate(v: raylib.Vector2) -> raylib.Vector2
