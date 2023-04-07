@@ -48,16 +48,16 @@ println(a)
 # Default integer type is i32
 a: int = 1       # datatype ✅ | literal ✅
 b: i32 = 2       # datatype ✅ | literal ✅
-c: i8 = 3i8      # datatype ✅ | literal ❌
-d: i16 = 4i16    # datatype ✅ | literal ❌
-e: i32 = 5i32    # datatype ✅ | literal ❌
-f: i64 = 6i64    # datatype ✅ | literal ❌
+c: i8 = 3i8      # datatype ✅ | literal ✅
+d: i16 = 4i16    # datatype ✅ | literal ✅
+e: i32 = 5i32    # datatype ✅ | literal ✅
+f: i64 = 6i64    # datatype ✅ | literal ✅
 
 # Unsigned
-g: u8 = 3u8      # datatype ✅ | literal ❌
-h: u16 = 4u16    # datatype ✅ | literal ❌
-i: u32 = 4u32    # datatype ✅ | literal ❌
-j: u64 = 5u64    # datatype ✅ | literal ❌
+g: u8 = 3u8      # datatype ✅ | literal ✅
+h: u16 = 4u16    # datatype ✅ | literal ✅
+i: u32 = 4u32    # datatype ✅ | literal ✅
+j: u64 = 5u64    # datatype ✅ | literal ✅
 ```
 ---
 ### Float types
@@ -379,28 +379,35 @@ def main() -> int:
 ---
 !!!<p><span class="yellow-status">in progress</span></p>
 ---
-* ✅ `print` - A `print` function will be introduced instead of `print` statement.
-* ✅ `println` - A `print` function that suffix a new line character.
-* ✅ `len` - Get length of strings and other data structures provided by the language.
-* ❌ `sizeof` - Size of structures or C data types.
-* ❌ `tostr` - If it is a string, copy is created. Floats are converted to 2 decimal places. 
-* ✅ `arrput` - Put item to an array.
-* ✅ `arrpop` - Remove last item from an array and return it.
-* ✅ `getref` - Get a pointer to given object.
-* ✅ `unref` - Dereference a pointer.
-* ✅ `charat` - Get a character at a specific location in string.
-* ✅ `shnew` - Initialize `Array[SMEntry[T]]` object .
-* ✅ `shput` - Put item to a `Array[SMEntry[T]]`.
-* ✅ `shget` - Get item from a `Array[SMEntry[T]]`.
-* ✅ `shgeti` - Get item index from a `Array[SMEntry[T]]` (-1 if not found).
-* ✅ `hmnew` - Initialize `Array[MEntry[T]]` object.
-* ✅ `hmput` - Put item to a `Array[MEntry[T]]`.
-* ✅ `hmget` - Get item from a `Array[MEntry[T]]`.
-* ✅ `hmgeti` - Get item index from a `Array[MEntry[T]]` (-1 if not found).
-* ❌ `reversed` - Reverse an array creating a new array. New array need to be deleted.
-* ❌ `sorted` - Sort an array creating a new array. New array need to be deleted.
-* ❌ `format` - String formatting.
-;Builtin functions may call different implementations in `C` based on input.
+* ✅ `print(primitive) -> None` - Print without a new line
+* ✅ `println(primitive) -> None` - Print + new line
+* ✅ `len(Array[T]) -> int` - Get length of arrays,maps
+* ✅ `arrput(Array[T], T) -> None` - Put item to an array
+* ✅ `arrpop(Array[T]) -> T` - Remove last item from an array and return it
+* ✅ `arrnew("T", int) -> Array[T]` - Create a new array of given size. (Uninitialized elements)
+* ✅ `arrsetcap(Array[T], int) -> None` - Set array capacity / grow memory. Does not affect length.
+* ✅ `arrsetlen(Array[T], int) -> None` - Set array length. Each element will be an uninitialized element.
+* ✅ `array("T", T...) -> Array[T]` - Create a new array from given elements
+* ✅ `getref(T) -> Ptr[T]` - Get a pointer to given object
+* ✅ `unref(Ptr[T]) -> T` - Dereference a pointer
+* ✅ `charat(str, int) -> int` - Get a character at a specific location in string
+* ✅ `shnew(Array[SMEntry[T]]) -> None` - Initialize Array[SMEntry[T]] object
+* ✅ `shput(Array[SMEntry[T]], str, T) -> None` - Put item to an Array[SMEntry[T]]
+* ✅ `shget(Array[SMEntry[T]], str) -> T` - Get item from an Array[SMEntry[T]]
+* ✅ `shgeti(Array[SMEntry[T]], str) -> int` - Get item index from an Array[SMEntry[T]] (-1 if not found)
+* ✅ `hmnew(Array[MEntry[K,T]]) -> None` - Initialize Array[MEntry[K,T]] object
+* ✅ `hmput(Array[MEntry[K,T]], K, T) -> None` - Put item to an Array[MEntry[K,T]]
+* ✅ `hmget(Array[MEntry[K,T]], K) -> T` - Get item from an Array[MEntry[K,T]]
+* ✅ `hmgeti(Array[MEntry[K,T]], K) -> int` - Get item index from an Array[MEntry[K,T]] (-1 if not found)
+* ✅ `cast("T", X) -> T` - Data type casting builtin
+* ✅ `qsort(Array[T],Function[In[Const[AnyPtrToConst],Const[AnyPtrToConst]],Out[int]]) -> bool` - Sort an array, returns True if successful
+* ✅ `iif(bool, T, T) -> T` - Ternary functionality
+* ✅ `foreach(Array[T],Function[In[T,V],Out[bool]],V) -> bool` - For each element in array execute given function
+* ✅ `countif(Array[T],Function[In[T,V],Out[bool]],V) -> int` - For each element in array count if function returns true
+* ✅ `filter(Array[T],Function[In[T,V],Out[bool]],V) -> Array[T]` - Create a new array with filtered elements based on return value of given function
+* ✅ `map(Array[T],Function[In[T,V],Out[K]],V) -> Array[K]` - Create a new array with result of given function
+* ✅ `binarydata("data") -> Const[Ptr[Const[u8]]]` - Create constant binary data (must pass in a string literal).\nReturns Const[Ptr[Const[u8]]] that does not need to be deleted.
+;Builtin functions may call different implementations based on input.
 ---
 ## Non primitive data types
 ---
