@@ -3,7 +3,7 @@
 ---
 Yaksha library uses multiple 3rd party libraries, set of python scripts and few other nuts and bolts to create library sources. 
 ---
-Core parts of runtime library functionaly starts with `yk__` or `YK__`.
+Core parts of runtime library functionality starts with `yk__` or `YK__`.
 Yaksha programming language preserves anything that starts with `yk__` or `YK__` while prefixing any other name with `yy__`. 
 ;This avoids collisions with C standard library functions or keywords.
 ---

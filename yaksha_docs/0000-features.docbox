@@ -9,7 +9,7 @@
 ---
 *String allocations and de-allocations are abstracted away, so strings are immutable and automatically deleted.
 *Assignment copy values and automatically delete previous value.
-*Strings are also copied everytime you create a new variable or pass it to a function or assign it to a container (object, array, etc).
+*Strings are also copied every time you create a new variable or pass it to a function or assign it to a container (object, array, etc).
 *It is not meant to be fast. It is meant to be easily usable.
 *At C code level `yk__sds` data structure will be used. (`yk__sds` is a `char*` with special header placed just before).
 *💀️ Managed strings are not deleted when used in arrays, maps, or objects. (This is intentional and not a bug.)

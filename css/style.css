@@ -208,6 +208,16 @@ hr {
     font-size: .8em
 }
 
+.red-warning {
+    display: block;
+    border: 1px solid #ff2323;
+    background: #000000;
+    color: #ff2323;
+    padding: 10px;
+    margin: auto 2px;
+    font-size: 1.3em
+}
+
 .green-status {
     display: inline-block;
     border: 1px solid #20ff56;
