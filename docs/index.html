@@ -48,6 +48,12 @@
             <li class="nav__bar__item">
                 <a class="nav__bar__link" href="/documentation.html">Docs</a>
             </li>
+            <li class="nav__bar__item">
+                <a class="nav__bar__link" href="/Tutorials">Tutorials</a>
+            </li>
+            <li class="nav__bar__item">
+                <a class="nav__bar__link" href="/YAMA">Proposals</a>
+            </li>
         </ul>
     </nav>
     <!--  Header text and gif  -->
@@ -60,7 +66,7 @@
             </h1>
             <h1>compiled to C99,</h1>
             <h4>
-                programming language with <span class="header__text__effect">Python-like</span>
+                programming language with <span class="header__text__effect">off-side rule</span>
                 syntax
             </h4>
         </div>
@@ -95,6 +101,23 @@
                 </svg>
             </span>
             <span class="header__text">Forum</span>
+        </a>
+        <a class="program__tab program__tab--link-2" href="https://discord.com/invite/SUsJu4PnwU">
+            <span class="header__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-discord" viewBox="0 0 16 16">
+                    <path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.052.052 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019Zm-8.198 7.307c-.789 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612Zm5.316 0c-.788 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612Z"/>
+                  </svg>
+            </span>
+            <span class="header__text">Discord</span>
+        </a>
+        <a class="program__tab program__tab--link-2" href="https://www.reddit.com/r/yakshalang/">
+            <span class="header__icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-reddit" viewBox="0 0 16 16">
+                    <path d="M6.167 8a.831.831 0 0 0-.83.83c0 .459.372.84.83.831a.831.831 0 0 0 0-1.661zm1.843 3.647c.315 0 1.403-.038 1.976-.611a.232.232 0 0 0 0-.306.213.213 0 0 0-.306 0c-.353.363-1.126.487-1.67.487-.545 0-1.308-.124-1.671-.487a.213.213 0 0 0-.306 0 .213.213 0 0 0 0 .306c.564.563 1.652.61 1.977.61zm.992-2.807c0 .458.373.83.831.83.458 0 .83-.381.83-.83a.831.831 0 0 0-1.66 0z"/>
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.828-1.165c-.315 0-.602.124-.812.325-.801-.573-1.9-.945-3.121-.993l.534-2.501 1.738.372a.83.83 0 1 0 .83-.869.83.83 0 0 0-.744.468l-1.938-.41a.203.203 0 0 0-.153.028.186.186 0 0 0-.086.134l-.592 2.788c-1.24.038-2.358.41-3.17.992-.21-.2-.496-.324-.81-.324a1.163 1.163 0 0 0-.478 2.224c-.02.115-.029.23-.029.353 0 1.795 2.091 3.256 4.669 3.256 2.577 0 4.668-1.451 4.668-3.256 0-.114-.01-.238-.029-.353.401-.181.688-.592.688-1.069 0-.65-.525-1.165-1.165-1.165z"/>
+                  </svg>
+            </span>
+            <span class="header__text">Reddit</span>
         </a>
     </div>
 </header>
@@ -136,75 +159,71 @@
             <details>
                 <summary>Click to see code sample</summary>
                 <br/>
-                <span class="green">import</span> <span class="blue">raylib</span> <span class="green">as</span> <span
-                    class="blue">rl</span><br/>
-                <span class="green">import</span> <span class="blue">raylib.utils</span><br/>
-                <span class="green">import</span> <span class="blue">libs.numbers</span> <span class="green">as</span>
-                <span class="blue">num</span><br/>
-                <span class="green">import</span> <span class="blue">libs.perlin</span><br/>
-                <span class="green">import</span> <span class="blue">libs.random</span><br/>
+                <span class="green">import</span> raylib <span class="green">as</span> rl<br/>
+                <span class="green">import</span> raylib<span class="purple">.</span>utils<br/>
+                <span class="green">import</span> libs<span class="purple">.</span>numbers <span class="green">as</span> num<br/>
+                <span class="green">import</span> libs<span class="purple">.</span>perlin<br/>
+                <span class="green">import</span> libs<span class="purple">.</span>random<br/>
                 <br/>
-                <span class="green">class</span> <span class="blue">State:</span><br/>
-                &emsp; width: <span class="green">float</span><br/>
-                &emsp; height: <span class="green">float</span><br/>
-                &emsp; angle: <span class="green">float</span><br/>
-                &emsp; frame_count: <span class="green">u64</span><br/>
-                &emsp; blue: rl.Color<br/>
-                &emsp; green: rl.Color<br/>
-                &emsp; color3: rl.Color<br/>
                 <br/>
-                <span class="green">def</span> <span class="blue">branch</span>(x: <span class="green">float</span>, y:
-                <span class="green">float</span>, length: <span class="green">float</span>, angle: <span class="green">float</span>,
-                s: State) -> <span class="green">None:</span><br/>
-                &emsp; <span class="green">if</span> length < 4.0f:<br/>
-                &emsp; &emsp; leaf_width: <span class="green">float</span> = random.random_betweenf(1.0f, 3.0f)<br/>
-                &emsp; &emsp; leaf_height: <span class="green">float</span> = random.random_betweenf(3.0f, 6.0f)<br/>
-                &emsp; &emsp; lerped_green: rl.Color = utils.lerp_color(s.green, s.blue, utils.remap(x, 0.0f, s.width,
-                0.0f, 1.0f) * 2.0f)<br/>
-                &emsp; &emsp; color: rl.Color = utils.lerp_color(lerped_green, s.color3, utils.remap(y, 0.0f, s.height,
-                0.0f, 1.0f) * 1.5f)<br/>
-                &emsp; &emsp; rl.draw_ellipse(num.f2i(x), num.f2i(y), leaf_height, leaf_width, color)<br/>
-                &emsp; &emsp; <span class="green">return</span><br/>
-                &emsp; wind: <span class="green">float</span> = utils.sin_deg(perlin.noise1df(num.uu2f(s.frame_count) /
-                50.0f)) * 100.0f * utils.sin_deg(num.uu2f(s.frame_count) / 2.0f)<br/>
-                &emsp; next_y: <span class="green">float</span> = y - length * utils.cos_deg(angle)<br/>
-                &emsp; next_x: <span class="green">float</span> = x + length * utils.sin_deg(angle)<br/>
-                &emsp; thick: <span class="green">float</span> = utils.remap(length, 0.0f, s.height / 4.0f, 2.0f,
-                6.0f)<br/>
-                &emsp; rl.draw_line_ex(rl.vector2(x, y), rl.vector2(next_x, next_y), thick, rl.color(152, 50, 1,
-                255))<br/>
-                &emsp; r1: <span class="green">float</span> = random.random_betweenf(0.3f, 0.9f)<br/>
-                &emsp; r2: <span class="green">float</span> = random.random_betweenf(0.5f, 0.8f)<br/>
-                &emsp; branch(next_x, next_y, (length * r2), angle + s.angle + wind * 10.0f, s)<br/>
-                &emsp; branch(next_x, next_y, (length * r1), angle - s.angle + wind * 10.0f, s)<br/>
+                <span class="green">class</span> State<span class="purple">:</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;width<span class="purple">:</span> float<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;height<span class="purple">:</span> float<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;angle<span class="purple">:</span> float<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;frame_count<span class="purple">:</span> u64<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;blue<span class="purple">:</span> rl<span class="purple">.</span>Color<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;green<span class="purple">:</span> rl<span class="purple">.</span>Color<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;color3<span class="purple">:</span> rl<span class="purple">.</span>Color<br/>
                 <br/>
-                <span class="green">def</span> <span class="blue">update_draw_frame</span>(s: State) -> <span
-                    class="green">None</span>:<br/>
-                &emsp; rl.clear_background(rl.color(255, 255, 255, 255))<br/>
-                &emsp; branch(s.width / 2.0f, s.height, s.height / 4.0f, 0.0f, s)<br/>
                 <br/>
-                <span class="green">def</span> <span class="blue">main</span>() -> <span class="green">int</span><br/>
-                &emsp; s: State = State()<br/>
-                &emsp; s.angle = random.random_betweenf(30.0f, 45.0f)<br/>
-                &emsp; s.width = 600.0f<br/>
-                &emsp; s.height = 600.0f<br/>
-                &emsp; s.frame_count = num.i2uu(0)<br/>
-                &emsp; s.blue = rl.color(0, 255, 214, 255)<br/>
-                &emsp; s.green = rl.color(0, 255, 0, 255)<br/>
-                &emsp; s.color3 = rl.color(255, 45, 156, 255)<br/>
-                &emsp; rl.init_window(num.f2i(s.width), num.f2i(s.height), <span class="brown">"Fractal Tree in the Wind"</span>)<br/>
-                &emsp; rl.set_target_fps(120)<br/>
-                &emsp; seed: <span class="green">u64</span> = random.init_random()<br/>
-                &emsp; <span class="green">while</span> <span class="purple">not</span> rl.window_should_close():<br/>
-                &emsp; &emsp; rl.begin_drawing()<br/>
-                &emsp; &emsp; update_draw_frame(s)<br/>
-                &emsp; &emsp; rl.draw_fps(0, 0)<br/>
-                &emsp; &emsp; rl.end_drawing()<br/>
-                &emsp; &emsp; s.frame_count = s.frame_count + num.i2uu(1)<br/>
-                &emsp; &emsp; random.set_seed(seed)<br/>
-                &emsp; rl.close_window()<br/>
-                &emsp; <span class="green">del</span> s<br/>
-                &emsp; <span class="green">return</span> 0
+                <span class="green">def</span> branch<span class="purple">(</span>x<span class="purple">:</span> float<span class="purple">,</span> y<span class="purple">:</span> float<span class="purple">,</span> length<span class="purple">:</span> float<span class="purple">,</span> angle<span class="purple">:</span> float<span class="purple">,</span> s<span class="purple">:</span> State<span class="purple">)</span> <span class="purple">-&gt;</span> <span class="green">None</span><span class="purple">:</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="green">if</span> length <span class="purple">&lt;</span> <span class="blue">4.0f</span><span class="purple">:</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;leaf_width <span class="purple">=</span> random<span class="purple">.</span>random_betweenf<span class="purple">(</span><span class="blue">1.0f</span><span class="purple">,</span> <span class="blue">3.0f</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;leaf_height <span class="purple">=</span> random<span class="purple">.</span>random_betweenf<span class="purple">(</span><span class="blue">3.0f</span><span class="purple">,</span> <span class="blue">6.0f</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lerped_green <span class="purple">=</span> utils<span class="purple">.</span>lerp_color<span class="purple">(</span>s<span class="purple">.</span>green<span class="purple">,</span> s<span class="purple">.</span>blue<span class="purple">,</span> utils<span class="purple">.</span>remap<span class="purple">(</span>x<span class="purple">,</span> <span class="blue">0.0f</span><span class="purple">,</span> s<span class="purple">.</span>width<span class="purple">,</span> <span class="blue">0.0f</span><span class="purple">,</span> <span class="blue">1.0f</span><span class="purple">)</span> <span class="purple">*</span> <span class="blue">2.0f</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;color <span class="purple">=</span> utils<span class="purple">.</span>lerp_color<span class="purple">(</span>lerped_green<span class="purple">,</span> s<span class="purple">.</span>color3<span class="purple">,</span> utils<span class="purple">.</span>remap<span class="purple">(</span>y<span class="purple">,</span> <span class="blue">0.0f</span><span class="purple">,</span> s<span class="purple">.</span>height<span class="purple">,</span> <span class="blue">0.0f</span><span class="purple">,</span> <span class="blue">1.0f</span><span class="purple">)</span> <span class="purple">*</span> <span class="blue">1.5f</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rl<span class="purple">.</span>draw_ellipse<span class="purple">(</span>num<span class="purple">.</span>f2i<span class="purple">(</span>x<span class="purple">)</span><span class="purple">,</span> num<span class="purple">.</span>f2i<span class="purple">(</span>y<span class="purple">)</span><span class="purple">,</span> leaf_height<span class="purple">,</span> leaf_width<span class="purple">,</span> color<span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="green">return</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;wind <span class="purple">=</span> utils<span class="purple">.</span>sin_deg<span class="purple">(</span>perlin<span class="purple">.</span>noise1df<span class="purple">(</span>num<span class="purple">.</span>uu2f<span class="purple">(</span>s<span class="purple">.</span>frame_count<span class="purple">)</span> <span class="purple">/</span> <span class="blue">50.0f</span><span class="purple">)</span><span class="purple">)</span> <span class="purple">*</span> <span class="blue">100.0f</span> <span class="purple">*</span> utils<span class="purple">.</span>sin_deg<span class="purple">(</span>num<span class="purple">.</span>uu2f<span class="purple">(</span>s<span class="purple">.</span>frame_count<span class="purple">)</span> <span class="purple">/</span> <span class="blue">2.0f</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;next_y <span class="purple">=</span> y <span class="purple">-</span> length <span class="purple">*</span> utils<span class="purple">.</span>cos_deg<span class="purple">(</span>angle<span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;next_x <span class="purple">=</span> x <span class="purple">+</span> length <span class="purple">*</span> utils<span class="purple">.</span>sin_deg<span class="purple">(</span>angle<span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;thick <span class="purple">=</span> utils<span class="purple">.</span>remap<span class="purple">(</span>length<span class="purple">,</span> <span class="blue">0.0f</span><span class="purple">,</span> s<span class="purple">.</span>height <span class="purple">/</span> <span class="blue">4.0f</span><span class="purple">,</span> <span class="blue">2.0f</span><span class="purple">,</span> <span class="blue">6.0f</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;rl<span class="purple">.</span>draw_line_ex<span class="purple">(</span>rl<span class="purple">.</span>vector2<span class="purple">(</span>x<span class="purple">,</span> y<span class="purple">)</span><span class="purple">,</span> rl<span class="purple">.</span>vector2<span class="purple">(</span>next_x<span class="purple">,</span> next_y<span class="purple">)</span><span class="purple">,</span> thick<span class="purple">,</span> rl<span class="purple">.</span>color<span class="purple">(</span><span class="blue">152</span><span class="purple">,</span> <span class="blue">50</span><span class="purple">,</span> <span class="blue">1</span><span class="purple">,</span> <span class="blue">255</span><span class="purple">)</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;r1 <span class="purple">=</span> random<span class="purple">.</span>random_betweenf<span class="purple">(</span><span class="blue">0.3f</span><span class="purple">,</span> <span class="blue">0.9f</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;r2 <span class="purple">=</span> random<span class="purple">.</span>random_betweenf<span class="purple">(</span><span class="blue">0.5f</span><span class="purple">,</span> <span class="blue">0.8f</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;branch<span class="purple">(</span>next_x<span class="purple">,</span> next_y<span class="purple">,</span> <span class="purple">(</span>length <span class="purple">*</span> r2<span class="purple">)</span><span class="purple">,</span> angle <span class="purple">+</span> s<span class="purple">.</span>angle <span class="purple">+</span> wind <span class="purple">*</span> <span class="blue">10.0f</span><span class="purple">,</span> s<span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;branch<span class="purple">(</span>next_x<span class="purple">,</span> next_y<span class="purple">,</span> <span class="purple">(</span>length <span class="purple">*</span> r1<span class="purple">)</span><span class="purple">,</span> angle <span class="purple">-</span> s<span class="purple">.</span>angle <span class="purple">+</span> wind <span class="purple">*</span> <span class="blue">10.0f</span><span class="purple">,</span> s<span class="purple">)</span><br/>
+                <br/>
+                <br/>
+                <span class="green">def</span> update_draw_frame<span class="purple">(</span>s<span class="purple">:</span> State<span class="purple">)</span> <span class="purple">-&gt;</span> <span class="green">None</span><span class="purple">:</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;rl<span class="purple">.</span>clear_background<span class="purple">(</span>rl<span class="purple">.</span>color<span class="purple">(</span><span class="blue">255</span><span class="purple">,</span> <span class="blue">255</span><span class="purple">,</span> <span class="blue">255</span><span class="purple">,</span> <span class="blue">255</span><span class="purple">)</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;branch<span class="purple">(</span>s<span class="purple">.</span>width <span class="purple">/</span> <span class="blue">2.0f</span><span class="purple">,</span> s<span class="purple">.</span>height<span class="purple">,</span> s<span class="purple">.</span>height <span class="purple">/</span> <span class="blue">4.0f</span><span class="purple">,</span> <span class="blue">0.0f</span><span class="purple">,</span> s<span class="purple">)</span><br/>
+                <br/>
+                <br/>
+                <span class="green">def</span> main<span class="purple">(</span><span class="purple">)</span> <span class="purple">-&gt;</span> int<span class="purple">:</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;s<span class="purple">:</span> State <span class="purple">=</span> State<span class="purple">(</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;s<span class="purple">.</span>angle <span class="purple">=</span> random<span class="purple">.</span>random_betweenf<span class="purple">(</span><span class="blue">30.0f</span><span class="purple">,</span> <span class="blue">45.0f</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;s<span class="purple">.</span>width <span class="purple">=</span> <span class="blue">600.0f</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;s<span class="purple">.</span>height <span class="purple">=</span> <span class="blue">600.0f</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;s<span class="purple">.</span>frame_count <span class="purple">=</span> <span class="blue">0u64</span>   <br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;s<span class="purple">.</span>blue <span class="purple">=</span> rl<span class="purple">.</span>color<span class="purple">(</span><span class="blue">0</span><span class="purple">,</span> <span class="blue">255</span><span class="purple">,</span> <span class="blue">214</span><span class="purple">,</span> <span class="blue">255</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;s<span class="purple">.</span>green <span class="purple">=</span> rl<span class="purple">.</span>color<span class="purple">(</span><span class="blue">0</span><span class="purple">,</span> <span class="blue">255</span><span class="purple">,</span> <span class="blue">0</span><span class="purple">,</span> <span class="blue">255</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;s<span class="purple">.</span>color3 <span class="purple">=</span> rl<span class="purple">.</span>color<span class="purple">(</span><span class="blue">255</span><span class="purple">,</span> <span class="blue">45</span><span class="purple">,</span> <span class="blue">156</span><span class="purple">,</span> <span class="blue">255</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;rl<span class="purple">.</span>init_window<span class="purple">(</span>num<span class="purple">.</span>f2i<span class="purple">(</span>s<span class="purple">.</span>width<span class="purple">)</span><span class="purple">,</span> num<span class="purple">.</span>f2i<span class="purple">(</span>s<span class="purple">.</span>height<span class="purple">)</span><span class="purple">,</span>  <span class="brown">&quot;Fractal&nbsp;Tree&nbsp;in&nbsp;the&nbsp;Wind&quot;</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;rl<span class="purple">.</span>set_target_fps<span class="purple">(</span><span class="blue">120</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;seed<span class="purple">:</span> u64 <span class="purple">=</span> random<span class="purple">.</span>init_random<span class="purple">(</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="green">while</span> <span class="green">not</span> rl<span class="purple">.</span>window_should_close<span class="purple">(</span><span class="purple">)</span><span class="purple">:</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rl<span class="purple">.</span>begin_drawing<span class="purple">(</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;update_draw_frame<span class="purple">(</span>s<span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rl<span class="purple">.</span>draw_fps<span class="purple">(</span><span class="blue">0</span><span class="purple">,</span> <span class="blue">0</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rl<span class="purple">.</span>end_drawing<span class="purple">(</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;s<span class="purple">.</span>frame_count <span class="purple">+=</span> <span class="blue">1u64</span>   <br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;random<span class="purple">.</span>set_seed<span class="purple">(</span>seed<span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;rl<span class="purple">.</span>close_window<span class="purple">(</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="green">del</span> s<br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="green">return</span> <span class="blue">0</span><br/>
+                <span class="purple"></span>
+
             </details>
         </div>
         <!--  Tab Contents 2  -->
@@ -221,24 +240,26 @@
             <details>
                 <summary>Click to see code sample</summary>
                 <br/>
-                <span class="green">import</span> <span class="blue">libs.console</span><br/>
+                <span class="green">import</span> libs<span class="purple">.</span>console<br/>
                 <br/>
-                <span class="green">def</span> <span class="blue">factorial</span>(x: <span class="green">int</span>) ->
-                <span class="green">int</span>:<br/>
-                &emsp; <span class="green">if</span> x <= 0:<br/>
-                &emsp; &emsp; <span class="green">return</span> 1<br/>
-                &emsp; <span class="green">return</span> x * factorial(x - 1)<br/>
                 <br/>
-                <span class="green">def</span> <span class="blue">main</span>() -> <span class="green">int</span><br/>
-                &emsp; a: <span class="green">int</span> = 0<br/>
-                &emsp; <span class="green">while</span> a < 10:<br/>
-                &emsp; &emsp; console.cyan(<span class="brown">"factorial"</span>)<br/>
-                &emsp; &emsp; console.red(<span class="brown">"("</span>)<br/>
-                &emsp; &emsp; <span class="green">print</span>(a)<br/>
-                &emsp; &emsp; console.red(<span class="brown">") = "</span>)<br/>
-                &emsp; &emsp; <span class="green">println</span>(factorial(a))<br/>
-                &emsp; &emsp; a = a + 1<br/>
-                &emsp; <span class="green">return</span> 0<br/>
+                <span class="green">def</span> factorial<span class="purple">(</span>x<span class="purple">:</span> int<span class="purple">)</span> <span class="purple">-&gt;</span> int<span class="purple">:</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="green">if</span> x <span class="purple">&lt;=</span> <span class="blue">0</span><span class="purple">:</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="green">return</span> <span class="blue">1</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="green">return</span> x <span class="purple">*</span> factorial<span class="purple">(</span>x <span class="purple">-</span> <span class="blue">1</span><span class="purple">)</span><br/>
+                <br/>
+                <br/>
+                <span class="green">def</span> main<span class="purple">(</span><span class="purple">)</span> <span class="purple">-&gt;</span> int<span class="purple">:</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;a <span class="purple">=</span> <span class="blue">0</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="green">while</span> a <span class="purple">&lt;</span> <span class="blue">10</span><span class="purple">:</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console<span class="purple">.</span>cyan<span class="purple">(</span> <span class="brown">&quot;factorial&quot;</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console<span class="purple">.</span>red<span class="purple">(</span> <span class="brown">&quot;(&quot;</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print<span class="purple">(</span>a<span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;console<span class="purple">.</span>red<span class="purple">(</span> <span class="brown">&quot;)&nbsp;=&nbsp;&quot;</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;println<span class="purple">(</span>factorial<span class="purple">(</span>a<span class="purple">)</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;a <span class="purple">=</span> a <span class="purple">+</span> <span class="blue">1</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="green">return</span> <span class="blue">0</span><br/>
+                <span class="purple"></span>                
             </details>
         </div>
         <!--  Tab Contents 3  -->
@@ -255,50 +276,43 @@
             <details>
                 <summary>Click to see code sample</summary>
                 <br/>
-                <span class="green">import</span> <span class="blue">raylib</span> <span class="green">as</span> <span
-                    class="blue">rl</span><br/>
-                <span class="green">import</span> <span class="blue">raylib.utils</span><br/>
-                <span class="green">import</span> <span class="blue">raylib.gui</span><br/>
-                <span class="green">import</span> <span class="blue">libs.numbers</span> <span class="green">as</span>
-                <span class="blue">num</span><br/>
+                <span class="green">import</span> raylib <span class="green">as</span> rl<br/>
+                <span class="green">import</span> raylib<span class="purple">.</span>utils<br/>
+                <span class="green">import</span> raylib<span class="purple">.</span>gui<br/>
+                <span class="green">import</span> libs<span class="purple">.</span>numbers <span class="green">as</span> num<br/>
                 <br/>
-                <span class="green">def</span> <span class="blue">main</span>() -> <span class="green">int</span>:<br/>
-                &emsp; width: <span class="green">int</span> = 200<br/>
-                &emsp; height: <span class="green">int</span> = 160<br/>
-                &emsp; counter1: <span class="green">int</span> = 0<br/>
-                &emsp; counter2: <span class="green">int</span> = 0<br/>
-                &emsp; rl.init_window(width, height, <span class="brown">"Counter"</span>)<br/>
-                &emsp; rl.set_target_fps(120)<br/>
-                &emsp; <span class="green">while</span> <span class="purple">not</span> rl.window_should_close():<br/>
-                &emsp; &emsp; rl.begin_drawing()<br/>
-                &emsp; &emsp; rl.clear_background(rl.color(255, 255, 255, 255))<br/>
-                &emsp; &emsp; gui.gui_panel(rl.rectangle(10.0f, 10.0f, num.i2f(width) - 20.0f, num.i2f(height) - 20.0f),
-                <span class="brown">"&lt;Counter&gt;"</span>)<br/>
-                &emsp; &emsp; widget_width: <span class="green">float</span> = num.i2f(width) - 40.0f<br/>
-                &emsp; &emsp; # Counter 1<br/>
-                &emsp; &emsp; gui.gui_label(rl.rectangle(20.0f, 40.0f, widget_width, 20.0f), <span class="brown">"Count:"</span>
-                + num.i2s(counter1))<br/>
-                &emsp; &emsp; <span class="green">if</span> gui.gui_button(rl.rectangle(20.0f, 60.0f, widget_width,
-                20.0f), <span class="brown">"Count"</span>):<br/>
-                &emsp; &emsp; &emsp; counter1 = counter1 + 1<br/>
-                &emsp; &emsp; # Counter 2<br/>
-                &emsp; &emsp; gui.gui_label(rl.rectangle(20.0f, 80.0f, widget_width, 20.0f), <span class="brown">"Count:"</span>
-                + num.i2s(counter2))<br/>
-                &emsp; &emsp; <span class="green">if</span> gui.gui_button(rl.rectangle(20.0f, 100.0f, widget_width,
-                20.0f), <span class="brown">"Count"</span>):<br/>
-                &emsp; &emsp; &emsp; counter2 = counter2 + 1<br/>
-                &emsp; &emsp; # Asciimoji status bar<br/>
-                &emsp; &emsp; animation: int = (counter1 + counter2) % 3<br/>
-                &emsp; &emsp; <span class="green">if</span> animation == 1:<br/>
-                &emsp; &emsp; &emsp; gui.gui_status_bar(rl.rectangle(10.0f, num.i2f(height) - 30.0f, num.i2f(width) -
-                20.0f, 20.0f), <span class="brown">" \\- (- _ -) -/"</span>)<br/>
-                &emsp; &emsp; <span class="green">else</span>:<br/>
-                &emsp; &emsp; &emsp; gui.gui_status_bar(rl.rectangle(10.0f, num.i2f(height) - 30.0f, num.i2f(width) -
-                20.0f, 20.0f), <span class="brown">" \\- (o _ o) -/"</span>)<br/>
-                &emsp; &emsp; rl.draw_fps(20, 540)<br/>
-                &emsp; &emsp; rl.end_drawing()<br/>
-                &emsp; rl.close_window()<br/>
-                &emsp; <span class="green">return</span> 0<br/>
+                <span class="green">def</span> main<span class="purple">(</span><span class="purple">)</span> <span class="purple">-&gt;</span> int<span class="purple">:</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;width <span class="purple">=</span> <span class="blue">200</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;height <span class="purple">=</span> <span class="blue">160</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;counter1 <span class="purple">=</span> <span class="blue">0</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;counter2 <span class="purple">=</span> <span class="blue">0</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;rl<span class="purple">.</span>init_window<span class="purple">(</span>width<span class="purple">,</span> height<span class="purple">,</span>  <span class="brown">&quot;Counter&quot;</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;rl<span class="purple">.</span>set_target_fps<span class="purple">(</span><span class="blue">120</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="green">while</span> <span class="green">not</span> rl<span class="purple">.</span>window_should_close<span class="purple">(</span><span class="purple">)</span><span class="purple">:</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rl<span class="purple">.</span>begin_drawing<span class="purple">(</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rl<span class="purple">.</span>clear_background<span class="purple">(</span>rl<span class="purple">.</span>color<span class="purple">(</span><span class="blue">255</span><span class="purple">,</span> <span class="blue">255</span><span class="purple">,</span> <span class="blue">255</span><span class="purple">,</span> <span class="blue">255</span><span class="purple">)</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gui<span class="purple">.</span>gui_panel<span class="purple">(</span>rl<span class="purple">.</span>rectangle<span class="purple">(</span><span class="blue">10.0f</span><span class="purple">,</span> <span class="blue">10.0f</span><span class="purple">,</span> num<span class="purple">.</span>i2f<span class="purple">(</span>width<span class="purple">)</span> <span class="purple">-</span> <span class="blue">20.0f</span><span class="purple">,</span> num<span class="purple">.</span>i2f<span class="purple">(</span>height<span class="purple">)</span> <span class="purple">-</span> <span class="blue">20.0f</span><span class="purple">)</span><span class="purple">,</span>  <span class="brown">&quot;&lt;Counter&gt;&quot;</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;widget_width <span class="purple">=</span> num<span class="purple">.</span>i2f<span class="purple">(</span>width<span class="purple">)</span> <span class="purple">-</span> <span class="blue">40.0f</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="brown">#&nbsp;&nbsp;Counter&nbsp;1</span> <br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gui<span class="purple">.</span>gui_label<span class="purple">(</span>rl<span class="purple">.</span>rectangle<span class="purple">(</span><span class="blue">20.0f</span><span class="purple">,</span> <span class="blue">40.0f</span><span class="purple">,</span> widget_width<span class="purple">,</span> <span class="blue">20.0f</span><span class="purple">)</span><span class="purple">,</span>  <span class="brown">&quot;Count:&quot;</span><span class="purple">+</span> num<span class="purple">.</span>i2s<span class="purple">(</span>counter1<span class="purple">)</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="green">if</span> gui<span class="purple">.</span>gui_button<span class="purple">(</span>rl<span class="purple">.</span>rectangle<span class="purple">(</span><span class="blue">20.0f</span><span class="purple">,</span> <span class="blue">60.0f</span><span class="purple">,</span> widget_width<span class="purple">,</span> <span class="blue">20.0f</span><span class="purple">)</span><span class="purple">,</span>  <span class="brown">&quot;Count&quot;</span><span class="purple">)</span><span class="purple">:</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter1 <span class="purple">=</span> counter1 <span class="purple">+</span> <span class="blue">1</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="brown">#&nbsp;&nbsp;Counter&nbsp;2</span> <br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gui<span class="purple">.</span>gui_label<span class="purple">(</span>rl<span class="purple">.</span>rectangle<span class="purple">(</span><span class="blue">20.0f</span><span class="purple">,</span> <span class="blue">80.0f</span><span class="purple">,</span> widget_width<span class="purple">,</span> <span class="blue">20.0f</span><span class="purple">)</span><span class="purple">,</span>  <span class="brown">&quot;Count:&quot;</span><span class="purple">+</span> num<span class="purple">.</span>i2s<span class="purple">(</span>counter2<span class="purple">)</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="green">if</span> gui<span class="purple">.</span>gui_button<span class="purple">(</span>rl<span class="purple">.</span>rectangle<span class="purple">(</span><span class="blue">20.0f</span><span class="purple">,</span> <span class="blue">100.0f</span><span class="purple">,</span> widget_width<span class="purple">,</span> <span class="blue">20.0f</span><span class="purple">)</span><span class="purple">,</span>  <span class="brown">&quot;Count&quot;</span><span class="purple">)</span><span class="purple">:</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;counter2 <span class="purple">=</span> counter2 <span class="purple">+</span> <span class="blue">1</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="brown">#&nbsp;&nbsp;Asciimoji&nbsp;status&nbsp;bar</span> <br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;animation <span class="purple">=</span> <span class="purple">(</span>counter1 <span class="purple">+</span> counter2<span class="purple">)</span> <span class="purple">%</span> <span class="blue">3</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="green">if</span> animation <span class="purple">==</span> <span class="blue">1</span><span class="purple">:</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gui<span class="purple">.</span>gui_status_bar<span class="purple">(</span>rl<span class="purple">.</span>rectangle<span class="purple">(</span><span class="blue">10.0f</span><span class="purple">,</span> num<span class="purple">.</span>i2f<span class="purple">(</span>height<span class="purple">)</span> <span class="purple">-</span> <span class="blue">30.0f</span><span class="purple">,</span> num<span class="purple">.</span>i2f<span class="purple">(</span>width<span class="purple">)</span> <span class="purple">-</span> <span class="blue">20.0f</span><span class="purple">,</span> <span class="blue">20.0f</span><span class="purple">)</span><span class="purple">,</span>  <span class="brown">&quot;&nbsp;\\\\-&nbsp;(-&nbsp;_&nbsp;-)&nbsp;-/&quot;</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="green">else</span><span class="purple">:</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gui<span class="purple">.</span>gui_status_bar<span class="purple">(</span>rl<span class="purple">.</span>rectangle<span class="purple">(</span><span class="blue">10.0f</span><span class="purple">,</span> num<span class="purple">.</span>i2f<span class="purple">(</span>height<span class="purple">)</span> <span class="purple">-</span> <span class="blue">30.0f</span><span class="purple">,</span> num<span class="purple">.</span>i2f<span class="purple">(</span>width<span class="purple">)</span> <span class="purple">-</span> <span class="blue">20.0f</span><span class="purple">,</span> <span class="blue">20.0f</span><span class="purple">)</span><span class="purple">,</span>  <span class="brown">&quot;&nbsp;\\\\-&nbsp;(o&nbsp;_&nbsp;o)&nbsp;-/&quot;</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rl<span class="purple">.</span>draw_fps<span class="purple">(</span><span class="blue">20</span><span class="purple">,</span> <span class="blue">540</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rl<span class="purple">.</span>end_drawing<span class="purple">(</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;rl<span class="purple">.</span>close_window<span class="purple">(</span><span class="purple">)</span><br/>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="green">return</span> <span class="blue">0</span><br/>
+                <span class="purple"></span>
+
             </details>
         </div>
     </div>
@@ -316,7 +330,7 @@
                 alt="Yaksha language gif"
         />
         <div class="section__text">
-            <h4>Language syntax is minimalistic and looks like Python in most cases.</h4>
+            <h4>Language syntax is minimalistic and has similarities to Python.</h4>
             <h4>Manual memory management is required.</h4>
             <h4>New developers should be able to pick up the full syntax in a few hours.</h4>
         </div>
@@ -331,7 +345,7 @@
     <div class="section__content">
         <div class="section__text">
             <h4>Yaksha aims to be a simple general purpose language with a minimalistic standard library.</h4>
-            <h4>One goal is to have easy access to GPU/parallel programming (this has not yet begun) using OpenCL.</h4>
+            <h4>One goal is to have easy access to GPU/parallel programming (this has not yet begun, and hopefully we can get there) using OpenCL.</h4>
             <h4>There will be first class support for Windows.</h4>
             <h4>At the moment, the author plans on using the language (once it reaches a usable level) in personal
                 projects.</h4>

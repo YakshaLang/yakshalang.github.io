@@ -391,14 +391,14 @@ def main() -> int:
 * ✅ `getref(T) -> Ptr[T]` - Get a pointer to given object
 * ✅ `unref(Ptr[T]) -> T` - Dereference a pointer
 * ✅ `charat(str, int) -> int` - Get a character at a specific location in string
-* ✅ `shnew(Array[SMEntry[T]]) -> None` - Initialize Array[SMEntry[T]] object
-* ✅ `shput(Array[SMEntry[T]], str, T) -> None` - Put item to an Array[SMEntry[T]]
-* ✅ `shget(Array[SMEntry[T]], str) -> T` - Get item from an Array[SMEntry[T]]
-* ✅ `shgeti(Array[SMEntry[T]], str) -> int` - Get item index from an Array[SMEntry[T]] (-1 if not found)
-* ✅ `hmnew(Array[MEntry[K,T]]) -> None` - Initialize Array[MEntry[K,T]] object
-* ✅ `hmput(Array[MEntry[K,T]], K, T) -> None` - Put item to an Array[MEntry[K,T]]
-* ✅ `hmget(Array[MEntry[K,T]], K) -> T` - Get item from an Array[MEntry[K,T]]
-* ✅ `hmgeti(Array[MEntry[K,T]], K) -> int` - Get item index from an Array[MEntry[K,T]] (-1 if not found)
+* ✅ `shnew(Array[SMEntry[T]]) -> None` - Initialize `Array[SMEntry[T]]` object
+* ✅ `shput(Array[SMEntry[T]], str, T) -> None` - Put item to an `Array[SMEntry[T]]`
+* ✅ `shget(Array[SMEntry[T]], str) -> T` - Get item from an `Array[SMEntry[T]]`
+* ✅ `shgeti(Array[SMEntry[T]], str) -> int` - Get item index from an `Array[SMEntry[T]]` (-1 if not found)
+* ✅ `hmnew(Array[MEntry[K,T]]) -> None` - Initialize `Array[MEntry[K,T]]` object
+* ✅ `hmput(Array[MEntry[K,T]], K, T) -> None` - Put item to an `Array[MEntry[K,T]]`
+* ✅ `hmget(Array[MEntry[K,T]], K) -> T` - Get item from an `Array[MEntry[K,T]]`
+* ✅ `hmgeti(Array[MEntry[K,T]], K) -> int` - Get item index from an `Array[MEntry[K,T]]` (-1 if not found)
 * ✅ `cast("T", X) -> T` - Data type casting builtin
 * ✅ `qsort(Array[T],Function[In[Const[AnyPtrToConst],Const[AnyPtrToConst]],Out[int]]) -> bool` - Sort an array, returns True if successful
 * ✅ `iif(bool, T, T) -> T` - Ternary functionality
@@ -406,7 +406,7 @@ def main() -> int:
 * ✅ `countif(Array[T],Function[In[T,V],Out[bool]],V) -> int` - For each element in array count if function returns true
 * ✅ `filter(Array[T],Function[In[T,V],Out[bool]],V) -> Array[T]` - Create a new array with filtered elements based on return value of given function
 * ✅ `map(Array[T],Function[In[T,V],Out[K]],V) -> Array[K]` - Create a new array with result of given function
-* ✅ `binarydata("data") -> Const[Ptr[Const[u8]]]` - Create constant binary data (must pass in a string literal).\nReturns Const[Ptr[Const[u8]]] that does not need to be deleted.
+* ✅ `binarydata("data") -> Const[Ptr[Const[u8]]]` - Create constant binary data (must pass in a string literal). Returns `Const[Ptr[Const[u8]]]` that does not need to be deleted.
 ;Builtin functions may call different implementations based on input.
 ---
 ## Non primitive data types
@@ -452,10 +452,142 @@ def main() -> int:
 ---
 ### Hash Map
 ---
-!!!<p><span class="red-status">not started</span></p>
+!!!<p><span class="yellow-status">in progress</span></p>
 ---
 Simple single key single value hashmaps.
 ---
-;Data type `Array[MEntry[?]]`.
+;Data type `Array[MEntry[K,T]]`.
 ;key and value both need to be deleted.
 ---
+## Macros & YakshaLisp
+---
+!!!<p><span class="yellow-status">in progress</span></p>
+---
+!!!<p><span class="yellow-status">documentation - in progress</span></p>
+---
+YakshaLisp macros are one of the most important features of Yaksha. You can think of it as an interpreted language that lives in Yaksha compiler.
+;Because that is what it is!
+---
+It has it's own built in functions, can use `import`, read/write files and even use `metamacro` directive to create quoted input functions(similar to `defun`, except input args are not evaluated and returns quoted output that is immediately evaluated). Has multiple data types (list, map, callable, string, expression). Support's q-expressions `{1 2 3}` (inspired by build-your-own-lisp's lisp dialect), and special forms. A simple mark and sweep garbage collector is used. Provides a mediocre REPL and ability to execute standalone lisp code using a command. Not only that, it also support reflection using builtin callables such as `this` and `parent` (which returns a mutable current or parent scope as a map).
+;Yo dog!, I heard you like macros, so I added meta-macro support in your macro processor.
+;So you can meta-program while you meta-program.
+---
+### Philosophy?
+YakshaLisp provide the ability to write token-list to token-list conversion macros. One can use `my_macro!{t t t}` style expansion to achieve this. So why YakshaLisp? because it needs to process a list of tokens. 
+Additionally, Yaksha and YakshaLisp are polar opposites of each other, therefore I think they can compliment each other nicely.
+;Think Yin-Yang!
+---
+#### What are the differences?
+
+ <table>
+ <caption>Language differences</caption>
+ <thead>
+  <tr>
+    <th scope="col">Yaksha</th>
+    <th scope="col">YakshaLisp</th>
+    <th scope="col">C99</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td data-label="Yaksha">manual memory management</td>
+    <td data-label="YakshaLisp">garbage collected</td>
+    <td data-label="C99">manual memory management</td>
+  </tr>
+  <tr>
+    <td data-label="Yaksha">compiled (to C99)</td>
+    <td data-label="YakshaLisp">interpreted</td>
+    <td data-label="C99">compiled by most compilers to target platform.</td>
+  </tr>
+  <tr>
+    <td data-label="Yaksha">can be multi-threaded</td>
+    <td data-label="YakshaLisp">only single threaded</td>
+    <td data-label="C99">can be multi-threaded, etc</td>
+  </tr>
+  <tr>
+    <td data-label="Yaksha">indent based syntax</td>
+    <td data-label="YakshaLisp">parenthesis based syntax</td>
+    <td data-label="C99">C family {} scope syntax</td>
+  </tr>
+  <tr>
+    <td data-label="Yaksha">c-like function pointers</td>
+    <td data-label="YakshaLisp">closures, function body not evaluated unless called. First class functions/lambda</td>
+    <td data-label="C99">function pointers</td>
+  </tr>
+  <tr>
+    <td data-label="Yaksha">multiple integer types and float / double / bool</td>
+    <td data-label="YakshaLisp">only 64bit signed integer is supported.</td>
+    <td data-label="C99">multiple integer types and float / double / bool, enums & unions</td>
+  </tr>
+  <tr>
+    <td data-label="Yaksha">hygienic macros using $name syntax (automated gensym), non-hygienic macros supported are also supported (do not use the $ prefix for identifiers), can also generate C style macros/code with nativexxx annotations and ccode keyword in some cases.</td>
+    <td data-label="YakshaLisp">metamacro / eval / parse / this / parent / q-expressions </td>
+    <td data-label="C99">#define / #include</td>
+  </tr>
+  <tr>
+    <td data-label="Yaksha">has statements and expressions</td>
+    <td data-label="YakshaLisp">expressions only</td>
+    <td data-label="C99">has statements and expressions</td>
+  </tr>
+  <tr>
+    <td data-label="Yaksha">no support for exceptions</td>
+    <td data-label="YakshaLisp">exceptions are a string that you can throw and catch</td>
+    <td data-label="C99">setjmp</td>
+  </tr>
+  <tr>
+    <td data-label="Yaksha">no support for reflection</td>
+    <td data-label="YakshaLisp">supports reflection - repr / this / parent</td>
+    <td data-label="C99">no support for reflection</td>
+  </tr>
+  </tbody>
+</table> 
+
+---
+
+### Builtin functions, values & prelude
+---
+!!!<p><span class="green-status">done</span></p>
+---
+All below listed functions are available at the moment.
+---
+* `nil` - this has value of `{}` (an empty list)
+* `true` - value of `1`
+* `false` - value of `0`
+* `newline` - value of `\r\n` or `\n` as a string.
+* `+`, `-`, `*`, `/`, `modulo` - basic functions
+* `==`, `!=`, `<`, `>`, `<=`, `>=` - comparison functions
+* `and`, `or`, `not` - boolean operator functions
+* `bitwise_and`, `bitwise_or`, `bitwise_not`, `bitwise_xor`, `bitwise_left_shift`, `bitwise_right_shift` - bitwise operator functions to be applied to number values (underlying structure of a number is a 64bit signed integer)
+* `filter`, `map`, `reduce` - basic functional-programming functions
+* `map_get`, `map_has`, `map_set`, `map_remove`, `map_values`, `map_keys` - functions to manipulate map-objects.
+* `access_module` - access an element from another root environment (uses same imports at the top of the file as in Yaksha)
+* `this`, `parent` - returns current scope or parent scope as a map-object (can be modified)
+* `magic_dot` - wrapper around `map_get` and `access_module` (supports both type of objects) to read a value. Special syntax sugar `symbol1::symbol2` expands to `(magic_dot symbol1 symbol2)`
+* `io_read_file`, `io_write_file`, `print`, `println`, `input` - I/O functions
+* `def/define` - define an undefined value in current environment with a given symbol.
+* `set` - update an already defined value
+* `=` - combination of `set` and `def`. try to `def` and if it fails use `set`.
+* `quote` - create a list with non-evaluated expressions parsed as arguments. This has a somewhat-similar (but not 100% similar) effect to `{}`
+* `list` - create a list with all arguments to list function evaluated.
+* `eval`, `parse`, `repr` - evaluate a list or single expression, parse to q-expression, convert values to strings.
+* `raise_error`, `try`, `try_catch` - functions to use exceptions during evaluation.
+* `head`, `tail`, `cons`, `push`, `pop`, `insert`, `remove` - list manipulation functions
+* `for`, `while` - looping functions
+* `scope`, `do` - do these expressions in a child scope `scope` or in current scope (`do`)
+* `is_list`, `is_list`, `is_int`, `is_string`, `is_truthy`, `is_callable`, `is_nil`, `is_metamacro`, `is_module` - check types
+* `defun`, `lambda` - create named and anonymous functions
+* `cond`, `if` - conditions
+* `random` - random number between given range
+* `time` - unix time as number
+
+
+### Macro environments
+
+Inside Yaksha a root (known as builtins_root) environment is created. It will house builtin functions and results of executing prelude code.
+
+A single .yaka file in imports (or current compiled file) will have their own root environment that is a child of builtins_root.
+
+During garbage collection, mark phase will start marking from builtins_root and file level roots.
+
+Environment is an unordered_map with string keys. Environments and maps use same data type internally.
+
