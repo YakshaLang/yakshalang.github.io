@@ -580,7 +580,7 @@ All below listed functions are available at the moment.
 * `random` - random number between given range
 * `time` - unix time as number
 
-
+---
 ### Macro environments
 
 Inside Yaksha a root (known as builtins_root) environment is created. It will house builtin functions and results of executing prelude code.
@@ -590,4 +590,31 @@ A single .yaka file in imports (or current compiled file) will have their own ro
 During garbage collection, mark phase will start marking from builtins_root and file level roots.
 
 Environment is an unordered_map with string keys. Environments and maps use same data type internally.
+---
+### How does it look like
+---
 
+```yaksha
+# ╔═╗┌─┐┌┬┐┌─┐┬┬  ┌─┐  ╔╦╗┬┌┬┐┌─┐
+# ║  │ ││││├─┘││  ├┤    ║ ││││├┤
+# ╚═╝└─┘┴ ┴┴  ┴┴─┘└─┘   ╩ ┴┴ ┴└─┘
+# ╔═╗┬┌─┐┌─┐  ╔╗ ┬ ┬┌─┐┌─┐
+# ╠╣ │┌─┘┌─┘  ╠╩╗│ │┌─┘┌─┘
+# ╚  ┴└─┘└─┘  ╚═╝└─┘└─┘└─┘
+macros!{
+    (defun to_fb (n) (+ (if (== n 1) "" " ") (cond
+        ((== 0 (modulo n 15)) "FizzBuzz")
+        ((== 0 (modulo n 3)) "Fizz")
+        ((== 0 (modulo n 5)) "Buzz")
+        (true (to_string n))
+        )))
+    (defun fizzbuzz () (list (yk_create_token YK_TOKEN_STRING (reduce + (map to_fb (range 1 101))))))
+    (yk_register {dsl fizzbuzz fizzbuzz})
+}
+
+def main() -> int:
+    println(fizzbuzz!{})
+    return 0
+
+```
+---
