@@ -1,7 +1,7 @@
 import os.path
 import subprocess
 
-from docbox import docbox
+from docbox_generator import docbox
 
 
 def main():
@@ -11,8 +11,10 @@ def main():
                  "Yaksha Programming Language"], root=path)
     docbox.conv(["--all-headers-in-toc", "--input", "yaksha_docs", "-o", "docs/documentation.html", "--title",
                  "Yaksha Programming Language"], root=path)
-
-
+    docbox.conv(["--md", "--input", "yaksha_tutorials", "-o", "docs/tutorials.html", "--title",
+                 "Yaksha Programming Language"], root=path)
+    docbox.conv(["--md", "--input", "yaksha_proposals", "-o", "docs/yama.html", "--title",
+                 "Yaksha Programming Language"], root=path)
 if __name__ == "__main__":
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
     main()

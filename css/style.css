@@ -119,6 +119,15 @@ table {
     }
   }
 
+h1, h2, h3, h4, h5, h6, .highlight {
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.highlight {
+    padding: 4px;
+}
+
 /* Based on https://www.w3schools.com/css/css3_buttons.asp */
 .button {
     background-color: #4CAF50; /* Green */

@@ -119,6 +119,15 @@ table {
     }
   }
 
+h1, h2, h3, h4, h5, h6, .highlight {
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.highlight {
+    padding: 4px;
+}
+
 /* Based on https://www.w3schools.com/css/css3_buttons.asp */
 .button {
     background-color: #4CAF50; /* Green */
@@ -428,7 +437,6 @@ span.linenos.special {
 /* Comment.Hashbang */
 .highlight .cm {
     color: #408080;
-    font-style: italic
 }
 
 /* Comment.Multiline */
@@ -439,19 +447,16 @@ span.linenos.special {
 /* Comment.Preproc */
 .highlight .cpf {
     color: #408080;
-    font-style: italic
 }
 
 /* Comment.PreprocFile */
 .highlight .c1 {
     color: #408080;
-    font-style: italic
 }
 
 /* Comment.Single */
 .highlight .cs {
     color: #408080;
-    font-style: italic
 }
 
 /* Comment.Special */

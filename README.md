@@ -1,5 +1,7 @@
 # Yaksha Lang Website & Docs Site
 
+* Documentation directories are `yaksha_docs`, `yaksha_lib_docs`, `yaksha_proposals` and `yaksha_tutorials`
+
 Require `css-minify` and `html-minifier` in path.
 
 * STEP 01: Install node.js
