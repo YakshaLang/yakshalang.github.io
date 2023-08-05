@@ -24,6 +24,7 @@ html {
     box-sizing: border-box;
 }
 
+
 body {
     font-family: 'Roboto Mono', 'Ubuntu', 'sans-serif';
     color: var(--color-tertiary);
@@ -238,6 +239,7 @@ body {
     background-color: #f8ece2;
     margin: 0 auto;
     padding: 1rem;
+    font-family: 'Source Code Pro', monospace !important;
 }
 
 .green {
