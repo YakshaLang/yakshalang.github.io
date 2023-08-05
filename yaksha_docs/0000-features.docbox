@@ -520,7 +520,7 @@ Additionally, Yaksha and YakshaLisp are polar opposites of each other, therefore
     <td data-label="C99">multiple integer types and float / double / bool, enums & unions</td>
   </tr>
   <tr>
-    <td data-label="Yaksha">hygienic macros using $name syntax (automated gensym), non-hygienic macros supported are also supported (do not use the $ prefix for identifiers), can also generate C style macros/code with nativexxx annotations and ccode keyword in some cases.</td>
+    <td data-label="Yaksha">hygienic macros using $name syntax (automated gensym), non-hygienic macros are also supported (do not use the $ prefix for identifiers), can also generate C style macros/code with nativexxx annotations and ccode keyword in some cases.</td>
     <td data-label="YakshaLisp">metamacro / eval / parse / this / parent / q-expressions </td>
     <td data-label="C99">#define / #include</td>
   </tr>

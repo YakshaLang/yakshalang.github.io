@@ -1,14 +1,18 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: 'Roboto Mono', monospace
+}
+
+body {
+    font-family: Roboto Mono, monospace;
+    font-size: 1.4vw;
 }
 
 .toc-item {
     display: block;
     width: calc(100% - 10px);
     overflow: hidden;
-    margin-bottom: 3px;
+    margin-bottom: 0.3em;
 }
 
 .toc-item a {
@@ -35,89 +39,89 @@ a:hover {
 
 /* From https://codepen.io/AllThingsSmitty/pen/MyqmdM */
 table {
-    border: 1px solid #ccc;
+    border: 0.1em solid #ccc;
     border-collapse: collapse;
     margin: 0;
     padding: 0;
     width: 100%;
     table-layout: fixed;
-  }
-  
-  table caption {
+}
+
+table caption {
     font-size: 0.9em;
     margin: .5em 0 .75em;
-  }
-  
-  table tr {
-    background-color: #f8f8f8;
-    border: 1px solid #ddd;
-    padding: .35em;
-  }
+}
 
-  table td:nth-child(odd), table th:nth-child(odd) {
+table tr {
+    background-color: #f8f8f8;
+    border: 0.1em solid #ddd;
+    padding: .35em;
+}
+
+table td:nth-child(odd), table th:nth-child(odd) {
     background-color: #eeeeee;
-  }
-  
-  table th,
-  table td {
+}
+
+table th,
+table td {
     padding: .625em;
     text-align: center;
-  }
-  
-  table th {
+}
+
+table th {
     font-size: .85em;
     letter-spacing: .1em;
     text-transform: uppercase;
-  }
-  
-  @media screen and (max-width: 600px) {
+}
+
+@media screen and (max-width: 600px) {
     table {
-      border: 0;
+        border: 0;
     }
-  
+
     table caption {
-      font-size: 0.9em;
+        font-size: 0.9em;
     }
-    
+
     table thead {
-      border: none;
-      clip: rect(0 0 0 0);
-      height: 1px;
-      margin: -1px;
-      overflow: hidden;
-      padding: 0;
-      position: absolute;
-      width: 1px;
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
     }
-    
+
     table tr {
-      border-bottom: 3px solid #ddd;
-      display: block;
-      margin-bottom: .625em;
+        border-bottom: 3px solid #ddd;
+        display: block;
+        margin-bottom: .625em;
     }
-    
+
     table td {
-      border-bottom: 1px solid #ddd;
-      display: block;
-      font-size: .8em;
-      text-align: right;
+        border-bottom: 1px solid #ddd;
+        display: block;
+        font-size: .8em;
+        text-align: right;
     }
-    
+
     table td::before {
-      /*
-      * aria-label has no advantage, it won't be read inside a table
-      content: attr(aria-label);
-      */
-      content: attr(data-label);
-      float: left;
-      font-weight: bold;
-      text-transform: uppercase;
+        /*
+        * aria-label has no advantage, it won't be read inside a table
+        content: attr(aria-label);
+        */
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+        text-transform: uppercase;
     }
-    
+
     table td:last-child {
-      border-bottom: 0;
+        border-bottom: 0;
     }
-  }
+}
 
 h1, h2, h3, h4, h5, h6, .highlight {
     margin-bottom: 5px;
@@ -170,11 +174,11 @@ a.read-more:hover {
 }
 
 ul {
-    margin-left: 20px
+    margin-left: 2em;
 }
 
 ul > li {
-    margin-left: 10px
+    margin-left: 1em
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -182,28 +186,28 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-    margin-top: 15px
+    margin-top: 1.5em
 }
 
 h1, h2 {
-    margin-bottom: 10px
+    margin-bottom: 1em
 }
 
 body, html {
     background-color: #ffffff;
     color: #2b2b2b;
-    line-height: 1.35em;
+    line-height: 1.45em;
     width: 100%
 }
 
 .table-of-contents {
     font-size: .7em;
-    line-height: 1.1em;
+    line-height: 1.3em;
     width: 20%;
     overflow-y: auto;
     position: fixed;
-    padding-left: 3px;
-    top: 20px;
+    padding-left: 0.3em;
+    top: 2em;
     bottom: 0
 }
 
@@ -221,14 +225,14 @@ body, html {
 
 .box {
     display: inline-block;
-    width: calc(100% - 4px);
-    padding: 2px;
+    width: calc(100% - 0.4em);
+    padding: 0.2em;
     overflow-wrap: anywhere
 }
 
 .content {
-    width: calc(70% - 25px);
-    padding: 0 10px;
+    width: calc(70% - 2.5em);
+    padding: 0 1em;
     display: inline-block;
     float: left;
     overflow: wrap;
@@ -237,8 +241,8 @@ body, html {
 
 .note {
     display: inline-block;
-    width: calc(30% - 5px);
-    padding-left: 5px;
+    width: calc(30% - 0.5em);
+    padding-left: 0.5em;
     float: right;
     font-size: .7em
 }
@@ -250,20 +254,18 @@ body, html {
 }
 
 code {
-    border: 1px dashed #25ffd7;
-    background: #10423c;
-    color: #20ffd6;
-    padding-left: 1px;
-    padding-right: 1px
+    border: 0.05em dashed #10423c;
+    background: #eeeeee;
+    padding-left: 0.1em;
+    margin-top: 0.6em;
 }
 
 .highlight {
-    border: 1px dashed gray;
+    border: 0.1em dashed gray;
     background-color: #000
 }
 
 pre {
-    font-size: .6em;
     white-space: pre-wrap;
     white-space: -moz-pre-wrap;
     white-space: -pre-wrap;
@@ -273,65 +275,119 @@ pre {
 
 hr {
     border: none;
-    border-top: 1px solid transparent;
-    margin-bottom: 15px
+    border-top: 0.1em solid transparent;
+    margin-bottom: 1.5em
 }
 
 .center-text {
-    margin-bottom: 20px;
-    margin-top: 20px;
+    margin-bottom: 2em;
+    margin-top: 2em;
     text-align: center
 }
 
-.blue-status {
-    display: inline-block;
-    border: 1px solid #20deff;
-    background: #103b42;
-    color: #20deff;
-    padding: 0 5px;
-    margin: auto 2px;
-    font-size: .8em
-}
+/* https://codepen.io/tbugai/pen/DBNBdm */
 
-.red-status {
-    display: inline-block;
-    border: 1px solid #ff2323;
-    background: #440101;
-    color: #ff2323;
-    padding: 0 5px;
-    margin: auto 2px;
-    font-size: .8em
-}
 
-.red-warning {
-    display: block;
-    border: 1px solid #ff2323;
-    background: #ffffff;
-    color: #ff2323;
-    padding: 10px;
-    margin: auto 2px;
-    font-size: 1.3em
-}
-
-.green-status {
+.yellow-status:before {
+    background-color: #FFC182;
+    border-color: #FFB161;
+    box-shadow: 0 0 0.4em 0.1em #FFC182;
+    content: ' ';
     display: inline-block;
-    border: 1px solid #20ff56;
-    background: #104210;
-    color: #20ff56;
-    padding: 0 5px;
-    margin: auto 2px;
-    font-size: .8em
+    width: 0.7em;
+    height: 0.7em;
+    margin-right: 1em;
+    border-width: 0.1em;
+    border-style: solid;
+    border-radius: 0.7em;
 }
 
 .yellow-status {
     display: inline-block;
-    border: 1px solid #ffdd00;
-    background: #544801;
-    color: #ffdd00;
-    padding: 0 5px;
-    margin: auto 2px;
-    font-size: .8em
+    border: 0.1em solid #7a542c;
+    color: #7a542c;
+    padding: 0 0.5em;
+    margin: auto 0.2em;
+    font-size: .8em;
+    border-radius: 0.7em;
+    font-weight: bold;
 }
+
+.green-status:before {
+    background-color: #94E185;
+    border-color: #78D965;
+    box-shadow: 0 0 0.4em 0.1em #94E185;
+    content: ' ';
+    display: inline-block;
+    width: 0.7em;
+    height: 0.7em;
+    margin-right: 1em;
+    border-width: 0.1em;
+    border-style: solid;
+    border-radius: 0.7em;
+}
+
+.green-status {
+    display: inline-block;
+    border: 0.1em solid #48833e;
+    color: #48833e;
+    padding: 0 0.5em;
+    margin: auto 0.2em;
+    font-size: .8em;
+    border-radius: 0.7em;
+    font-weight: bold;
+}
+
+.red-status:before {
+    background-color: #C9404D;
+    border-color: #C42C3B;
+    box-shadow: 0 0 0.4em 0.1em #C9404D;
+    content: ' ';
+    display: inline-block;
+    width: 0.7em;
+    height: 0.7em;
+    margin-right: 1em;
+    border-width: 0.1em;
+    border-style: solid;
+    border-radius: 0.7em;
+}
+
+.red-status {
+    display: inline-block;
+    border: 0.1em solid #7a1d27;
+    color: #7a1d27;
+    padding: 0 0.5em;
+    margin: auto 0.2em;
+    font-size: .8em;
+    border-radius: 0.7em;
+    font-weight: bold;
+}
+
+.blue-status:before {
+    background-color: #40c4c9;
+    border-color: #2cb7c4;
+    box-shadow: 0 0 0.4em 0.1em #40c9c9;
+    content: ' ';
+    display: inline-block;
+    width: 0.7em;
+    height: 0.7em;
+    margin-right: 1em;
+    border-width: 0.1em;
+    border-style: solid;
+    border-radius: 0.7em;
+}
+
+.blue-status {
+    display: inline-block;
+    border: 0.1em solid #1b727c;
+    color: #1b727c;
+    padding: 0 0.5em;
+    margin: auto 0.2em;
+    font-size: .8em;
+    border-radius: 0.7em;
+    font-weight: bold;
+}
+
 
 @media (max-width: 800px) {
     body, html {
@@ -340,13 +396,13 @@ hr {
     }
 
     .note {
-        padding: 0 10px;
-        width: calc(100% - 25px)
+        padding: 0 0.1em;
+        width: calc(100% - 2.5em)
     }
 
     .content {
-        padding: 0 10px;
-        width: calc(100% - 25px)
+        padding: 0 0.1em;
+        width: calc(100% - 2.5em)
     }
 
     .boxes {
@@ -358,7 +414,7 @@ hr {
         position: sticky;
         top: 0;
         background: #defbff;
-        padding-left: 3px;
+        padding-left: 0.3em;
         overflow: hidden
     }
 
@@ -367,36 +423,42 @@ hr {
     }
 }
 
+.highlight {
+    font-family: 'Source Code Pro', monospace !important;
+    font-size: 0.8em;
+}
+
 pre {
-    line-height: 125%
+    line-height: 125%;
+    font-family: 'Source Code Pro', monospace !important;
 }
 
 td.linenos .normal {
-    color: #f1fa8c;
-    background-color: #44475a;
-    padding-left: 5px;
-    padding-right: 5px
+    color: inherit;
+    background-color: transparent;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
 }
 
 span.linenos {
-    color: #f1fa8c;
-    background-color: #44475a;
-    padding-left: 5px;
-    padding-right: 5px
+    color: inherit;
+    background-color: transparent;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
 }
 
 td.linenos .special {
-    color: #50fa7b;
-    background-color: #6272a4;
-    padding-left: 5px;
-    padding-right: 5px
+    color: #000000;
+    background-color: #ffffc0;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
 }
 
 span.linenos.special {
-    color: #50fa7b;
-    background-color: #6272a4;
-    padding-left: 5px;
-    padding-right: 5px
+    color: #000000;
+    background-color: #ffffc0;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
 }
 
 .highlight .hll {
@@ -408,13 +470,13 @@ span.linenos.special {
 }
 
 .highlight .c {
-    color: #408080;
-    font-style: italic
+    color: #3D7B7B;
+    font-weight: bold
 }
 
 /* Comment */
 .highlight .err {
-    border: 1px solid #FF0000
+    /*border: 1px solid #FF0000*/
 }
 
 /* Error */
@@ -430,33 +492,37 @@ span.linenos.special {
 
 /* Operator */
 .highlight .ch {
-    color: #408080;
+    color: #3D7B7B;
     font-style: italic
 }
 
 /* Comment.Hashbang */
 .highlight .cm {
-    color: #408080;
+    color: #3D7B7B;
+    font-style: italic
 }
 
 /* Comment.Multiline */
 .highlight .cp {
-    color: #BC7A00
+    color: #9C6500
 }
 
 /* Comment.Preproc */
 .highlight .cpf {
-    color: #408080;
+    color: #3D7B7B;
+    font-weight: bold
 }
 
 /* Comment.PreprocFile */
 .highlight .c1 {
-    color: #408080;
+    color: #3D7B7B;
+    font-weight: bold
 }
 
 /* Comment.Single */
 .highlight .cs {
-    color: #408080;
+    color: #3D7B7B;
+    font-weight: bold
 }
 
 /* Comment.Special */
@@ -470,8 +536,13 @@ span.linenos.special {
 }
 
 /* Generic.Emph */
+.highlight .ges {
+    font-weight: bold;
+}
+
+/* Generic.EmphStrong */
 .highlight .gr {
-    color: #FF0000
+    color: #E40000
 }
 
 /* Generic.Error */
@@ -482,12 +553,12 @@ span.linenos.special {
 
 /* Generic.Heading */
 .highlight .gi {
-    color: #00A000
+    color: #008400
 }
 
 /* Generic.Inserted */
 .highlight .go {
-    color: #888888
+    color: #717171
 }
 
 /* Generic.Output */
@@ -558,7 +629,7 @@ span.linenos.special {
 
 /* Literal.String */
 .highlight .na {
-    color: #7D9029
+    color: #687822
 }
 
 /* Name.Attribute */
@@ -584,13 +655,13 @@ span.linenos.special {
 
 /* Name.Decorator */
 .highlight .ni {
-    color: #999999;
+    color: #717171;
     font-weight: bold
 }
 
 /* Name.Entity */
 .highlight .ne {
-    color: #D2413A;
+    color: #CB3F38;
     font-weight: bold
 }
 
@@ -601,7 +672,7 @@ span.linenos.special {
 
 /* Name.Function */
 .highlight .nl {
-    color: #A0A000
+    color: #767600
 }
 
 /* Name.Label */
@@ -680,7 +751,7 @@ span.linenos.special {
 /* Literal.String.Delimiter */
 .highlight .sd {
     color: #BA2121;
-    font-style: italic
+    font-weight: bold
 }
 
 /* Literal.String.Doc */
@@ -690,7 +761,7 @@ span.linenos.special {
 
 /* Literal.String.Double */
 .highlight .se {
-    color: #BB6622;
+    color: #AA5D1F;
     font-weight: bold
 }
 
@@ -701,7 +772,7 @@ span.linenos.special {
 
 /* Literal.String.Heredoc */
 .highlight .si {
-    color: #BB6688;
+    color: #A45A77;
     font-weight: bold
 }
 
@@ -712,7 +783,7 @@ span.linenos.special {
 
 /* Literal.String.Other */
 .highlight .sr {
-    color: #BB6688
+    color: #A45A77
 }
 
 /* Literal.String.Regex */

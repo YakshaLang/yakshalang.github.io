@@ -28,7 +28,7 @@ b: Orange = make("Orange")
 ## Item 2 - Create structures or classes ✅
 
 ```python
-a: Banana = Banana {color: YELLOW, origin: SRI_LANKA} 
+a: Banana = Banana {color: YELLOW, origin: SRI_LANKA}
 ```
 
 ```c
