@@ -40,6 +40,13 @@
     btnSmall.addEventListener("click", function() {  fontSize.href = "/assets/small-font.min.css";   localStorage.setItem(fontSizeKey, "/assets/small-font.min.css"); });
     btnMedium.addEventListener("click", function() { fontSize.href = "/assets/medium-font.min.css";  localStorage.setItem(fontSizeKey, "/assets/medium-font.min.css"); });
     btnLarge.addEventListener("click", function() {  fontSize.href = "/assets/large-font.min.css";   localStorage.setItem(fontSizeKey, "/assets/large-font.min.css"); });
+    // Toggle open all details elements, onload
+    // Regardless of their initial status
+    document.body.querySelectorAll('details')
+      .forEach((e) => {(e.hasAttribute('open')) ?
+        e.removeAttribute('open') : e.setAttribute('open',true);
+        console.log(e.hasAttribute('open'))
+      });
 })();
 </script>
 </body>

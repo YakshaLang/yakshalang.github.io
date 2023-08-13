@@ -833,6 +833,7 @@ body {
 @media screen and (max-width: 1280px) {
     .nav__bar {
         padding: 1rem;
+        flex-direction: column;
     }
 
     .nav__bar__logo {
@@ -981,10 +982,6 @@ body {
 
 /* Smaller screens - less than 510px */
 @media screen and (max-width: 510px) {
-    .nav__bar {
-        flex-direction: column;
-    }
-
     .nav__bar__links {
         gap: 0;
     }

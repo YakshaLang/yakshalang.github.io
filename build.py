@@ -13,7 +13,11 @@ def main():
                  "Yaksha Programming Language"], root=path)
     docbox.conv(["--md", "--input", "yaksha_tutorials", "-o", "docs/tutorials.html", "--title",
                  "Yaksha Programming Language"], root=path)
-    docbox.conv(["--md", "--input", "yaksha_proposals", "-o", "docs/yama.html", "--title",
+    docbox.conv(["--md", "--no-number", "--input", "yaksha_proposals", "-o", "docs/yama.html", "--title",
+                 "Yaksha Programming Language"], root=path)
+    docbox.conv(["--md", "--no-number", "--input", "yaksha_blog", "-o", "docs/blog.html", "--title",
+                 "Yaksha Programming Language"], root=path)
+    docbox.conv(["--all-headers-in-toc", "--no-number", "--input", "yaksha_demos", "-o", "docs/demos.html", "--title",
                  "Yaksha Programming Language"], root=path)
 if __name__ == "__main__":
     os.chdir(os.path.dirname(os.path.abspath(__file__)))

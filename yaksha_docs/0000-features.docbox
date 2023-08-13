@@ -4,6 +4,11 @@
 ---
 ## Data Types
 ---
+### Wrapped String References
+!!!<p><span class="green-status">done</span></p>
+---
+Wrapped string literals `sr` wraps multiple source strings in an uniform structure. There is no reason to delete a `sr` unless you want to de-allocate, referred data of the string. 
+---
 ### (Semi)Managed Strings
 !!!<p><span class="green-status">done</span></p>
 ---

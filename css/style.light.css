@@ -153,7 +153,6 @@ h6 {
     font-size: 1.5em;
 }
 
-
 .highlight {
     padding: 4px;
 }
@@ -846,3 +845,26 @@ span.linenos.special {
 }
 
 /* Literal.Number.Integer.Long */
+
+
+h1 {
+    line-height: 1.9em;
+}
+
+h2,
+h3,
+h3,
+h4,
+h5,
+h6 {
+    line-height: 1.6em;
+}
+
+ul {
+    margin-left: 1.3em;
+}
+
+ul > li {
+    margin-left: 0.15em;
+}
+

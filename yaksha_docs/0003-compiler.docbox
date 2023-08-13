@@ -107,7 +107,7 @@ int main(void) { return (int) yy__main(); }
 !!!<p><span class="yellow-status">in progress</span></p>
 ---
 !!
-<div class="banner-image"><img alt="Import Analyzer" src="images/yk-imports.png" style="max-width: 100%;" /></div>
+<img alt="Import Analyzer" src="images/yk-imports.png" style="max-width: 100%;" />
 !!
 *Analyzes imports.
 *Parses imported files.
@@ -198,8 +198,6 @@ int main(void) { return (int) yy__main(); }
 ;If you stack few giants, you can stand very tall on top of them.
 *`sds` - Salvatore Sanfilippo's string library. (Needed a patch to support MSVC 2019)
 *`stb` - Single header libraries by Sean Barrett.
-*`sokol` - Useful single header libraries by Andre Weissflog. 
-*`nuklear` - Single header immediate mode UI library by Micha Mettke.
 *`libs` -  Mattias Gustavsson's single header C libraries.
 *`utf8proc` - UTF-8 library - Jan Behrens, Public Software Group and Julia developers.
 ;!<br />

@@ -621,8 +621,10 @@ class DocBoxFile:
                 level, text = count_and_strip(stripped_line, "#")
                 num = self._num_gen.generate(level)
                 id_ = self._id_gen.generate(text)
-                # Title just uses HTML escape, no need for fancy markdown for titles
-                token = Token(TokenType.HEADER, html.escape(text), text, level)
+                mk_header = markdown.markdown(text)
+                if mk_header.startswith("<p>") and mk_header.endswith("</p>"):
+                    mk_header =  mk_header[3:-4]
+                token = Token(TokenType.HEADER, mk_header, text, level)
                 token.header_id = id_
                 token.header_num = num
                 token.header_indent = "&nbsp;" * ((len(num) // 2) - 1)
