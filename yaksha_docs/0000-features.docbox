@@ -7,7 +7,34 @@
 ### Wrapped String References
 !!!<p><span class="green-status">done</span></p>
 ---
-Wrapped string literals `sr` wraps multiple source strings in an uniform structure. There is no reason to delete a `sr` unless you want to de-allocate, referred data of the string. 
+Wrapped string literals `sr` wraps multiple source strings in an uniform structure. There is no reason to delete a `sr` unless you want to de-allocate, referred data of the string.
+
+You can add two `sr` using `+` operator. However, resulting value will be of type `str`, as memory allocation is required. It is recommended to use a string buffer for concatenating a string.
+
+```yaksha
+a: sr = "A"
+b: sr = "B"
+c = a + b
+# Type of c would be str
+```
+
+Type inference during creating a variable will create a value of `sr` type whenever `"string literal"` is used on RHS.
+
+```yaksha
+my_sr = "Hello World"
+another_sr: sr = "Hello World"
+```
+---
+### String literals
+!!!<p><span class="green-status">done</span></p>
+---
+Internally string literals such as `"hello world"` are neither `str` or `sr`. They utilize a hidden data type `:s:` for string literal. 
+
+String literals are efficient and does not require any additional memory allocation.
+
+If you `+` two string literals that will be done at compile time.
+
+String literals are automatically converted to `sr` or `str`.
 ---
 ### (Semi)Managed Strings
 !!!<p><span class="green-status">done</span></p>
@@ -412,6 +439,8 @@ def main() -> int:
 * ✅ `filter(Array[T],Function[In[T,V],Out[bool]],V) -> Array[T]` - Create a new array with filtered elements based on return value of given function
 * ✅ `map(Array[T],Function[In[T,V],Out[K]],V) -> Array[K]` - Create a new array with result of given function
 * ✅ `binarydata("data") -> Const[Ptr[Const[u8]]]` - Create constant binary data (must pass in a string literal). Returns `Const[Ptr[Const[u8]]]` that does not need to be deleted.
+* ✅ `make("T") -> Ptr[T]` - Allocate a single object.
+* ✅ `inlinec("T", "code") -> T` - Inline `C` code resulting in `T` data type. Example - `inlinec("int", "sizeof(char)")`
 ;Builtin functions may call different implementations based on input.
 ---
 ## Non primitive data types
@@ -570,8 +599,8 @@ All below listed functions are available at the moment.
 * `magic_dot` - wrapper around `map_get` and `access_module` (supports both type of objects) to read a value. Special syntax sugar `symbol1::symbol2` expands to `(magic_dot symbol1 symbol2)`
 * `io_read_file`, `io_write_file`, `print`, `println`, `input` - I/O functions
 * `def/define` - define an undefined value in current environment with a given symbol.
-* `set` - update an already defined value
-* `=` - combination of `set` and `def`. try to `def` and if it fails use `set`.
+* `setq` - update an already defined value
+* `=` - combination of `setq` and `def`. try to `def` and if it fails use `setq`.
 * `quote` - create a list with non-evaluated expressions parsed as arguments. This has a somewhat-similar (but not 100% similar) effect to `{}`
 * `list` - create a list with all arguments to list function evaluated.
 * `eval`, `parse`, `repr` - evaluate a list or single expression, parse to q-expression, convert values to strings.
@@ -588,11 +617,11 @@ All below listed functions are available at the moment.
 ---
 ### Macro environments
 
-Inside Yaksha a root (known as builtins_root) environment is created. It will house builtin functions and results of executing prelude code.
+Inside Yaksha a root (known as `builtins_root`) environment is created. It will house builtin functions and results of executing prelude code.
 
-A single .yaka file in imports (or current compiled file) will have their own root environment that is a child of builtins_root.
+A single `.yaka` file in imports (or current compiled file) will have their own root environment that is a child of `builtins_root`.
 
-During garbage collection, mark phase will start marking from builtins_root and file level roots.
+During garbage collection, mark phase will start marking from `builtins_root` and file level roots.
 
 Environment is an unordered_map with string keys. Environments and maps use same data type internally.
 ---
