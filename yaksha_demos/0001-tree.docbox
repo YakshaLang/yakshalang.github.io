@@ -72,7 +72,8 @@ def main() -> int:
 ```
 !!!</details>
 ---
-!!!<details open><summary>Show Demo</summary>
+!!!<a href="/static_demos/tree/wind_tree.html" target="_blank">Show demo in a new tab</a>
+!!!<details open><summary>Show demo inline</summary>
 !!!<iframe src="/static_demos/tree/wind_tree.html" width="100%" height="700px" style="border:none;">&nbsp</iframe>
 !!!</details>
 ---
