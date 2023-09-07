@@ -10,10 +10,10 @@
 Yaksha programming language does not offer a `for` syntax sugar. This is annoying for someone coming from Python or other languages that has this feature. 
 We have `foreach` builtin and `while` loop, which can be used at the moment. `for` can make certain things easy.
 
-
 ### Use case 1 - for each element in array ✅
 
 How it works now
+
 ```python
 items: Array[int] = get_it()
 
@@ -55,7 +55,6 @@ while yy__2t < yy__3t:
     yy__2t += 1               # Increase count at the very end
 ```
 
-
 ### Use case 2 - endless loops ✅
 
 Syntax sugar
@@ -81,7 +80,7 @@ Syntax sugar
 ```python
 def next_book(x: Books) -> Book:
     pass
-  
+
 def has_next_book(x: Books) -> bool:
     pass
 
@@ -92,7 +91,7 @@ def process() -> None:
         print_book(element)
 ```
 
-### Use case 4 - range for loops ⚠️(deferred at this step)
+### Use case 4 - range for loops ⚠️(not required a we have c-like for loops)
 
 Syntax sugar
 
@@ -133,4 +132,4 @@ while hidden__c < r[1]:
 
 Iterators/Ranges are deferred for now. It would be better to come up with a generic `Iterator` approach for these.
 
-At the moment I think endless loops and simple foreach style loops should be implemented.
+At the moment I think endless loops and simple for-each style loops should be implemented.

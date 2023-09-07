@@ -51,6 +51,7 @@ def something() -> int:
 This does not copy the value, but make it annoying to use the API as now we need to access this as `something()`.
 
 ## Suggestions
+
 ### Suggestion 1
 
 ```python
@@ -65,7 +66,7 @@ nativexp """1 + 1""" as TWO: Const[int]
   - Clearly define that this is a native expression
 - Con:
   - Looks different
-  
+
 ### Suggestion 2
 
 ```python
@@ -83,6 +84,7 @@ TWO: Const[int] = ccode """1 + 1"""
 ```python
 TWO: Const[int] <- nativexp """1 + 1"""
 ```
+
 - Pro:
   - Clearly define that this is a native expression
 - Con:
@@ -104,6 +106,7 @@ nativexp """1 + 1""" -> TWO: Const[int]
 ```python
 TWO: Const[int] = nativexp """1 + 1"""
 ```
+
 - Pro:
   - Consistent syntax
   - Clearly define that this is a native expression (ccode)

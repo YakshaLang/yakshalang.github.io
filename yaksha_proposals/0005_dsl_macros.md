@@ -32,7 +32,7 @@ Use YakshaLisp as it's own programming language.
 ### DSL macros
 
 DSL macros get a list of tokens and outputs a list of tokens. This allows for more complex logic to be written in YakshaLisp macros.
- 
+
 Any DSL macro inside `{}` will be also expanded. 
 
 Most nested macro invocation will be expanded first. These macros can call other macros as you call a function and support iteration and recursion. These macros will only be expanded once.
@@ -82,7 +82,6 @@ macros!{
 def main() -> int:
     println(fizzbuzz!{})
     return 0
-
 ```
 
 ## Item 2 - Hygienic DSL macros using `gensym` ✅ and `metagensym` 🟡
@@ -100,7 +99,6 @@ Other than that it is similar to a `defun`. Metamacros are executed similarly to
 If you consider just YakshaLisp as it's own language, this allows you to meta program in YakshaLisp during runtime of YakshaLisp.
 
 * `(is_callable my_meta)` --> `false`, this is `true` only for `builtins`, `def`, `lambda`.
-
 
 ```python
 macros!{

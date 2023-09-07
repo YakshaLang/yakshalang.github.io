@@ -1,7 +1,7 @@
 # YAMA 0010 - Numbers auto casting when widening
 
 - Author(s): Bhathiya Perera
-- Status   : Draft
+- Status   : ✅
 
 Following casting is suggested for basic binary mathematical operations.
 
@@ -43,5 +43,4 @@ Bitwise operations would require manual casting to same data type.
 .'-------------V-V-.
 |       i16        |
 '------------------'
-
 ```

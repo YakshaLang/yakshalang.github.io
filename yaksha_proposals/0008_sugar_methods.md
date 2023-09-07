@@ -9,7 +9,7 @@
 struct Banana:
     color: int
     origin: int
-    
+
 def display(b: Ptr[Banana]) -> None:
     return
 
@@ -26,7 +26,7 @@ def main() -> int:
 class Banana:
     color: int
     origin: int
-    
+
 def display(b: Ptr[Banana]) -> None:
     return
 

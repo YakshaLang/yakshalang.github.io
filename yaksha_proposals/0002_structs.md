@@ -10,7 +10,7 @@ class Enemy:
     x: int
     y: int
     hit_points: int
-    
+
 def main() -> int:
     enemies: Array[Enemy] = arrnew("Enemy", 2)
     enemies[0] = Enemy()
@@ -39,7 +39,7 @@ class Enemy:
   - Does not introduce a new keyword
 - Con:
   - No way to tell that this get allocated in stack?
-  
+
 ### Suggestion 2
 
 ```python
@@ -49,6 +49,7 @@ class Enemy:
     y: int
     hit_points: int
 ```
+
 - Pro:
   - Consistent syntax
   - Does not introduce a new keyword
@@ -88,6 +89,7 @@ class Enemy:
 # And use that for this purpose
 Enemy() # This is disallowed. Just create a variable and you can use it.
 ```
+
 - Pro:
   - Defines that this is different from a normal class
   - Clearly visible that this get allocated on stack

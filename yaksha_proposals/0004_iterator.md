@@ -9,15 +9,14 @@
 
 We would like to introduce support for iterators, such that it allows Yaksha to simply iterate arbitrary content. 
 
-
-### Use case 1 - custom iterators / iterables 
+### Use case 1 - custom iterators / iterables
 
 Syntax sugar
 
 ```python
 def next_book(x: Ptr[Books]) -> Book:
     pass
-  
+
 def has_next_book(x: Ptr[Books]) -> bool:
     pass
 
@@ -36,13 +35,13 @@ Desugared
 ```python
 def next_book(x: Ptr[Books]) -> Book:
     pass
-  
+
 def has_next_book(x: Ptr[Books]) -> bool:
     pass
 
 def process() -> None:
     books: Books = get_it()
-    
+
     it: Tuple[Books, .., ..]
     it[0] = books
     it[1] = next_book
@@ -53,8 +52,7 @@ def process() -> None:
         print_book(element)
 ```
 
-
-### Use case 2 - range for loops 
+### Use case 2 - range for loops
 
 Syntax sugar
 

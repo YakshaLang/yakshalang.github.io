@@ -3,7 +3,6 @@
 - Author(s): Bhathiya Perera
 - Status   : Draft
 
-
 Strings in programming languages are tough to design. You can make things simple by using it like a value type (Copying and deleting it). However, value like strings come at a cost as it does large number of alloc/dealloc resulting in fragmented memory. In WASM4 or embedded (potential future scenario) cases, this kind of alloc/dealloc is not acceptable.
 
 This is an all or nothing proposal. Need to support all scenarios explained below. After this is completed, libs/runtime needs to rewritten to use new `sr` data type instead of `str` data type.
@@ -75,6 +74,7 @@ First we assume we have something like below defined, that takes the new data ty
 `literal` is a hidden data type -- this cannot be used by end users directly. (Internally represented as `:s:`)
 
 #### Legend
+
 * ✅ - Completed
 * N - No allocation should happen here (except in Windows due to need to convert to utf16).
 * A - Alloc/Dealloc happens
