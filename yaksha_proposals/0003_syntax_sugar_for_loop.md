@@ -14,7 +14,7 @@ We have `foreach` builtin and `while` loop, which can be used at the moment. `fo
 
 How it works now
 
-```python
+```yaksha
 items: Array[int] = get_it()
 
 c: int = 0
@@ -30,7 +30,7 @@ while c < length:
 
 Syntax sugar (we will keep compulsory data types for now)
 
-```python
+```yaksha
 for item: int in get_it(): # get_it should return Array[T]
     if item == 2:
         continue
@@ -39,7 +39,7 @@ for item: int in get_it(): # get_it should return Array[T]
 
 Desugared 
 
-```python
+```yaksha
 yy__1t: Array[int] = get_it()
 yy__2t: int = 0
 yy__3t: int = len(yk__1t)
@@ -59,7 +59,7 @@ while yy__2t < yy__3t:
 
 Syntax sugar
 
-```python
+```yaksha
 for:
     game_step()
     log_stuff()
@@ -67,7 +67,7 @@ for:
 
 Desugared
 
-```python
+```yaksha
 while True:
     game_step()
     log_stuff()
@@ -77,7 +77,7 @@ while True:
 
 Syntax sugar
 
-```python
+```yaksha
 def next_book(x: Books) -> Book:
     pass
 
@@ -95,7 +95,7 @@ def process() -> None:
 
 Syntax sugar
 
-```python
+```yaksha
 # Example 1
 r: Range[int] = range(1, 5, 2)
 for i: int in r:
@@ -112,7 +112,7 @@ for i: int in range(1, 5, 2):
 
 Desugared
 
-```python
+```yaksha
 r: Tuple[int, int, int]
 r[0] = 1
 r[1] = 5

@@ -11,7 +11,7 @@ Macros allow for compile time code generation. Yaksha already supports multiple 
 
 ## Proposal
 
-YakshaLisp would be a language of it's own. Capable of executing at compile time of Yaksha (and also as a command line interpreter).
+YakshaLisp would be a language of its own. Capable of executing at compile time of Yaksha (and also as a command line interpreter).
 
 ### WHY?
 
@@ -20,11 +20,11 @@ YakshaLisp would be a language of it's own. Capable of executing at compile time
 * Token list to token list transformation is a good fit for lisp.
 * Simplest form of syntax to learn.
 * Yak-shaving is fun. (Did you see what I did there? 😄)
-* Feels nicer and user friendly than `C` macros and `@nativexxx` in Yaksha.
+* Feels nicer and user-friendly than `C` macros and `@nativexxx` in Yaksha.
 
 ### Command line interpreter
 
-Use YakshaLisp as it's own programming language.
+Use YakshaLisp as its own programming language.
 
 * `yaksha lisp` - Run YakshaLisp interpreter REPL (Just YakshaLisp code, no macros!{} required) 
 * `yaksha lisp <file>` - Execute just YakshaLisp code. (Don't use macros!{} here)
@@ -61,7 +61,7 @@ Most nested macro invocation will be expanded first. These macros can call other
 
 ## Item 1 - Initial DSL macro support ✅
 
-```python
+```yaksha
 # ╔═╗┌─┐┌┬┐┌─┐┬┬  ┌─┐  ╔╦╗┬┌┬┐┌─┐
 # ║  │ ││││├─┘││  ├┤    ║ ││││├┤
 # ╚═╝└─┘┴ ┴┴  ┴┴─┘└─┘   ╩ ┴┴ ┴└─┘
@@ -100,7 +100,7 @@ If you consider just YakshaLisp as it's own language, this allows you to meta pr
 
 * `(is_callable my_meta)` --> `false`, this is `true` only for `builtins`, `def`, `lambda`.
 
-```python
+```yaksha
 macros!{
     (metamacro twice (x) (+ (list x) (list x)))
     # since x is an expression (non evaluated), it can be converted to {}
@@ -128,7 +128,7 @@ def main() -> int:
 
 ## Item 4 - Import macros from other files ✅
 
-```python
+```yaksha
 import libs.macro as m
 macros!{
     (enable_print)
@@ -143,7 +143,7 @@ def main() -> int:
 
 Will be disabled by default. Can be enabled by a setting a flag in `yaksha.toml` or setting an environment variable `YAKSHA_SERIOUSLY_ENABLE_SHELL_EXEC` to `True`.
 
-```python
+```yaksha
 import libs.macro.shell as m
 
 def main() -> int:

@@ -13,7 +13,7 @@ We would like to introduce support for iterators, such that it allows Yaksha to 
 
 Syntax sugar
 
-```python
+```yaksha
 def next_book(x: Ptr[Books]) -> Book:
     pass
 
@@ -32,7 +32,7 @@ def process() -> None:
 
 Desugared
 
-```python
+```yaksha
 def next_book(x: Ptr[Books]) -> Book:
     pass
 
@@ -56,7 +56,7 @@ def process() -> None:
 
 Syntax sugar
 
-```python
+```yaksha
 # Example 1
 r: Iterator[int] = range(1, 5, 2)
 for i: int in r:
@@ -73,7 +73,7 @@ for i: int in range(1, 5, 2):
 
 Desugared
 
-```python
+```yaksha
 r: Tuple[Tuple[int, int, int, int], .., ..]
 yy__1t: Tuple[int, int, int, int]
 yy__1t[0] = 1       # start

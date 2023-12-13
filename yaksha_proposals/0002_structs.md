@@ -5,7 +5,7 @@
 
 ## Problem
 
-```python
+```yaksha
 class Enemy:
     x: int
     y: int
@@ -26,7 +26,7 @@ Keep in mind that the Tuple's in Yaksha are mutable (Mutable `Tuple`s are what w
 
 ### Suggestion 1
 
-```python
+```yaksha
 @namedtuple
 class Enemy:
     x: int
@@ -42,7 +42,7 @@ class Enemy:
 
 ### Suggestion 2
 
-```python
+```yaksha
 @dataclass
 class Enemy:
     x: int
@@ -60,7 +60,7 @@ class Enemy:
 
 ### Suggestion 3
 
-```python
+```yaksha
 class Enemy:
     x: int
     y: int
@@ -79,7 +79,7 @@ new Enemy() # << allocate on heap
 
 ### Suggestion 4 ✅
 
-```python
+```yaksha
 @onstack
 class Enemy:
     x: int

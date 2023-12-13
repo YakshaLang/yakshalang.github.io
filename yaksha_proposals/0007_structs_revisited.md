@@ -5,7 +5,7 @@
 
 Structures are at the moment can be created as follows
 
-```python
+```yaksha
 @onstack
 class Banana:
     color: int
@@ -19,7 +19,7 @@ class Orange:
 
 ## Item 1 - Allocate single object on heap
 
-```python
+```yaksha
 a: Ptr[Banana] = make("Banana")
 
 b: Orange = make("Orange")
@@ -27,7 +27,7 @@ b: Orange = make("Orange")
 
 ## Item 2 - Create structures or classes ✅
 
-```python
+```yaksha
 a: Banana = Banana {color: YELLOW, origin: SRI_LANKA}
 ```
 
@@ -35,7 +35,7 @@ a: Banana = Banana {color: YELLOW, origin: SRI_LANKA}
 struct Banana a = (struct Banana){.color = YELLOW, .origin = SRI_LANKA};
 ```
 
-```python
+```yaksha
 b: Orange = Orange {color: ORANGE, origin: SOUTH_AFRICA} 
 ```
 
@@ -49,7 +49,7 @@ struct Orange* b = _temp;
 
 ## Item 3 - Introduce `struct` keyword, desugar to `@onstack class` ✅
 
-```python
+```yaksha
 struct Banana:
     color: int
     origin: int

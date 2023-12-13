@@ -184,7 +184,7 @@ def main() -> int:
 
 #### Comparison of `literal`s (`"a" == "a"`) --> `bool` ✅
 
-```
+```yaksha
 def main() -> int:
     println("a" == "a")          # AC  
     println("a" == "b")          # AC
@@ -195,7 +195,7 @@ def main() -> int:
 
 #### Comparison of mixed `str`, `sr` and `literal`s --> `bool` ✅
 
-```
+```yaksha
 def main() -> int:
     a: str = "a"                 # N 
     b: sr = "oi"                 # A
@@ -229,7 +229,7 @@ def main() -> int:
 
 #### Compare with None ✅
 
-```
+```yaksha
 def main() -> int:
     a: sr = "a"                  # N
     b: str = "b"                 # A 

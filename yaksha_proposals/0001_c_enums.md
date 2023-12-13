@@ -33,7 +33,7 @@ Currently we can use something like
 
 <!-- Note using Python for syntax highlighting, below is Yaksha code -->
 
-```python
+```yaksha
 SOMETHING: Const[int] = 0
 ANOTHER: Const[int] = 1
 ```
@@ -42,7 +42,7 @@ This however make it annoying to maintain, as we now have a copy of the enum val
 
 We can use below as well.
 
-```python
+```yaksha
 @nativemacro("SOMETHING")
 def something() -> int:
     pass
@@ -54,7 +54,7 @@ This does not copy the value, but make it annoying to use the API as now we need
 
 ### Suggestion 1
 
-```python
+```yaksha
 # Expose enum value / #define value
 nativexp "SOMETHING" as SOMETHING: Const[int]
 
@@ -69,7 +69,7 @@ nativexp """1 + 1""" as TWO: Const[int]
 
 ### Suggestion 2
 
-```python
+```yaksha
 TWO: Const[int] = ccode """1 + 1"""
 ```
 
@@ -81,7 +81,7 @@ TWO: Const[int] = ccode """1 + 1"""
 
 ### Suggestion 3
 
-```python
+```yaksha
 TWO: Const[int] <- nativexp """1 + 1"""
 ```
 
@@ -92,7 +92,7 @@ TWO: Const[int] <- nativexp """1 + 1"""
 
 ### Suggestion 4
 
-```python
+```yaksha
 nativexp """1 + 1""" -> TWO: Const[int]
 ```
 
@@ -103,7 +103,7 @@ nativexp """1 + 1""" -> TWO: Const[int]
 
 ### Suggestion 5
 
-```python
+```yaksha
 TWO: Const[int] = nativexp """1 + 1"""
 ```
 

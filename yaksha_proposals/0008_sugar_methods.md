@@ -5,7 +5,7 @@
 
 ## Idea 01 - Arrow
 
-```python
+```yaksha
 struct Banana:
     color: int
     origin: int
@@ -21,7 +21,7 @@ def main() -> int:
 
 ## Idea 02 - Dot ✅
 
-```python
+```yaksha
 @onstack
 class Banana:
     color: int
@@ -39,6 +39,6 @@ def main() -> int:
 If `@onstack` or `struct` then we need to use `Ptr[DataType]` otherwise `DataType` can be used. 
 Going with `.` as it is already valid AST. Additionally, we can find the method during `type checking` and desugar it.
 
-```python
+```yaksha
 display(getref(b))
 ```
