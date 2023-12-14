@@ -14,6 +14,8 @@ From the point of view of `Yaksha` language. `YakshaLisp` exist only during the 
 
 Before we take a look at how to write macros, we need to understand how YakshaLisp works.
 
+You can execute YakshaLisp REPL by running `yaksha lisp` command. (This is a very simple REPL)
+
 ## Defining and setting a value
 
 ```yaksha
@@ -28,6 +30,12 @@ Shortcut.
 (= a 1)   # <--- def or setq
 ```
 
+## S-expressions
+
+```yaksha
+(def a 1)  # <--- this is an S-expression
+```
+
 ## Q-expressions
 
 ```yaksha
@@ -36,5 +44,30 @@ Shortcut.
 (== a b) # <---- truthy
 ```
 
-Q-expressions are inspired by the make your own lisp book's Q expressions. (However, we also do have special forms)
+Q-expressions are inspired by the make your own lisp. (However, we also do have special forms). 
 
+### Difference between `list`, `quote` and `Q-Expressions`
+
+```yaksha
+(def a (list 1 2 3)) # <--- a is created with `list`
+(def b {1 2 3})      # <--- b created with `{}`
+(def c (quote 1 2 3))# <--- c is created with `quote`
+(== a b)             # <--- ==/!= type mismatch
+(== b c)             # <--- truthy
+(== (map eval b) a)  # <--- truthy
+```
+
+Individual elements in Q-expressions are not evaluated. However, if you want to evaluate them, you can use `eval` function with `map` function.
+
+`(quote ...)` is same as `{...}`. However, `quote` is a function with a special form.
+
+```yaksha
+(map eval {(+ 0 1) (+ 1 1) (+ 1 2)}) # <---- {1 2 3}
+```
+
+## Builtin values
+
+* `nil` - falsey value, it is same as `{}`
+* `true` - truthy value, it is same as `1`
+* `false` - falsey value, it is same as `0`
+* `newline` - newline character, either `"\r\n"` or `"\n"`
