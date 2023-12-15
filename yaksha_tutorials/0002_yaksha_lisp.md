@@ -18,7 +18,7 @@ You can execute YakshaLisp REPL by running `yaksha lisp` command. (This is a ver
 
 ### Defining and setting a value
 
-```yaksha
+```scheme
 (def a 1)  # <--- a is initialized to 1
 (setq a 2) # <--- a value is changed to 2 
            # a is now set to 2
@@ -26,19 +26,19 @@ You can execute YakshaLisp REPL by running `yaksha lisp` command. (This is a ver
 
 Shortcut.
 
-```yaksha
+```scheme
 (= a 1)   # <--- def or setq
 ```
 
 ### S-expressions
 
-```yaksha
+```scheme
 (def a 1)  # <--- this is an S-expression
 ```
 
 ### Q-expressions
 
-```yaksha
+```scheme
 (def a (quote 1 2 3))
 (def b {1 2 3})
 (== a b) # <---- truthy
@@ -48,7 +48,7 @@ Q-expressions are inspired by the make your own lisp. (However, we also do have 
 
 #### Difference between `list`, `quote` and `Q-Expressions`
 
-```yaksha
+```scheme
 (def a (list 1 2 3)) # <--- a is created with `list`
 (def b {1 2 3})      # <--- b created with `{}`
 (def c (quote 1 2 3))# <--- c is created with `quote`
@@ -74,7 +74,7 @@ Individual elements in Q-expressions are not evaluated. However, if you want to 
 
 ### Simple builtins
 
-```yaksha
+```scheme
 (def a (+ 1 2)) # <----- a is 3
 (def b (- 2 1)) # <----- b is 1
 (def c (* 2 3)) # <----- c is 6
@@ -83,7 +83,7 @@ Individual elements in Q-expressions are not evaluated. However, if you want to 
 
 ### Comparison builtins
 
-```yaksha
+```scheme
 (def a (== 1 1)) # <----- a is true
 (def b (!= 1 1)) # <----- b is false
 (def c (< 1 2))  # <----- c is true
@@ -94,7 +94,7 @@ Individual elements in Q-expressions are not evaluated. However, if you want to 
 
 ### Logical builtins
 
-```yaksha
+```scheme
 (def a (and true true))  # <----- a is true
 (def b (and true false)) # <----- b is false
 (def c (or true false))  # <----- c is true
@@ -105,7 +105,7 @@ Individual elements in Q-expressions are not evaluated. However, if you want to 
 
 ### If builtin
 
-```yaksha
+```scheme
 (def a (if true 1 2)) # <----- a is 1
 (def b (if false 1 2))# <----- b is 2
 (def c (if true 1))   # <----- c is 1
