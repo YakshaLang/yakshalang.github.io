@@ -53,7 +53,7 @@ Most nested macro invocation will be expanded first. These macros can call other
 * Q-Expressions inspired by [Build Your Own Lisp](http://www.buildyourownlisp.com/) lisp dialect. ✅ (This is somewhat similar to `'(+ 1 2 3)`)
 * Eval and parse ✅
 * Token generation for Yaksha ✅
-* Executing commands ❌ (not started, planned) - Will be disabled by default.
+* Executing commands 🟡 (Implemented. however, this is enabled all the time)
 * Macros for YakshaLisp ✅
 * Imports ✅
 * Hygienic macros - gensym ✅ / metagensym 🟡
@@ -139,7 +139,7 @@ def main() -> int:
     return 0
 ```
 
-## Item 5 - Execute commands (not started, planned) ❌
+## Item 5 - Execute commands 🟡
 
 Will be disabled by default. Can be enabled by a setting a flag in `yaksha.toml` or setting an environment variable `YAKSHA_SERIOUSLY_ENABLE_SHELL_EXEC` to `True`.
 

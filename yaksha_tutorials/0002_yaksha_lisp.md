@@ -10,7 +10,7 @@
 From the point of view of `Yaksha` language. `YakshaLisp` exist only during the compilation phase. Most of the programming languages consist of a DSL that acts as the meta programming layer. Think `YakshaLisp` as such DSL that exist to generate code.
 
 
-## YakshaLisp
+## YakshaLisp basics
 
 Before we take a look at how to write macros, we need to understand how YakshaLisp works.
 
@@ -71,3 +71,66 @@ Individual elements in Q-expressions are not evaluated. However, if you want to 
 * `true` - truthy value, it is same as `1`
 * `false` - falsey value, it is same as `0`
 * `newline` - newline character, either `"\r\n"` or `"\n"`
+
+### Simple builtins
+
+```yaksha
+(def a (+ 1 2)) # <----- a is 3
+(def b (- 2 1)) # <----- b is 1
+(def c (* 2 3)) # <----- c is 6
+(def d (/ 6 2)) # <----- d is 3
+```
+
+### Comparison builtins
+
+```yaksha
+(def a (== 1 1)) # <----- a is true
+(def b (!= 1 1)) # <----- b is false
+(def c (< 1 2))  # <----- c is true
+(def d (> 1 2))  # <----- d is false
+(def e (<= 1 2)) # <----- e is true
+(def f (>= 1 2)) # <----- f is false
+```
+
+### Logical builtins
+
+```yaksha
+(def a (and true true))  # <----- a is true
+(def b (and true false)) # <----- b is false
+(def c (or true false))  # <----- c is true
+(def d (or false false)) # <----- d is false
+(def e (not true))       # <----- e is false
+(def f (not false))      # <----- f is true
+```
+
+### If builtin
+
+```yaksha
+(def a (if true 1 2)) # <----- a is 1
+(def b (if false 1 2))# <----- b is 2
+(def c (if true 1))   # <----- c is 1
+(def d (if false 1))  # <----- d is nil (same as {})
+```
+
+## DSL macros
+
+Currently YakshaLisp can be used to write DSL macros. In this tutorial we will go through how to write a simple DSL macro.
+
+```yaksha
+macros! {
+    # Get an integer_decimal token 7
+    (defun ymacro_get () (list (ykt_integer_decimal 7)))
+    # create a DSL macro named get! that executes above (defun ymacro_get...) function
+    (yk_register {dsl get ymacro_get})
+}
+
+def main() -> int:
+    e1 = array("int", 4, 5, 6, get!{})
+    for i: int in e1:
+        println(i)
+    del e1
+    return 0
+
+```
+
+This should print 4, 5, 6, 7 in individual lines. `yk_register` is a builtin function that registers a DSL macro. `dsl` is the type of the macro. `get` is the name of the macro. `ymacro_get` is the `YakshaLisp` function that executes when the macro is called.
