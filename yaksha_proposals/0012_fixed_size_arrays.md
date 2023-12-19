@@ -1,11 +1,11 @@
-# YAMA 0012 - Static arrays
+# YAMA 0012 - Fixed size arrays
 
 - Author(s): Bhathiya Perera
 - Status   : Draft
 
-Static arrays are an important feature in C. Allowing us to create arrays in the stack and pass them around without worrying about memory management. This is a proposal to add static arrays to Yaksha.
+Fixed size arrays are an important feature in C. Allowing us to create arrays in the stack and pass them around without worrying about memory management. This is a proposal to add static arrays to Yaksha.
 
- Problem with arrays in C is that it decays to pointers. This is a problem when passing arrays to functions. And we need to pass the size of the array as well. Another problem is array size is not considered part of the data type (as it decays, information is lost).
+Problem with arrays in C is that it decays to pointers. This is a problem when passing arrays to functions. And we need to pass the size of the array as well. Another problem is array size is not considered part of the data type (as it decays, information is lost).
  
 So in Yaksha I would prefer to have a data type that mentions the size of the array as well. `FixedArr[u8,10]` would be different from `FixedArr[u8,20]`. 
 
