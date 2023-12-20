@@ -1,0 +1,94 @@
+{
+	"patterns": [
+		{
+			"name": "string.quoted.double.yaksha",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.yaksha",
+					"match": "\\\\."
+				}
+			]
+		},
+		{
+			"name": "comment",
+			"begin": "(^[ \\t]+)?(?=#)",
+			"end": "(?!\\G)",
+			"patterns": [
+				{
+					"begin": "#",
+					"end": "\\n",
+					"name": "comment.line.number-sign.yaksha"
+				}
+			]
+		},
+		{
+			"name": "constant.numeric.integer.decimal.yaksha",
+			"match": "\\b([1-9]+[0-9]*|0)"
+		},
+		{
+			"name": "constant.language.yaksha",
+			"match": "\\b(True|False|None)\\b"
+		},
+		{
+			"name": "keyword.language.yaksha",
+			"match": "\\b(while|def|import|continue|break|if|elif|else|class|struct|return|pass|as|for|in|macros)\\b"
+		},
+		{
+			"name": "invalid.spaces.yaksha",
+			"match": "^\\s+$"
+		},
+		{
+			"name": "keyword.deletion.related.yaksha",
+			"match": "\\b(defer|del)\\b"
+		},
+		{
+			"name": "keyword.native.related.yaksha",
+			"match": "\\b(ccode|runtimefeature)\\b"
+		},		
+		{
+			"name": "entity.name.type.yaksha",
+			"match": "\\b(int|float|i8|i16|i32|i64|u8|u16|u32|u64|float|f32|f64|Array|Function|In|Const|AnyPtr|Out|SMEntry|MEntry|str|bool|Ptr|Tuple|AnyPtrToConst)\\b"
+		},
+		{
+			"name": "support.function.yaksha",
+			"match": "\\b(print|println|len|arrput|arrpop|arrnew|array|getref|unref|charat|shnew|shput|shget|shgeti|hmnew|hmput|hmget|hmgeti|cast|qsort|iif|foreach|countif|filter|map|binarydata|arrsetlen|arrsetcap)\\b"
+		},
+		{
+			"name": "keyword.decorator.yaksha",
+			"match": "@\\s*(nativedefine|varargs|onstack|nativemacro|native)"
+		},
+		{
+			"name": "keyword.operator.yaksha",
+			"match": "\\.|\\+|\\-|\\*|\\\/|\\:|\\[|\\]|\\(|\\)|,|>|<|<\\=|>\\=|\\=\\=|\\=|\\bnot\\b|\\bor\\b|\\band\\b|!\\=|\\->|\\{|\\}|!"
+		},
+		{
+			"match": "^(class|struct)\\s+([a-zA-Z_][a-zA-Z0-9_]+)\\s*",
+			"captures": {
+				"1": {
+					"name": "keyword.language.yaksha"
+				},
+				"2": {
+					"name": "support.class.yaksha"
+				}
+			}
+		},
+		{
+			"match": "^(def)\\s+([a-zA-Z_][a-zA-Z0-9_]+)\\s*",
+			"captures": {
+				"1": {
+					"name": "keyword.language.yaksha"
+				},
+				"2": {
+					"name": "support.function.yaksha"
+				}
+			}
+		}
+	],
+	"repository": {
+
+
+	},
+	"scopeName": "source.yaksha"
+}
