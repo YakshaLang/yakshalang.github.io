@@ -1,3 +1,9 @@
+---
+title: Iterators
+author: Bhathiya Perera
+layout: '../../layouts/YamaPostLayout.astro'
+---
+
 # YAMA 0004 - Iterators
 
 - Author(s): Bhathiya Perera

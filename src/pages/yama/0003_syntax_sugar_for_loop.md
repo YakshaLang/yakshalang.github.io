@@ -1,3 +1,9 @@
+---
+title: For loop / loop
+author: Bhathiya Perera
+layout: '../../layouts/YamaPostLayout.astro'
+---
+
 # YAMA 0003 - For loop / loop
 
 - Author(s): Bhathiya Perera

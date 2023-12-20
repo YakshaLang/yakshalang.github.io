@@ -1,3 +1,9 @@
+---
+title: Numbers auto casting when widening
+author: Bhathiya Perera
+layout: '../../layouts/YamaPostLayout.astro'
+---
+
 # YAMA 0010 - Numbers auto casting when widening
 
 - Author(s): Bhathiya Perera

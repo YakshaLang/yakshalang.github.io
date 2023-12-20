@@ -1,3 +1,9 @@
+---
+title: Fixed size arrays
+author: Bhathiya Perera
+layout: '../../layouts/YamaPostLayout.astro'
+---
+
 # YAMA 0012 - Fixed size arrays
 
 - Author(s): Bhathiya Perera

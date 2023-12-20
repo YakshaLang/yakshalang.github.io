@@ -1,3 +1,9 @@
+---
+title: Sugar methods
+author: Bhathiya Perera
+layout: '../../layouts/YamaPostLayout.astro'
+---
+
 # YAMA 0008 - Sugar methods
 
 - Author(s): Bhathiya Perera

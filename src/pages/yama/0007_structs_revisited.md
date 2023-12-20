@@ -1,3 +1,9 @@
+---
+title: Additional features for structs
+author: Bhathiya Perera
+layout: '../../layouts/YamaPostLayout.astro'
+---
+
 # YAMA 0007 - Additional features for structs
 
 - Author(s): Bhathiya Perera

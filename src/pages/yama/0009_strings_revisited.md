@@ -1,3 +1,9 @@
+---
+title: Strings revisited
+author: Bhathiya Perera
+layout: '../../layouts/YamaPostLayout.astro'
+---
+
 # YAMA 0009 - Strings revisited
 
 - Author(s): Bhathiya Perera

@@ -1,3 +1,9 @@
+---
+title: Adding support for stack allocated structs
+author: Bhathiya Perera
+layout: '../../layouts/YamaPostLayout.astro'
+---
+
 # YAMA 0002 - Adding support for stack allocated structs
 
 - Author(s): Bhathiya Perera

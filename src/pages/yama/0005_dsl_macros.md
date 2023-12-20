@@ -1,3 +1,9 @@
+---
+title: DSL macros for Yaksha
+author: Bhathiya Perera
+layout: '../../layouts/YamaPostLayout.astro'
+---
+
 # YAMA 0005 - DSL macros for Yaksha
 
 - Author(s): Bhathiya Perera
