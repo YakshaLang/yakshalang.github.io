@@ -1,6 +1,8 @@
-# Getting started
-
-- Author(s): Bhathiya Perera
+---
+title: Getting started
+author: Bhathiya Perera
+layout: '../../layouts/TutorialLayout.astro'
+---
 
 ## Setting things up
 

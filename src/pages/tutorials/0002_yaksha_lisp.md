@@ -1,6 +1,8 @@
-# YakshaLisp and macros in Yaksha
-
-- Author(s): Bhathiya Perera
+---
+title: YakshaLisp and macros in Yaksha
+author: Bhathiya Perera
+layout: '../../layouts/TutorialLayout.astro'
+---
 
 `YakshaLisp` is the builtin macro processing system in the `Yaksha` language. In this tutorial we will go through `YakshaLisp` basics, some builtin functions and how you can use those.
 

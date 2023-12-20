@@ -1,0 +1,21 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const tutorials = await Astro.glob('./tutorials/*.md');
+---
+
+<Layout title="Yaksha | Tutorials">
+    <div class="flex justify-center text-center gap-8 pt-16 pb-8 px-8 md:px-0">
+        <div>
+            <h1 class="font-mono text-xl my-auto md:text-3xl">Tutorials</h1>
+            
+            <div class="divide-y divide-dotted pt-4">
+                {tutorials.map(tutorial => 
+                <a href={tutorial.url} class="flex flex-col gap-2 py-4 group">
+                    <h2 class="font-mono text-lg md:text-2xl group-hover:text-primary">{tutorial.frontmatter.title}</h2>
+                    <p class="font-mono text-sm md:text-base group-hover:text-secondary">{tutorial.frontmatter.author}</p>
+                </a>)}
+            </div>
+        </div>
+	</div>
+</Layout>
