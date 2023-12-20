@@ -1,8 +1,9 @@
 ---
 const pathname = new URL(Astro.request.url).pathname;
-
 const currentPageRegex = /\/yakshalang.github.io\/([^\/]*)/;
-const currentPath = currentPageRegex.exec(pathname)[1];
+
+const matches = currentPageRegex.exec(pathname);
+const currentPath = matches ? matches[1] : "";
 
 const activePageStyling = (path: string) => path == currentPath ? "text-secondary" : "";
 ---
