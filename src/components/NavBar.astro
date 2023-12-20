@@ -1,8 +1,9 @@
 ---
+import { Code } from 'astro:components';
 import Config from '../../astro.config.mjs'
 
 const pathname = new URL(Astro.request.url).pathname;
-const currentPath = pathname.slice(1);
+const currentPath = pathname.replace(Config.base, "").slice(1);
 
 const activePageStyling = (path: string) => path == currentPath ? "text-primary" : "";
 
