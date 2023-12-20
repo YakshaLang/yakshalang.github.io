@@ -11,6 +11,7 @@ export default defineConfig({
   integrations: [tailwind(), mdx()],
   markdown: {
     shikiConfig: {
+      wrap: true,
       langs: [{
         name: 'yaksha',
         scopeName: 'source.yaksha',
