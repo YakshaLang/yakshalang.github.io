@@ -8,7 +8,7 @@ const currentPath = matches ? matches[1] : "";
 const activePageStyling = (path: string) => path == currentPath ? "text-secondary" : "";
 ---
 
-<nav class="bg-base-100">
+<nav class="sticky top-0 bg-base-100 z-40 w-full">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <img src="/yakshalang.github.io/imgs/yk-banner1.png" class="h-12" alt="Yaksha Banner" />
 
@@ -21,7 +21,7 @@ const activePageStyling = (path: string) => path == currentPath ? "text-secondar
             </summary>
             <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
                 <li><a href="/yakshalang.github.io/">Home</a></li>
-                <li><a href="#">Lib</a></li>
+                <li><a href="/yakshalang.github.io/lib">Lib</a></li>
                 <li><a href="#">Docs</a></li>
                 <li><a href="/yakshalang.github.io/tutorials">Tutorials</a></li>
                 <li><a href="#">Demos</a></li>
@@ -35,7 +35,7 @@ const activePageStyling = (path: string) => path == currentPath ? "text-secondar
         <div class="hidden w-full md:block md:w-auto">
             <div class="flex rounded-lg space-x-4 text-lg">
                 <a href="/yakshalang.github.io/" class={`${activePageStyling("")} hover:text-primary`}>Home</a>
-                <a href="#" class={`${activePageStyling("lib")} hover:text-primary`}>Lib</a>
+                <a href="/yakshalang.github.io/lib" class={`${activePageStyling("lib")} hover:text-primary`}>Lib</a>
                 <a href="#" class={`${activePageStyling("docs")} hover:text-primary`}>Docs</a>
                 <div class="divider divider-horizontal divider-primary" />
                 <a href="/yakshalang.github.io/tutorials" class={`${activePageStyling("tutorials")} hover:text-primary`}>Tutorials</a>
