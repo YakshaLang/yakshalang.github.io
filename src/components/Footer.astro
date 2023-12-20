@@ -1,6 +1,10 @@
+---
+import Config from '../../astro.config.mjs'
+---
+
 <footer class="footer footer-center bg-base-100 text-base-content fill-base-content">
     <aside>
-        <img src="/imgs/yaksha_logo.png" class="w-24 mt-8" />
+        <img src={`${Config.base}/imgs/yaksha_logo.png`} class="w-24 mt-8" />
         <div>
             <p class="font-bold">Yaksha - The Programming Language</p>
         </div>
