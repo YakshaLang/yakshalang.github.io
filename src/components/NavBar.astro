@@ -1,0 +1,55 @@
+---
+const pathname = new URL(Astro.request.url).pathname;
+const currentPath = pathname.slice(1);
+
+const activePageStyling = (path: string) => path == currentPath ? "text-primary" : "";
+---
+
+<nav class="bg-base-100">
+    <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+        <img src="/imgs/yk-banner1.png" class="h-12" alt="Yaksha Banner" />
+
+        <!-- <button data-collapse-toggle="navbar-default" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-default" aria-expanded="false">
+            <span class="sr-only">Open main menu</span>
+            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+            </svg>
+        </button>
+ -->
+
+        <!-- For small devices use consise burger menu, basically just phones -->
+        <details class="dropdown dropdown-end md:hidden">
+            <summary class="m-1 btn">
+                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+                </svg>
+            </summary>
+            <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Lib</a></li>
+                <li><a href="#">Docs</a></li>
+                <li><a href="#">Tutorials</a></li>
+                <li><a href="#">Demos</a></li>
+                <li><a href="#">Playground</a></li>
+                <li><a href="#">YAMA</a></li>
+                <li><a href="#">Blog</a></li>
+            </ul>
+        </details>
+
+        <!-- For larger screen devices like desktops -->
+        <div class="hidden w-full md:block md:w-auto">
+            <div class="flex rounded-lg space-x-4 text-lg">
+                <a href="#" class={`${activePageStyling("")} hover:text-secondary`}>Home</a>
+                <a href="#" class={`${activePageStyling("lib")} hover:text-secondary`}>Lib</a>
+                <a href="#" class={`${activePageStyling("docs")} hover:text-secondary`}>Docs</a>
+                <div class="divider divider-horizontal divider-primary" />
+                <a href="#" class={`${activePageStyling("tutorials")} hover:text-secondary`}>Tutorials</a>
+                <a href="#" class={`${activePageStyling("demos")} hover:text-secondary`}>Demos</a>
+                <a href="#" class={`${activePageStyling("playground")} hover:text-secondary`}>Playground</a>
+                <div class="divider divider-horizontal divider-primary" />
+                <a href="#" class={`${activePageStyling("blog")} hover:text-secondary`}>Blog</a>
+                <a href="#" class={`${activePageStyling("yama")} hover:text-secondary`}>YAMA</a>
+            </div>
+        </div>
+    </div>
+</nav>
