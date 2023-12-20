@@ -1,6 +1,10 @@
-# New website structure
+---
+title: Initial Post
+author: Bhathiya Perera
+layout: '../../layouts/BlogPostLayout.astro'
+---
 
-* Author: Bhathiya Perera
+# New website structure
 
 ## Website
 
