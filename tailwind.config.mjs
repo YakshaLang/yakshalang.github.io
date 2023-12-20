@@ -7,13 +7,13 @@ export default {
 	plugins: [require("daisyui")],
 	daisyui: {
 		themes: [
-			// {
-			// 	dark: {
-			// 		...require("daisyui/src/theming/themes")["dark"],
-			// 		"primary": "#9a2036",
-			// 		"secondary": "#f9872e",
-			// 	},
-			// },
+			{
+				dark: {
+					...require("daisyui/src/theming/themes")["dark"],
+					"primary": "#9a2036",
+					"secondary": "#f9872e",
+				},
+			},
 			{
 				light: {
 					...require("daisyui/src/theming/themes")["light"],
