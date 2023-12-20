@@ -11,10 +11,10 @@ const posts = await Astro.glob('./blog/*.md');
             
             <div class="divide-y divide-dotted pt-4">
                 {posts.map(post => 
-                <a href={post.url} class="flex flex-col gap-2 py-4 hover:text-primary ">
+                <a href={post.url} class="flex flex-col gap-2 py-4 group">
                     {post.frontmatter.id}
-                    <h2 class="font-mono text-lg md:text-2xl">{post.frontmatter.title}</h2>
-                    <p class="font-mono text-sm md:text-base">{post.frontmatter.author}</p>
+                    <h2 class="font-mono text-lg md:text-2xl group-hover:text-primary">{post.frontmatter.title}</h2>
+                    <p class="font-mono text-sm md:text-base group-hover:text-secondary">{post.frontmatter.author}</p>
                 </a>)}
             </div>
         </div>

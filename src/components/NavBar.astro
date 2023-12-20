@@ -1,8 +1,10 @@
 ---
 const pathname = new URL(Astro.request.url).pathname;
-const currentPath = pathname.replace("/yakshalang.github.io/", "");
 
-const activePageStyling = (path: string) => path == currentPath ? "text-primary" : "";
+const currentPageRegex = /\/yakshalang.github.io\/([^\/]*)/;
+const currentPath = currentPageRegex.exec(pathname)[1];
+
+const activePageStyling = (path: string) => path == currentPath ? "text-secondary" : "";
 ---
 
 <nav class="bg-base-100">
@@ -31,16 +33,16 @@ const activePageStyling = (path: string) => path == currentPath ? "text-primary"
         <!-- For larger screen devices like desktops -->
         <div class="hidden w-full md:block md:w-auto">
             <div class="flex rounded-lg space-x-4 text-lg">
-                <a href="/yakshalang.github.io/" class={`${activePageStyling("")} hover:text-secondary`}>Home</a>
-                <a href="#" class={`${activePageStyling("lib")} hover:text-secondary`}>Lib</a>
-                <a href="#" class={`${activePageStyling("docs")} hover:text-secondary`}>Docs</a>
+                <a href="/yakshalang.github.io/" class={`${activePageStyling("")} hover:text-primary`}>Home</a>
+                <a href="#" class={`${activePageStyling("lib")} hover:text-primary`}>Lib</a>
+                <a href="#" class={`${activePageStyling("docs")} hover:text-primary`}>Docs</a>
                 <div class="divider divider-horizontal divider-primary" />
-                <a href="#" class={`${activePageStyling("tutorials")} hover:text-secondary`}>Tutorials</a>
-                <a href="#" class={`${activePageStyling("demos")} hover:text-secondary`}>Demos</a>
-                <a href="#" class={`${activePageStyling("playground")} hover:text-secondary`}>Playground</a>
+                <a href="#" class={`${activePageStyling("tutorials")} hover:text-primary`}>Tutorials</a>
+                <a href="#" class={`${activePageStyling("demos")} hover:text-primary`}>Demos</a>
+                <a href="#" class={`${activePageStyling("playground")} hover:text-primary`}>Playground</a>
                 <div class="divider divider-horizontal divider-primary" />
-                <a href="/yakshalang.github.io/blog" class={`${activePageStyling("blog")} hover:text-secondary`}>Blog</a>
-                <a href="#" class={`${activePageStyling("yama")} hover:text-secondary`}>YAMA</a>
+                <a href="/yakshalang.github.io/blog" class={`${activePageStyling("blog")} hover:text-primary`}>Blog</a>
+                <a href="#" class={`${activePageStyling("yama")} hover:text-primary`}>YAMA</a>
             </div>
         </div>
 
