@@ -12,8 +12,8 @@ let yakshaGrammar = await resp.json();
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://gdwr.github.io',
-  base: '/yakshalang.github.io',
+  site: 'https://yakshalang.github.io',
+  base: '/',
   integrations: [tailwind(), mdx()],
   markdown: {
     shikiConfig: {

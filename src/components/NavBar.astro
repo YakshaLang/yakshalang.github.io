@@ -2,7 +2,7 @@
 import LightSwitch from "./LightSwitch.astro";
 
 const pathname = new URL(Astro.request.url).pathname;
-const currentPageRegex = /\/yakshalang.github.io\/([^\/]*)/;
+const currentPageRegex = /\/([^\/]*)/;
 
 const matches = currentPageRegex.exec(pathname);
 const currentPath = matches ? matches[1] : "";
@@ -12,7 +12,7 @@ const activePageStyling = (path: string) => path == currentPath ? "text-secondar
 
 <nav class="sticky top-0 bg-base-100 z-40 w-full">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <img src="/yakshalang.github.io/imgs/yk-banner1.png" class="h-12" alt="Yaksha Banner" />
+        <img src="/imgs/yk-banner1.png" class="h-12" alt="Yaksha Banner" />
 
         <!-- For small devices use consise burger menu, basically just phones -->
         <details class="dropdown dropdown-end md:hidden">
@@ -22,30 +22,30 @@ const activePageStyling = (path: string) => path == currentPath ? "text-secondar
                 </svg>
             </summary>
             <ul class="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
-                <li><a href="/yakshalang.github.io/">Home</a></li>
-                <li><a href="/yakshalang.github.io/lib">Lib</a></li>
-                <li><a href="/yakshalang.github.io/docs">Docs</a></li>
-                <li><a href="/yakshalang.github.io/tutorials">Tutorials</a></li>
-                <li><a href="/yakshalang.github.io/demos">Demos</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/lib">Lib</a></li>
+                <li><a href="/docs">Docs</a></li>
+                <li><a href="/tutorials">Tutorials</a></li>
+                <li><a href="/demos">Demos</a></li>
                 <li><a href="https://yaksha.pages.dev/">Playground</a></li>
-                <li><a href="/yakshalang.github.io/yama">YAMA</a></li>
-                <li><a href="/yakshalang.github.io/blog">Blog</a></li>
+                <li><a href="/yama">YAMA</a></li>
+                <li><a href="/blog">Blog</a></li>
             </ul>
         </details>
 
         <!-- For larger screen devices like desktops -->
         <div class="hidden w-full md:block md:w-auto">
             <div class="flex rounded-lg space-x-4 text-lg">
-                <a href="/yakshalang.github.io/" class={`${activePageStyling("")} hover:text-primary`}>Home</a>
-                <a href="/yakshalang.github.io/lib" class={`${activePageStyling("lib")} hover:text-primary`}>Lib</a>
-                <a href="/yakshalang.github.io/docs" class={`${activePageStyling("docs")} hover:text-primary`}>Docs</a>
+                <a href="/" class={`${activePageStyling("")} hover:text-primary`}>Home</a>
+                <a href="/lib" class={`${activePageStyling("lib")} hover:text-primary`}>Lib</a>
+                <a href="/docs" class={`${activePageStyling("docs")} hover:text-primary`}>Docs</a>
                 <div class="divider divider-horizontal divider-primary" />
-                <a href="/yakshalang.github.io/tutorials" class={`${activePageStyling("tutorials")} hover:text-primary`}>Tutorials</a>
-                <a href="/yakshalang.github.io/demos" class={`${activePageStyling("demos")} hover:text-primary`}>Demos</a>
+                <a href="/tutorials" class={`${activePageStyling("tutorials")} hover:text-primary`}>Tutorials</a>
+                <a href="/demos" class={`${activePageStyling("demos")} hover:text-primary`}>Demos</a>
                 <a href="https://yaksha.pages.dev/" class={`${activePageStyling("playground")} hover:text-primary`}>Playground</a>
                 <div class="divider divider-horizontal divider-primary" />
-                <a href="/yakshalang.github.io/blog" class={`${activePageStyling("blog")} hover:text-primary`}>Blog</a>
-                <a href="/yakshalang.github.io/yama" class={`${activePageStyling("yama")} hover:text-primary`}>YAMA</a>
+                <a href="/blog" class={`${activePageStyling("blog")} hover:text-primary`}>Blog</a>
+                <a href="/yama" class={`${activePageStyling("yama")} hover:text-primary`}>YAMA</a>
             </div>
         </div>
 
