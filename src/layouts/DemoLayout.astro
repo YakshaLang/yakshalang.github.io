@@ -5,8 +5,6 @@ const {frontmatter} = Astro.props;
 ---
 <Layout title={`Yaksha | Demo | ${frontmatter.title}`} description={frontmatter.description}>
 
-
-
   <div class="py-12 mx-auto w-96 md:w-[40rem]">
     <h1 class="text-center font-black text-4xl">{frontmatter.title}</h1>
     <p class="text-center pt-1">{frontmatter.author}</p>

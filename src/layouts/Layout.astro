@@ -8,14 +8,15 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
-const defaultDescription = 'Yaksha aims to be a simple general purpose language with a minimalistic standard library';
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content={description ?? defaultDescription} />
+		<meta name="theme-color" content="#9a2036">
+		<meta property="og:image" content="/yakshalang.github.io/imgs/yaksha_logo.png">
+		<meta name="description" content={description ?? "Yaksha Programming Language"} />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/png" href="/yakshalang.github.io/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
