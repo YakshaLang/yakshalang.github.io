@@ -1,6 +1,7 @@
 ---
 title: Initial Post
 author: Bhathiya Perera
+pubDate: 2022-12-10
 layout: '../../layouts/BlogPostLayout.astro'
 ---
 
