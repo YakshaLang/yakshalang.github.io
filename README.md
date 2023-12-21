@@ -1,27 +1,31 @@
 # Yaksha Lang Website & Docs Site
 
-* Documentation directories are `yaksha_docs`, `yaksha_lib_docs`, `yaksha_proposals` and `yaksha_tutorials`
+Build with [Astro](https://astro.build/) + [Tailwindcss](https://tailwindcss.com/) & [DaisyUi](https://daisyui.com/). 
 
-Require `css-minify` and `html-minifier` in path.
+## Quick Start
 
-* STEP 01: Install node.js
-* STEP 02:
-```
-npm install -g css-minify
-npm install -g html-minifier
-```
+0. [Install Yarn](https://classic.yarnpkg.com/lang/en/docs/install/) (will require NodeJs)
+1. `yarn # Installs dependecies`
+2. `yarn dev # Runs development server` 
 
-Uses Python to build the documentation.
-* STEP 01: Create virtual environment
-```
-python -m venv .venv
-```
-* STEP 02: Activate virtual environment
-* STEP 03: Install dependencies
-```
-pip install -r requirements.txt
-```
-* STEP 04: Run the build.py
-```
-python build.py
-```
+
+## Astro Brief
+
+Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+
+There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+
+Any static assets, like images, can be placed in the `public/` directory.
+
+## 🧞 Commands
+
+All commands are run from the root of the project, from a terminal:
+
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `yarn install`            | Installs dependencies                            |
+| `yarn dev`                | Starts local dev server at `localhost:4321`      |
+| `yarn build`              | Build your production site to `./dist/`          |
+| `yarn preview`            | Preview your build locally, before deploying     |
+| `yarn astro ...`          | Run CLI commands like `astro add`, `astro check` |
+| `yarn astro -- --help`    | Get help using the Astro CLI                     |

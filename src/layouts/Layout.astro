@@ -1,0 +1,32 @@
+---
+import Footer from '../components/Footer.astro';
+import NavBar from '../components/NavBar.astro';
+
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="theme-color" content="#9a2036">
+		<meta property="og:image" content="/imgs/yaksha_logo.png">
+		<meta name="description" content={description ?? "Yaksha Programming Language"} />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/png" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<NavBar />
+		<main class="bg-base-200">
+			<slot />
+		</main>
+		<Footer />
+	</body>
+</html>

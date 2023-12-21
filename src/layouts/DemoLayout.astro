@@ -1,0 +1,35 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const {frontmatter} = Astro.props;
+---
+<Layout title={`Yaksha | Demo | ${frontmatter.title}`} description={frontmatter.description}>
+
+  <div class="py-12 mx-auto w-96 md:w-[40rem]">
+    <h1 class="text-center font-black text-4xl">{frontmatter.title}</h1>
+    <p class="text-center pt-1">{frontmatter.author}</p>
+
+    <div class="py-4">
+      { frontmatter.demoJs != undefined &&
+        <>
+          <canvas class="rounded-lg w-full" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1 />
+          <script is:inline>
+              var Module = { canvas: document.getElementById("canvas") };
+          </script>
+      
+          <script async src={frontmatter.demoJs} />
+        </>
+      }
+
+      { frontmatter.demoHtml != undefined &&
+        <>
+          <iframe class="rounded-lg w-full aspect-video" src={frontmatter.demoHtml} />
+        </>
+      }
+    </div>
+
+    <div class="prose dark:prose-invert">
+      <slot />
+    </div>
+  </div>
+</Layout>
