@@ -1,0 +1,75 @@
+---
+title: Fractal Tree
+author: Bhathiya Perera
+layout: "../../layouts/DemoLayout.astro"
+demoJs: "/yakshalang.github.io/static_demos/tree/wind_tree.js"
+---
+
+Hint: Refresh to get a new random tree
+
+```yaksha
+import raylib as rl
+import raylib.utils
+import libs.numbers as num
+import libs.perlin
+import libs.random
+
+
+class State:
+    width: float
+    height: float
+    angle: float
+    frame_count: u64
+    blue: rl.Color
+    green: rl.Color
+    color3: rl.Color
+
+
+def branch(x: float, y: float, length: float, angle: float, s: State) -> None:
+    if length < 4.0f:
+        leaf_width = random.random_betweenf(1.0f, 3.0f)
+        leaf_height = random.random_betweenf(3.0f, 6.0f)
+        lerped_green = utils.lerp_color(s.green, s.blue, utils.remap(x, 0.0f, s.width, 0.0f, 1.0f) * 2.0f)
+        color = utils.lerp_color(lerped_green, s.color3, utils.remap(y, 0.0f, s.height, 0.0f, 1.0f) * 1.5f)
+        rl.draw_ellipse(num.f2i(x), num.f2i(y), leaf_height, leaf_width, color)
+        return
+    wind = utils.sin_deg(perlin.noise1df(num.uu2f(s.frame_count) / 50.0f)) * 100.0f * utils.sin_deg(num.uu2f(s.frame_count) / 2.0f)
+    next_y = y - length * utils.cos_deg(angle)
+    next_x = x + length * utils.sin_deg(angle)
+    thick = utils.remap(length, 0.0f, s.height / 4.0f, 2.0f, 6.0f)
+    rl.draw_line_ex(rl.vector2(x, y), rl.vector2(next_x, next_y), thick, rl.color(152, 50, 1, 255))
+    r1 = random.random_betweenf(0.3f, 0.9f)
+    r2 = random.random_betweenf(0.5f, 0.8f)
+    branch(next_x, next_y, (length * r2), angle + s.angle + wind * 10.0f, s)
+    branch(next_x, next_y, (length * r1), angle - s.angle + wind * 10.0f, s)
+
+
+def update_draw_frame(s: State) -> None:
+    rl.clear_background(rl.color(255, 255, 255, 255))
+    branch(s.width / 2.0f, s.height, s.height / 4.0f, 0.0f, s)
+
+
+def main() -> int:
+    s: State = State()
+    s.angle = random.random_betweenf(30.0f, 45.0f)
+    s.width = 600.0f
+    s.height = 600.0f
+    s.frame_count = 0u64
+    s.blue = rl.color(0, 255, 214, 255)
+    s.green = rl.color(0, 255, 0, 255)
+    s.color3 = rl.color(255, 45, 156, 255)
+    rl.init_window(num.f2i(s.width), num.f2i(s.height), "Fractal Tree in the Wind")
+    rl.set_target_fps(120)
+    seed: u64 = random.init_random()
+    while not rl.window_should_close():
+        rl.begin_drawing()
+        update_draw_frame(s)
+        rl.draw_fps(0, 0)
+        rl.end_drawing()
+        s.frame_count += 1u64
+        random.set_seed(seed)
+    rl.close_window()
+    del s
+    return 0
+```
+
