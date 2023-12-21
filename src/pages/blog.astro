@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-const posts = await Astro.glob('./blog/*.md');
+const posts = await Astro.glob('./blog/*.{md,mdx}');
 ---
 
 <Layout title="Yaksha | Blog">

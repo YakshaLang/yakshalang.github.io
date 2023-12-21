@@ -4,6 +4,7 @@ layout: '../../layouts/DocsLayout.astro'
 ---
 
 import Status from '../../components/Status.astro';
+import Note from '../../components/Note.astro';
 
 # Yaksha Library
 
@@ -13,7 +14,7 @@ Core parts of runtime library functionality starts with `yk__` or `YK__`.
 
 Yaksha programming language preserves anything that starts with `yk__` or `YK__` while prefixing any other name with `yy__`. 
 
-; This avoids collisions with C standard library functions or keywords.
+<Note mode="icon">This avoids collisions with C standard library functions or keywords.</Note>
 
 ---
 
@@ -73,4 +74,4 @@ def main() -> int:
     cl.run(dvc, my_program)
 ```
 
-; Placeholder code, API is not designed yet.
+<Note mode="icon">Placeholder code, API is not designed yet.</Note>

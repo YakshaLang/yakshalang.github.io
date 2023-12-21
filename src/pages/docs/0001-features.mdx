@@ -4,6 +4,7 @@ layout: '../../layouts/DocsLayout.astro'
 ---
 
 import Status from '../../components/Status.astro';
+import Note from '../../components/Note.astro';
 
 # Language Features
 
@@ -61,11 +62,11 @@ String literals are automatically converted to `sr` or `str`.
     * Use `libs.strings.array.del_str_array()` to delete a string array.
 * Supports `+` operator to join two `str` values.
 
-; Data Type - `str`
-
-; Internally this is a binary string.
-
-; `sds` library (part of runtime lib) takes care of the heavy lifting.
+<Note mode="mascot">
+* Data Type - `str`
+* Internally this is a binary string.
+* `sds` library (part of runtime lib) takes care of the heavy lifting.
+</Note>
 
 ```yaksha
 a: str = "hello world"
@@ -79,9 +80,11 @@ println(a)
 ### Standard integers 
 </Status>
 
-*Default integer is a 32bit signed integer. 
-*This is compiled to `int32_t` on all platforms.
-;Data Type - `int` or `i32`
+* Default integer is a 32bit signed integer. 
+* This is compiled to `int32_t` on all platforms.
+
+<Note mode="icon">Data Type - `int` or `i32`</Note>
+
 ```yaksha
 a: int = 4       # datatype ✅ | literal ✅
 print("Four =")
@@ -121,7 +124,8 @@ j: u64 = 5u64    # datatype ✅ | literal ✅
 
 * `f32` or `float` - single precision floats.
 * `f64` - double precision floats.
-;Data Type - `f32`, `float` and `f64`
+
+<Note mode="icon">Data Type - `f32`, `float` and `f64`</Note>
 
 ```yaksha
 a: f32 = 1.0f    # datatype ✅ | literal ✅
@@ -141,7 +145,7 @@ c: float = 3.0f  # datatype ✅ | literal ✅
 * If you want to assign to a variable, it needs to be created.
 * If no value is provided default value for data type is used.
 
-; Default value for `str` is an empty string.
+<Note mode="icon">Default value for `str` is an empty string.</Note>
 
 ```yaksha
 def main() -> int:
@@ -187,7 +191,7 @@ def get_arg(n: int) -> str:
 def get_global_arg(n: int) -> str:
     ccode "yk__sdsdup(global_args[yy__n])"
 ```
-;If `ccode` is there instead of an argument, then it is used as the message body.
+<Note mode="icon">If `ccode` is there instead of an argument, then it is used as the message body.</Note>
 
 <details>
 <summary>Click to see output C code</summary>
@@ -261,14 +265,14 @@ def new(count: int, s: str) -> Array[str]:
 
 ---
 
-<Status status="done">
+<Status status="not-started">
 ### Template functions
 </Status>
 
 * Return type can also be a template-arg if that template-arg is used in parameters.
 * String passed inside `@template(` should be single upper case characters separated by commas.
 
-;This means it is limited to 26 template arguments max.
+<Note mode="icon">This means it is limited to 26 template arguments max.</Note>
 
 ```yaksha
 @native("yk__arrput")
@@ -312,8 +316,11 @@ def calculate(n: int) -> int:
     * This behaviour is different from what you see in go-lang.
 * Before end of `if` body or end of `else` body.
 
-;`defer` works as a stack. \
-;That means deferred expressions are executed in last deferred first executed order. 
+<Note mode="mascot">
+* `defer` works as a stack. 
+* That means deferred expressions are executed in last deferred first executed order. 
+* Please note that this is not compatible with how `go` programming language `defer` works.
+</Note>
 
 ```yaksha
 def onexit() -> int:
@@ -351,7 +358,7 @@ def main() -> int:
     println(a[0])
     return 0
 ```
-; Compiles to `free` or other runtime functions.
+<Note mode="icon">Compiles to `free` or other runtime functions.</Note>
 
 ---
 
@@ -423,9 +430,9 @@ def main() -> int:
 class Something:
     something_id: int
 
-# Use @dotaccess for purely stack allocated structs
+# Use @onstack for purely stack allocated structs
 @nativedefine("Color")
-@dotaccess
+@onstack
 class Color:
     r: int
     g: int
@@ -462,7 +469,7 @@ def main() -> int:
     return 0
 ```
 
-;Name mangling takes place for this.
+<Note mode="icon">Name mangling takes place for this.</Note>
 
 ---
 
@@ -552,9 +559,10 @@ def main() -> int:
 
     return 0
 ```
-;Note that Yaksha allows omitting `return`, assuming last expression matches the return data type.
-
-;This is why `add` function does not have a return statement.
+<Note mode="mascot">
+* Note that Yaksha allows omitting `return`, assuming last expression matches the return data type.
+* This is why `add` function does not have a return statement.
+</Note>
 
 ---
 
@@ -593,7 +601,7 @@ def main() -> int:
 * ✅ `make("T") -> Ptr[T]` - Allocate a single object.
 * ✅ `inlinec("T", "code") -> T` - Inline `C` code resulting in `T` data type. Example - `inlinec("int", "sizeof(char)")`
 
-; Builtin functions may call different implementations based on input.
+<Note mode="icon">Builtin functions may call different implementations based on input.</Note>
 
 ---
 
@@ -618,7 +626,7 @@ def main() -> int:
     return 0
 ```
 
-; Must ensure array elements are freed. `int` need not be deleted as they are primitive types.
+<Note mode="icon">Must ensure array elements are freed. `int` need not be deleted as they are primitive types.</Note>
 
 ---
 
@@ -626,8 +634,8 @@ def main() -> int:
 ### String Hash Map
 </Status>
 
-HashMap with str keys and given data type values.
-Values need to be deleted when no longer needed.
+* HashMap with str keys and given data type values.
+* Values need to be deleted when no longer needed.
 
 ```yaksha
 def main() -> int:
@@ -640,9 +648,10 @@ def main() -> int:
     return r
 ```
 
-; `Array[SMEntry[?]]` keys are deleted automatically when `del` is invoked.
-
-; `len` will give the total number of elements of the String Hash Map.
+<Note mode="mascot">
+* `Array[SMEntry[?]]` keys are deleted automatically when `del` is invoked.
+* `len` will give the total number of elements of the String Hash Map.
+</Note>
 
 ---
 
@@ -652,9 +661,10 @@ def main() -> int:
 
 Simple single key single value hashmaps.
 
-;Data type `Array[MEntry[K,T]]`.
-
-;key and value both need to be deleted.
+<Note mode="mascot">
+* Data type `Array[MEntry[K,T]]`.
+* key and value both need to be deleted.
+</Note>
 
 ---
 
@@ -663,13 +673,14 @@ Simple single key single value hashmaps.
 </Status>
 
 YakshaLisp macros are one of the most important features of Yaksha. You can think of it as an interpreted language that lives in Yaksha compiler. \
-; Because that is what it is!
+<Note mode="icon">Because that is what it is!</Note>
 
 It has it's own built in functions, can use `import`, read/write files and even use `metamacro` directive to create quoted input functions(similar to `defun`, except input args are not evaluated and returns quoted output that is immediately evaluated). Has multiple data types (list, map, callable, string, expression). Support's q-expressions `{1 2 3}` (inspired by build-your-own-lisp's lisp dialect), and special forms. A simple mark and sweep garbage collector is used. Provides a mediocre REPL and ability to execute standalone lisp code using a command. Not only that, it also support reflection using builtin callables such as `this` and `parent` (which returns a mutable current or parent scope as a map).
 
-; Yo dog!, I heard you like macros, so I added meta-macro support in your macro processor.
-
-; So you can meta-program while you meta-program.
+<Note mode="mascot">
+* Yo dog!, I heard you like macros, so I added meta-macro support in your macro processor.
+* So you can meta-program while you meta-program.
+</Note>
 
 ---
 
@@ -677,7 +688,7 @@ It has it's own built in functions, can use `import`, read/write files and even 
 YakshaLisp provide the ability to write token-list to token-list conversion macros. One can use `my_macro!{t t t}` style expansion to achieve this. So why YakshaLisp? because it needs to process a list of tokens. 
 Additionally, Yaksha and YakshaLisp are polar opposites of each other, therefore I think they can compliment each other nicely.
 
-; Think Yin-Yang!
+<Note mode="icon">Think Yin-Yang!</Note>
 
 ---
 
