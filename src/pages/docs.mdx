@@ -1,0 +1,824 @@
+---
+layout: '../layouts/DocsLayout.astro'
+---
+
+import Status from '../components/Status.astro';
+
+# Language Features
+
+## Data Types
+
+<Status status="done">
+### Wrapped String References
+</Status>
+
+Wrapped string literals `sr` wraps multiple source strings in an uniform structure. There is no reason to delete a `sr` unless you want to de-allocate, referred data of the string.
+
+You can add two `sr` using `+` operator. However, resulting value will be of type `str`, as memory allocation is required. It is recommended to use a string buffer for concatenating a string.
+
+```yaksha
+a: sr = "A"
+b: sr = "B"
+c = a + b
+# Type of c would be str
+```
+
+Type inference during creating a variable will create a value of `sr` type whenever `"string literal"` is used on RHS.
+
+```yaksha
+my_sr = "Hello World"
+another_sr: sr = "Hello World"
+```
+
+---
+
+<Status status="done">
+### String literals
+</Status>
+
+Internally string literals such as `"hello world"` are neither `str` or `sr`. They utilize a hidden data type `:s:` for string literal. 
+
+String literals are efficient and does not require any additional memory allocation.
+
+If you `+` two string literals that will be done at compile time.
+
+String literals are automatically converted to `sr` or `str`.
+
+---
+
+<Status status="done">
+### (Semi)Managed Strings
+</Status>
+
+* String allocations and de-allocations are abstracted away, so strings are immutable and automatically deleted.
+* Assignment copy values and automatically delete previous value.
+* Strings are also copied every time you create a new variable or pass it to a function or assign it to a container (object, array, etc).
+* It is not meant to be fast. It is meant to be easily usable.
+* At C code level `yk__sds` data structure will be used. (`yk__sds` is a `char*` with special header placed just before).
+* 💀️ Managed strings are not deleted when used in arrays, maps, or objects. (This is intentional and not a bug.)
+    * You need to manage deletion of `str` object in this case.
+    * Use `libs.strings.array.del_str_array()` to delete a string array.
+* Supports `+` operator to join two `str` values.
+
+; Data Type - `str`
+
+; Internally this is a binary string.
+
+; `sds` library (part of runtime lib) takes care of the heavy lifting.
+
+```yaksha
+a: str = "hello world"
+# support -> datatype ✅ | literal ✅
+println(a)
+```
+
+---
+
+<Status status="done">
+### Standard integers 
+</Status>
+
+*Default integer is a 32bit signed integer. 
+*This is compiled to `int32_t` on all platforms.
+;Data Type - `int` or `i32`
+```yaksha
+a: int = 4       # datatype ✅ | literal ✅
+print("Four =")
+println(a)
+```
+
+---
+
+<Status status="in-progress">
+### Integer types
+</Status>
+
+* Signed types - `i8`, `i16`, `i32`, `i64`
+* Unsigned types - `u8`, `u16`, `u32`, `u64`
+
+```yaksha
+# Default integer type is i32
+a: int = 1       # datatype ✅ | literal ✅
+b: i32 = 2       # datatype ✅ | literal ✅
+c: i8 = 3i8      # datatype ✅ | literal ✅
+d: i16 = 4i16    # datatype ✅ | literal ✅
+e: i32 = 5i32    # datatype ✅ | literal ✅
+f: i64 = 6i64    # datatype ✅ | literal ✅
+
+# Unsigned
+g: u8 = 3u8      # datatype ✅ | literal ✅
+h: u16 = 4u16    # datatype ✅ | literal ✅
+i: u32 = 4u32    # datatype ✅ | literal ✅
+j: u64 = 5u64    # datatype ✅ | literal ✅
+```
+
+---
+
+<Status status="done">
+### Float types
+</Status>
+
+* `f32` or `float` - single precision floats.
+* `f64` - double precision floats.
+;Data Type - `f32`, `float` and `f64`
+
+```yaksha
+a: f32 = 1.0f    # datatype ✅ | literal ✅
+b: f64 = 2.0     # datatype ✅ | literal ✅
+c: float = 3.0f  # datatype ✅ | literal ✅
+```
+
+---
+
+## Syntax features
+
+<Status status="done">
+### Let statement
+</Status>
+
+* Create a new variable.
+* If you want to assign to a variable, it needs to be created.
+* If no value is provided default value for data type is used.
+
+; Default value for `str` is an empty string.
+
+```yaksha
+def main() -> int:
+    a: int = 10
+    print(a)
+    return 0
+```
+
+---
+
+<Status status="done">
+### Basic Functions
+</Status>
+
+* Return type must be mentioned always.
+* If return type is `None` it means no data is returned. (`void` in C world.)
+
+```yaksha
+def main() -> int:
+    print("Hello World\n")
+    return 0
+```
+
+---
+
+<Status status="done">
+### Exposing C functions
+</Status>
+
+* 💀 You can only call `@nativexxx` functions from normal functions. 
+* 💀 `@nativexxx` functions cannot call each other or normal functions.
+
+
+---
+
+#### @native - native functions
+```yaksha
+@native("getarg")
+def get_arg(n: int) -> str:
+    pass
+
+@native
+def get_global_arg(n: int) -> str:
+    ccode "yk__sdsdup(global_args[yy__n])"
+```
+;If `ccode` is there instead of an argument, then it is used as the message body.
+
+<details>
+<summary>Click to see output C code</summary>
+```c
+yk__sds yy__get_arg(int32_t nn__n) { return getarg(nn__n); }
+yk__sds yy__get_global_arg(int32_t nn__n) 
+{
+    yk__sdsdup(global_args[yy__n]);
+}
+```
+</details>
+
+---
+
+### @nativemacro - macros with arguments
+
+```yaksha
+@nativemacro
+def min_int(a: int, b:int) -> int:
+    ccode "((nn__a < nn__b) ? nn__a : nn__b)"
+
+@nativemacro("((nn__a > nn__b) ? nn__a : nn__b)")
+def max_int(a: int, b:int) -> int:
+    pass
+```
+
+<details>
+<summary>Click to see output C code</summary>
+```c
+#define yy__min_int(nn__a, nn__b) ((nn__a < nn__b) ? nn__a : nn__b)
+#define yy__max_int(nn__a, nn__b) ((nn__a > nn__b) ? nn__a : nn__b)
+```
+</details>
+
+---
+
+### @nativedefine - simple #define
+
+```yaksha
+@nativedefine("banana")
+def banana(a: int, b: int, c:int) -> int:
+    pass
+```
+<details>
+<summary>Click to see output C code</summary>
+```c
+#define yy__banana banana
+```
+</details>
+
+---
+
+### @varargs - variable argument functions
+
+* 💀 Can only be used with `@nativedefine`.
+
+```yaksha
+@nativedefine("yk__newsdsarray")
+@varargs
+def new(count: int, s: str) -> Array[str]:
+    pass
+```
+<details>
+<summary>Click to see output C code</summary>
+```c
+#define yy__new yk__newsdsarray
+// Assume that yk__newsdsarray is something like below
+// yk__sds *yk__newsdsarray(size_t count, ...)
+```
+</details>
+
+---
+
+<Status status="done">
+### Template functions
+</Status>
+
+* Return type can also be a template-arg if that template-arg is used in parameters.
+* String passed inside `@template(` should be single upper case characters separated by commas.
+
+;This means it is limited to 26 template arguments max.
+
+```yaksha
+@native("yk__arrput")
+@template("T")
+def arrput(a: Array[T], v: T) -> None:
+    pass
+
+@native("yk__hmput")
+@template("K,V")
+def hmput(a: HashMap[K,V], key: K, value: V) -> None:
+    pass
+
+@native("yk__hmget")
+@template("K,V")
+def hmget(a: HashMap[K,V], key: K) -> V:
+    pass
+```
+
+---
+
+<Status status="not-started">
+### GPU/OpenCL device functions
+</Status>
+
+* Easy access to GPU through OpenCL.
+```yaksha
+@device
+def calculate(n: int) -> int:
+   return 1 + 1 
+```
+
+---
+
+<Status status="done">
+### Defer statement
+</Status>
+
+* Defer something to happen at the end of the scope.
+* Before any `return` from a function.
+* Before `break`, `continue` or end of `while` loop body.
+    * This behaviour is different from what you see in go-lang.
+* Before end of `if` body or end of `else` body.
+
+;`defer` works as a stack. \
+;That means deferred expressions are executed in last deferred first executed order. 
+
+```yaksha
+def onexit() -> int:
+    println("All done")
+    return 0
+
+def main() -> int:
+    defer onexit()
+    println("Hello World")
+    return 0
+```
+
+Output:
+```text
+Hello World
+All done
+```
+
+---
+
+<Status status="in-progress">
+### Del statement
+</Status>
+
+* Delete values.
+* Delete arrays, and other builtin data structures without deleting content.
+
+```yaksha
+def main() -> int:
+    a: Array[int]
+    defer del a
+    arrput(a, 1)
+    arrput(a, 2)
+    arrput(a, 3)
+    println(a[0])
+    return 0
+```
+; Compiles to `free` or other runtime functions.
+
+---
+
+<Status status="in-progress">
+### Class statement
+</Status>
+
+* Create a custom data structure.
+* 💀 Templated structures are not supported yet.
+* 💀 Inheritance is not supported yet.
+
+```yaksha
+class Student:
+    student_id: int
+    name: str
+    address: str
+
+class Teacher:
+    teacher_id: int
+    name: str
+    address: str
+```
+
+---
+
+#### Creating and freeing objects
+
+```yaksha
+def main() -> int:
+    # Non primitive types are initialized to None 
+    john: Student
+    # Creating an instance, will be allocated in heap
+    # Results in a malloc
+    john = Student()
+    defer del john
+    # Set fields
+    john.student_id = 10
+    # str objects in structures are not freed automatically
+    john.name = "John Smith"
+    john.address = "1 Road, Negombo"
+    defer del john.name
+    defer del john.address
+    return 0
+```
+
+It might be better to create a custom function to delete custom objects.
+```yaksha
+def del_student(st: Student) -> None:
+    del st.name
+    del st.address
+    del st 
+
+def main() -> int:
+    john: Student = Student()
+    defer del_student(john)
+    
+    john.student_id = 10
+    john.name = "John Smith"
+    john.address = "1 Road, Negombo"
+    return 0
+```
+
+---
+
+#### Exposing native structures
+
+```yaksha
+@nativedefine("something")
+class Something:
+    something_id: int
+
+# Use @dotaccess for purely stack allocated structs
+@nativedefine("Color")
+@dotaccess
+class Color:
+    r: int
+    g: int
+    b: int
+```
+<details>
+<summary>Click to see output C code</summary>
+```c
+#define yy__Something something
+#define yy__Color Color
+```
+</details>
+
+---
+
+<Status status="in-progress">
+### Import statement
+</Status>
+
+* Import a file.
+
+```yaksha
+import io
+
+def main() -> int:
+    file: io.File = io.open("Haha")
+    defer io.close(file)
+    if file == None:
+        println("-- failed to read file --")
+        return 1
+    data: str = io.readall(file)
+    println("-- read file --")
+    println(data) 
+    return 0
+```
+
+;Name mangling takes place for this.
+
+---
+
+<Status status="done">
+### While loop
+</Status>
+
+Loop as long as the expression evaluates to `True`. 
+
+```yaksha
+def main() -> int:
+    a = 10
+    while a > 0:
+        println(a)
+        a -= 1
+    return 0
+```
+
+---
+
+<Status status="done">
+### Foreach loop
+</Status>
+
+For each allow you to iterate each element of a given array.
+
+```yaksha
+def main() -> int:
+    e1: Array[int] = array("int", 1, 2, 3)
+    e2 = array("int", 4, 5, 6, 7)
+    for i: int in e1:
+        for j in e2:
+            print(i)
+            print(" - ")
+            println(j)
+    del e1
+    del e2
+    return 0
+```
+
+---
+
+<Status status="done">
+### Endless for loop
+</Status>
+
+Endless for loop will iterate until break is executed.
+
+```yaksha
+def main() -> int:
+    c: int = 0
+    for:
+        if c == 2:
+            break
+        println(1)
+        c += 1
+    return 0
+```
+
+---
+
+<Status status="done">
+### C-For loop
+</Status>
+
+Standard for loop from `C` family of languages.
+
+```yaksha
+def add(a: int, b: int) -> int: a + b
+
+def main() -> int:
+    for (x = 0; x < 10; x = x + 1):
+        println(x)
+
+    a: str = ""
+    for (x = 0; x < 4; x += 1):
+        a += "hello "
+    println(a)
+
+    b: str = ""
+    c: str = "x"
+    for (b += c; b != "xxx"; b += c): pass
+    println(b)
+
+    for (x = 0; x < 10i8; x = add(x, 2i8)):
+        println(x)
+
+    return 0
+```
+;Note that Yaksha allows omitting `return`, assuming last expression matches the return data type.
+
+;This is why `add` function does not have a return statement.
+
+---
+
+<Status status="in-progress">
+## Builtin Functions
+</Status>
+
+* ✅ `print(primitive) -> None` - Print without a new line
+* ✅ `println(primitive) -> None` - Print + new line
+* ✅ `len(Array[T]) -> int` - Get length of arrays,maps
+* ✅ `arrput(Array[T], T) -> None` - Put item to an array
+* ✅ `arrpop(Array[T]) -> T` - Remove last item from an array and return it
+* ✅ `arrnew("T", int) -> Array[T]` - Create a new array of given size. (Uninitialized elements)
+* ✅ `arrsetcap(Array[T], int) -> None` - Set array capacity / grow memory. Does not affect length.
+* ✅ `arrsetlen(Array[T], int) -> None` - Set array length. Each element will be an uninitialized element.
+* ✅ `array("T", T...) -> Array[T]` - Create a new array from given elements
+* ✅ `getref(T) -> Ptr[T]` - Get a pointer to given object
+* ✅ `unref(Ptr[T]) -> T` - Dereference a pointer
+* ✅ `charat(str, int) -> int` - Get a character at a specific location in string
+* ✅ `shnew(Array[SMEntry[T]]) -> None` - Initialize `Array[SMEntry[T]]` object
+* ✅ `shput(Array[SMEntry[T]], str, T) -> None` - Put item to an `Array[SMEntry[T]]`
+* ✅ `shget(Array[SMEntry[T]], str) -> T` - Get item from an `Array[SMEntry[T]]`
+* ✅ `shgeti(Array[SMEntry[T]], str) -> int` - Get item index from an `Array[SMEntry[T]]` (-1 if not found)
+* ✅ `hmnew(Array[MEntry[K,T]]) -> None` - Initialize `Array[MEntry[K,T]]` object
+* ✅ `hmput(Array[MEntry[K,T]], K, T) -> None` - Put item to an `Array[MEntry[K,T]]`
+* ✅ `hmget(Array[MEntry[K,T]], K) -> T` - Get item from an `Array[MEntry[K,T]]`
+* ✅ `hmgeti(Array[MEntry[K,T]], K) -> int` - Get item index from an `Array[MEntry[K,T]]` (-1 if not found)
+* ✅ `cast("T", X) -> T` - Data type casting builtin
+* ✅ `qsort(Array[T],Function[In[Const[AnyPtrToConst],Const[AnyPtrToConst]],Out[int]]) -> bool` - Sort an array, returns True if successful
+* ✅ `iif(bool, T, T) -> T` - Ternary functionality
+* ✅ `foreach(Array[T],Function[In[T,V],Out[bool]],V) -> bool` - For each element in array execute given function
+* ✅ `countif(Array[T],Function[In[T,V],Out[bool]],V) -> int` - For each element in array count if function returns true
+* ✅ `filter(Array[T],Function[In[T,V],Out[bool]],V) -> Array[T]` - Create a new array with filtered elements based on return value of given function
+* ✅ `map(Array[T],Function[In[T,V],Out[K]],V) -> Array[K]` - Create a new array with result of given function
+* ✅ `binarydata("data") -> Const[Ptr[Const[u8]]]` - Create constant binary data (must pass in a string literal). Returns `Const[Ptr[Const[u8]]]` that does not need to be deleted.
+* ✅ `make("T") -> Ptr[T]` - Allocate a single object.
+* ✅ `inlinec("T", "code") -> T` - Inline `C` code resulting in `T` data type. Example - `inlinec("int", "sizeof(char)")`
+
+; Builtin functions may call different implementations based on input.
+
+---
+
+## Non primitive data types
+This section describes other essential types of builtin structures.
+
+---
+
+<Status status="in-progress">
+### Dynamic Arrays
+</Status>
+
+```yaksha
+def main() -> int:
+    a: Array[i32]
+    # Prior to calling arrput pointer is set to None
+    defer del a
+    arrput(a, 1)
+    arrput(a, 2)
+    # Array access works with `[]`
+    print(a[0])
+    return 0
+```
+
+; Must ensure array elements are freed. `int` need not be deleted as they are primitive types.
+
+---
+
+<Status status="in-progress">
+### String Hash Map
+</Status>
+
+HashMap with str keys and given data type values.
+Values need to be deleted when no longer needed.
+
+```yaksha
+def main() -> int:
+    m: Array[SMEntry[int]]
+    # shnew must be called before using the array as a String Hash Map
+    shnew(m)
+    defer del m
+    shput(m, "banana", 10)
+    r: int = shget(m, "banana")
+    return r
+```
+
+; `Array[SMEntry[?]]` keys are deleted automatically when `del` is invoked.
+
+; `len` will give the total number of elements of the String Hash Map.
+
+---
+
+<Status status="in-progress">
+### Hash Map
+</Status>
+
+Simple single key single value hashmaps.
+
+;Data type `Array[MEntry[K,T]]`.
+
+;key and value both need to be deleted.
+
+---
+
+<Status status="in-progress">
+## Macros & YakshaLisp
+</Status>
+
+YakshaLisp macros are one of the most important features of Yaksha. You can think of it as an interpreted language that lives in Yaksha compiler. \
+; Because that is what it is!
+
+It has it's own built in functions, can use `import`, read/write files and even use `metamacro` directive to create quoted input functions(similar to `defun`, except input args are not evaluated and returns quoted output that is immediately evaluated). Has multiple data types (list, map, callable, string, expression). Support's q-expressions `{1 2 3}` (inspired by build-your-own-lisp's lisp dialect), and special forms. A simple mark and sweep garbage collector is used. Provides a mediocre REPL and ability to execute standalone lisp code using a command. Not only that, it also support reflection using builtin callables such as `this` and `parent` (which returns a mutable current or parent scope as a map).
+
+; Yo dog!, I heard you like macros, so I added meta-macro support in your macro processor.
+
+; So you can meta-program while you meta-program.
+
+---
+
+### Philosophy?
+YakshaLisp provide the ability to write token-list to token-list conversion macros. One can use `my_macro!{t t t}` style expansion to achieve this. So why YakshaLisp? because it needs to process a list of tokens. 
+Additionally, Yaksha and YakshaLisp are polar opposites of each other, therefore I think they can compliment each other nicely.
+
+; Think Yin-Yang!
+
+---
+
+#### What are the differences?
+
+ <table>
+ <caption>Language differences</caption>
+ <thead>
+  <tr>
+    <th scope="col">Yaksha</th>
+    <th scope="col">YakshaLisp</th>
+    <th scope="col">C99</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td data-label="Yaksha">manual memory management</td>
+    <td data-label="YakshaLisp">garbage collected</td>
+    <td data-label="C99">manual memory management</td>
+  </tr>
+  <tr>
+    <td data-label="Yaksha">compiled (to C99)</td>
+    <td data-label="YakshaLisp">interpreted</td>
+    <td data-label="C99">compiled by most compilers to target platform.</td>
+  </tr>
+  <tr>
+    <td data-label="Yaksha">can be multi-threaded</td>
+    <td data-label="YakshaLisp">only single threaded</td>
+    <td data-label="C99">can be multi-threaded, etc</td>
+  </tr>
+  <tr>
+    <td data-label="Yaksha">indent based syntax</td>
+    <td data-label="YakshaLisp">parenthesis based syntax</td>
+    <td data-label="C99">C family {} scope syntax</td>
+  </tr>
+  <tr>
+    <td data-label="Yaksha">c-like function pointers</td>
+    <td data-label="YakshaLisp">closures, function body not evaluated unless called. First class functions/lambda</td>
+    <td data-label="C99">function pointers</td>
+  </tr>
+  <tr>
+    <td data-label="Yaksha">multiple integer types and float / double / bool</td>
+    <td data-label="YakshaLisp">only 64bit signed integer is supported.</td>
+    <td data-label="C99">multiple integer types and float / double / bool, enums & unions</td>
+  </tr>
+  <tr>
+    <td data-label="Yaksha">hygienic macros using $name syntax (automated gensym), non-hygienic macros are also supported (do not use the $ prefix for identifiers), can also generate C style macros/code with nativexxx annotations and ccode keyword in some cases.</td>
+    <td data-label="YakshaLisp">metamacro / eval / parse / this / parent / q-expressions </td>
+    <td data-label="C99">#define / #include</td>
+  </tr>
+  <tr>
+    <td data-label="Yaksha">has statements and expressions</td>
+    <td data-label="YakshaLisp">expressions only</td>
+    <td data-label="C99">has statements and expressions</td>
+  </tr>
+  <tr>
+    <td data-label="Yaksha">no support for exceptions</td>
+    <td data-label="YakshaLisp">exceptions are a string that you can throw and catch</td>
+    <td data-label="C99">setjmp</td>
+  </tr>
+  <tr>
+    <td data-label="Yaksha">no support for reflection</td>
+    <td data-label="YakshaLisp">supports reflection - repr / this / parent</td>
+    <td data-label="C99">no support for reflection</td>
+  </tr>
+  </tbody>
+</table> 
+
+---
+
+<Status status="done">
+### Builtin functions, values & prelude
+</Status>
+
+All below listed functions are available at the moment.
+
+* `nil` - this has value of `{}` (an empty list)
+* `true` - value of `1`
+* `false` - value of `0`
+* `newline` - value of `\r\n` or `\n` as a string.
+* `+`, `-`, `*`, `/`, `modulo` - basic functions
+* `==`, `!=`, `<`, `>`, `<=`, `>=` - comparison functions
+* `and`, `or`, `not` - boolean operator functions
+* `bitwise_and`, `bitwise_or`, `bitwise_not`, `bitwise_xor`, `bitwise_left_shift`, `bitwise_right_shift` - bitwise operator functions to be applied to number values (underlying structure of a number is a 64bit signed integer)
+* `filter`, `map`, `reduce` - basic functional-programming functions
+* `map_get`, `map_has`, `map_set`, `map_remove`, `map_values`, `map_keys` - functions to manipulate map-objects.
+* `access_module` - access an element from another root environment (uses same imports at the top of the file as in Yaksha)
+* `this`, `parent` - returns current scope or parent scope as a map-object (can be modified)
+* `magic_dot` - wrapper around `map_get` and `access_module` (supports both type of objects) to read a value. Special syntax sugar `symbol1::symbol2` expands to `(magic_dot symbol1 symbol2)`
+* `io_read_file`, `io_write_file`, `print`, `println`, `input` - I/O functions
+* `def/define` - define an undefined value in current environment with a given symbol.
+* `setq` - update an already defined value
+* `=` - combination of `setq` and `def`. try to `def` and if it fails use `setq`.
+* `quote` - create a list with non-evaluated expressions parsed as arguments. This has a somewhat-similar (but not 100% similar) effect to `{}`
+* `list` - create a list with all arguments to list function evaluated.
+* `eval`, `parse`, `repr` - evaluate a list or single expression, parse to q-expression, convert values to strings.
+* `raise_error`, `try`, `try_catch` - functions to use exceptions during evaluation.
+* `head`, `tail`, `cons`, `push`, `pop`, `insert`, `remove` - list manipulation functions
+* `for`, `while` - looping functions
+* `scope`, `do` - do these expressions in a child scope `scope` or in current scope (`do`)
+* `is_list`, `is_list`, `is_int`, `is_string`, `is_truthy`, `is_callable`, `is_nil`, `is_metamacro`, `is_module` - check types
+* `defun`, `lambda` - create named and anonymous functions
+* `cond`, `if` - conditions
+* `random` - random number between given range
+* `time` - unix time as number
+
+---
+
+### Macro environments
+
+Inside Yaksha a root (known as `builtins_root`) environment is created. It will house builtin functions and results of executing prelude code.
+
+A single `.yaka` file in imports (or current compiled file) will have their own root environment that is a child of `builtins_root`.
+
+During garbage collection, mark phase will start marking from `builtins_root` and file level roots.
+
+Environment is an unordered_map with string keys. Environments and maps use same data type internally.
+
+---
+
+### How does it look like
+
+```yaksha
+# ╔═╗┌─┐┌┬┐┌─┐┬┬  ┌─┐  ╔╦╗┬┌┬┐┌─┐
+# ║  │ ││││├─┘││  ├┤    ║ ││││├┤
+# ╚═╝└─┘┴ ┴┴  ┴┴─┘└─┘   ╩ ┴┴ ┴└─┘
+# ╔═╗┬┌─┐┌─┐  ╔╗ ┬ ┬┌─┐┌─┐
+# ╠╣ │┌─┘┌─┘  ╠╩╗│ │┌─┘┌─┘
+# ╚  ┴└─┘└─┘  ╚═╝└─┘└─┘└─┘
+macros!{
+    (defun to_fb (n) (+ (if (== n 1) "" " ") (cond
+        ((== 0 (modulo n 15)) "FizzBuzz")
+        ((== 0 (modulo n 3)) "Fizz")
+        ((== 0 (modulo n 5)) "Buzz")
+        (true (to_string n))
+        )))
+    (defun fizzbuzz () (list (yk_create_token YK_TOKEN_STRING (reduce + (map to_fb (range 1 101))))))
+    (yk_register {dsl fizzbuzz fizzbuzz})
+}
+
+def main() -> int:
+    println(fizzbuzz!{})
+    return 0
+
+```

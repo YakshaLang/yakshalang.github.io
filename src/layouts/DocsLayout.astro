@@ -1,0 +1,65 @@
+---
+import Layout from './Layout.astro';
+
+const { headings, frontmatter } = Astro.props;
+
+// Collet headings by depth
+const headingsByDepth = headings.reduce((acc, heading) => {
+  if(heading.depth === 2) {
+    acc.push({
+      text: heading.text,
+      slug: heading.slug,
+      children: []
+    });
+  } else if(heading.depth === 3) {
+    acc[acc.length - 1].children.push({
+      text: heading.text,
+      slug: heading.slug
+    });
+  }
+  return acc;
+}, []);
+
+---
+
+<Layout title="Yaksha | Docs">
+
+  <div class="flex bg-base-300">
+    <div class="w-fit bg-base-200 md:w-96">
+      <ul class="sticky top-20 menu">
+          {headingsByDepth.map(h =>
+          <li>
+            <details open>
+              <summary class="hover:text-primary"><a href={`#${h.slug}`}>{h.text}</a></summary>
+              <ul>
+                {h.children.map(child => 
+                  <li class="hover:text-primary"><a href={`#${child.slug}`}>{child.text}</a></li>
+                )}
+              </ul>
+            </details>
+          </li>)}  
+      </ul>
+    </div>
+  
+    <div class="relative mx-auto prose py-8 px-8 max-w-fit md:max-w-6xl dark:prose-invert prose-headings:scroll-mt-36 md:prose-headings:scroll-mt-96">
+        <slot/>
+    </div>
+  </div>
+
+</Layout>
+
+<script>
+// Updates the URL hash when a heading is scrolled to
+window.addEventListener('load', () => {
+  const headings = document.querySelectorAll('h2');
+  document.addEventListener('scroll', (e) => {
+    headings.forEach(ha => {
+      const rect = ha.getBoundingClientRect();
+      if(rect.top > 0 && rect.top < 150) {
+        const location = window.location.toString().split('#')[0];
+        history.replaceState(null, null, location + '#' + ha.id);
+      }
+    });
+  });
+});
+</script>
