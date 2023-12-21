@@ -5,8 +5,9 @@ layout: '../../layouts/DocsLayout.astro'
 
 import Warning from '../../components/Warning.astro';
 import Status from '../../components/Status.astro';
+import Note from '../../components/Note.astro';
 
-<Warning>this section needs rewriting</Warning>
+<Warning>This section needs rewriting</Warning>
 
 This describes Yaksha language grammar. 
 Lot learned from `Crafting Interpreters` book and Python grammar page.
@@ -74,9 +75,11 @@ c_code_statement: "ccode" (string | triple_quote_string) st_end
 block: ":" (newline ba_indent standard_statement+ ba_dedent | simple_statement)
 ```
 
-;`defer` statement is special, it can take either a `del` statement or any expression.
-
-;This allows you to defer a `del`.
+<Note mode="mascot">
+* `defer` statement is special, it can take either a `del` statement or any expression.
+* This allows you to defer a `del`.
+* Example - `defer del my_element`
+</Note>
 
 ---
 
@@ -91,7 +94,7 @@ primitive_data_type: "int" | "i8" | "i16" | "i32" | "i64" |
         "f32" | "f64"
 ```
 
-;Data type describes, primitives, custom data types and non primitives.
+<Note mode="icon">Data type describes, primitives, custom data types and non primitives.</Note>
 
 ---
 
@@ -116,7 +119,7 @@ primary: "True" | "False" | "None" | number | string | triple_quote_string | nam
           "(" expr ")"
 ```
 
-; Based on [lox grammar](https://craftinginterpreters.com/appendix-i.html) and [Python operator precedence](https://www.mathcs.emory.edu/~valerie/courses/fall10/155/resources/op_precedence.html).
+<Note mode="icon">Based on [lox grammar](https://craftinginterpreters.com/appendix-i.html) and [Python operator precedence](https://www.mathcs.emory.edu/~valerie/courses/fall10/155/resources/op_precedence.html).</Note>
 
 ---
 
@@ -135,5 +138,5 @@ eof: "end of file"
 ba_indent: "increase in indentation"
 ba_dedent: "decrease is indentation"
 ```
-; `ba_indent` and `ba_dedent` gets calculated before parsing in `block_analyzer` phase.
+<Note mode="icon">`ba_indent` and `ba_dedent` gets calculated before parsing in `block_analyzer` phase.</Note>
 
