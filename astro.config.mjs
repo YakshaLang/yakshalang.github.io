@@ -22,7 +22,7 @@ export default defineConfig({
         name: 'yaksha',
         scopeName: 'source.yaksha',
         ...yakshaGrammar
-      }, "c", "scheme"]
+      }, "c", "bash", "scheme", "python"]
     }
   }
 });
