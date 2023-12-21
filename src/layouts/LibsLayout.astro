@@ -24,18 +24,20 @@ const sortedHeadings = headings.reduce((acc, heading) => {
 
   <div class="flex bg-base-300">
     <div class="w-fit bg-base-200 md:w-96">
-      <ul class="sticky top-20 menu">
-          {sortedHeadings.map(heading =>
-          <li>
-            <details open>
-              <summary class="hover:text-primary"><a href={`#${heading.slug}`}>{heading.text}</a></summary>
-              <ul>
-                {heading.children.map(child => 
-                  <li class="hover:text-primary"><a href={`#${child.slug}`}>{child.text}</a></li>
-                )}
-              </ul>
-            </details>
-          </li>)}  
+      <ul class="sticky max-h-screen flex-nowrap top-24 menu">
+        <div class="max-h-full overflow-y-auto mb-24">
+            {sortedHeadings.map(heading =>
+            <li>
+              <details open>
+                <summary class="hover:text-primary"><a href={`#${heading.slug}`}>{heading.text}</a></summary>
+                <ul>
+                  {heading.children.map(child => 
+                    <li class="hover:text-primary"><a href={`#${child.slug}`}>{child.text}</a></li>
+                  )}
+                </ul>
+              </details>
+            </li>)}
+        </div>
       </ul>
     </div>
   
