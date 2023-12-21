@@ -29,6 +29,7 @@ const headingsByDepth = headings.reduce((acc, heading) => {
       <ul class="sticky top-20 menu">
           {headingsByDepth.map(h =>
           <li>
+            {h.children.length > 0 &&
             <details open>
               <summary class="hover:text-primary"><a href={`#${h.slug}`}>{h.text}</a></summary>
               <ul>
@@ -37,6 +38,10 @@ const headingsByDepth = headings.reduce((acc, heading) => {
                 )}
               </ul>
             </details>
+            }
+            {h.children.length == 0 &&
+              <summary class="hover:text-primary"><a href={`#${h.slug}`}>{h.text}</a></summary>
+            }
           </li>)}  
       </ul>
     </div>
