@@ -10,7 +10,7 @@ const { mode } = Astro.props;
   class="flex bg-info text-info-content rounded-lg p-2 w-fit my-2 prose-a:invert prose-a:mx-1 prose-code:mx-1 prose-code:bg-base-100 prose-code:text-base-content prose-ul:list-none"
 >
   {
-    mode == "icon" && (
+    mode != "mascot" && (
       <svg
         xmlns="http://www.w3.org/2000/svg"
         class="my-auto mx-2 stroke-current shrink-0 h-6 w-6"
