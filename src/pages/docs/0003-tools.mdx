@@ -1,0 +1,183 @@
+---
+title: Tools
+layout: '../../layouts/DocsLayout.astro'
+---
+
+import Warning from '../../components/Warning.astro';
+import Status from '../../components/Status.astro';
+import Note from '../../components/Note.astro';
+
+
+# Yaksha tools
+
+<Warning>This documentation is still being actively written.</Warning>
+
+## Building
+
+<Status status="in-progress">
+### carpntr / yaksha build
+</Status>
+
+```plaintext
+    ╔═╗┌─┐┬─┐╔═╗┌┐┌┌┬┐┬─┐
+    ║  ├─┤├┬┘╠═╝│││ │ ├┬┘
+    ╚═╝┴ ┴┴└─╩  ┘└┘ ┴ ┴└─
+    
+    Tool for building Yaksha
+    Projects
+    
+       ,
+      /(  ___________
+     |  >:===========`
+      )(
+      ""
+Usage: carpntr
+   or: carpntr [options] file
+
+    -h, --help            show help and exit
+    -R, --run             run a single file
+    -C, --compile         compile a single file
+    -r, --raylib          enable raylib
+    -w, --web             build for web (works only with raylib)
+    -d, --dll             enable .dll client build for hot reloading with ykreload/cr.h (works only with raylib)
+    -s, --shell=<str>     specify shell file for web builds
+    -a, --assets=<str>    specify assets directory for web builds
+    -4, --wasm4           wasm4 build
+    -S, --silent          do not print anything except errors
+    -N, --nothread        no parallel build & disable optimization (for debugging)
+```
+
+Most important tool that Yaksha comes with is called `carpntr`. 
+
+You can invoke it using `yaksha build` or directly using `carpntr`. This tool is written in Yaksha and it is capable of building itself (after a bootstrap stage is executed).
+
+<Note mode="mascot">
+* `carpntr` knows which runtime `.c` files need to be linked.
+* `carpntr` uses `zig cc` to build.
+* `carpntr` can cross compile projects using a `yaksha.toml`
+</Note>
+
+<Status status="in-progress">
+#### yaksha.toml
+</Status>
+
+This is the standard way of creating a Yaksha project. 
+
+```toml
+[project]
+main="main.yaka"
+name="carpntr"
+author="JaDoggx86"
+
+# C or C++ native code that get compiled
+[ccode]
+include_paths=[]
+defines=[]
+compiler_defines=[]
+includes=[]
+c_code=[]
+# cpp_code is not supported yet
+cpp_code=[]
+
+[compilation]
+override_alloc=false
+# Set this to true if whole project is pure C?
+only_ccode=false
+# libc=native|try_musl|musl|default
+libc="try_musl"
+# Automatically use zig cc & zig c++ to build project
+# We will start with just zig cc, zig c++ support so this is ignored for now
+compiler="zig"
+targets=["x86_64-linux-musl", "x86_64-linux-gnu", "x86_64-windows-gnu", "aarch64-macos-gnu", "x86_64-macos-gnu"]
+```
+
+#### How to build raylib native binaries?
+
+Copy a raylib samples from demo page to a file named `game.yaka` (or any name, as long as it is not a keyword or lib namespace).
+
+Execute `yaksha build -Rr game.yaka`
+{/* TODO
+#### How to build a wasm4 (fantasy console) game?
+
+#### How to build a console app?
+
+#### How to use emascripten to build a raylib webapp. */}
+
+<Status status="in-progress">
+### hammer 
+</Status>
+
+Hammer is a simple tool to build `c` and/or `c++` projects. It shares some capabilities with `carpntr`.
+
+It does not understand how to compile `.yaka` files. Hammer needs to be configured using a `hammer.toml` file.
+
+<Note mode="mascot">
+* `hammer` is used in github actions to build Yaksha release package.
+* `hammer` use either `zig cc` or `zig c++` commands.
+* `hammer` can cross compile as well.
+</Note>
+
+#### hammer.toml file 
+
+Hammer tool only work with a `hammer.toml` file.
+
+```toml
+[compilation]
+targets=["x86_64-linux-musl", "x86_64-linux-gnu", "x86_64-windows-gnu", "aarch64-macos-gnu", "x86_64-macos-gnu"]
+args_c_or_cpp=["-O2", "-fPIC"]
+args_cpp=["-std=c++17"]
+args_c=["-std=c99"]
+include_paths=["src", "3rd/utfcpp/source", "runtime",
+    "3rd/reproc/reproc/include", "3rd/reproc/reproc++/include",
+    "3rd/reproc/reproc/src", "3rd/reproc/reproc++/src", "3rd"]
+# .c or .cpp files that get compiled to .o files
+# so this is all except the .c/.cpp file with main()
+sources=["src/ast/ast.cpp", "src/ast/ast_printer.cpp", "src/ast/ast_vis.cpp", "src/ast/codefiles.cpp", "src/ast/environment.cpp", "src/ast/environment_stack.cpp", "src/ast/parser.cpp", "src/builtins/builtins.cpp", "src/compiler/compiler.cpp", "src/compiler/compiler_utils.cpp", "src/compiler/def_class_visitor.cpp", "src/compiler/delete_stack.cpp", "src/compiler/delete_stack_stack.cpp", "src/compiler/desugaring_compiler.cpp", "src/compiler/entry_struct_func_compiler.cpp", "src/compiler/multifile_compiler.cpp", "src/compiler/return_checker.cpp", "src/compiler/type_checker.cpp", "src/compiler/usage_analyser.cpp", "src/file_formats/ic_tokens_file.cpp", "src/file_formats/tokens_file.cpp", "src/ic2c/ic2c.cpp", "src/ic2c/ic_ast.cpp", "src/ic2c/ic_compiler.cpp", "src/ic2c/ic_level2_parser.cpp", "src/ic2c/ic_level2_tokenizer.cpp", "src/ic2c/ic_line_splicer.cpp", "src/ic2c/ic_optimizer.cpp", "src/ic2c/ic_parser.cpp", "src/ic2c/ic_peek_ahead_iter.cpp", "src/ic2c/ic_preprocessor.cpp", "src/ic2c/ic_tokenizer.cpp", "src/ic2c/ic_trigraph_translater.cpp", "src/tokenizer/block_analyzer.cpp", "src/tokenizer/string_utils.cpp", "src/tokenizer/tokenizer.cpp", "src/utilities/annotation.cpp", "src/utilities/annotations.cpp", "src/utilities/colours.cpp", "src/utilities/cpp_util.cpp", "src/utilities/defer_stack.cpp", "src/utilities/defer_stack_stack.cpp", "src/utilities/error_printer.cpp", "src/utilities/human_id.cpp", "src/utilities/ykdatatype.cpp", "src/utilities/ykdt_pool.cpp", "src/utilities/ykobject.cpp", "src/yaksha_lisp/yaksha_lisp.cpp", "src/yaksha_lisp/yaksha_lisp_builtins.cpp"] # update_makefile.py HAMMER_CPP
+temp_out_dir="bin/hammer"
+binaries=["yaksha"]
+disable_parallel=true
+
+[yaksha]
+main_file="src/yk.cpp"
+# Additional sources
+sources=["src/carpntr_wrapper.cpp", "runtime/whereami.c",
+    "3rd/reproc_single_file.c", "3rd/reproc/reproc++/src/reproc.cpp"]
+name="yaksha"
+out_dir="bin/hammer.bin"
+args_link=["-static", "-O2"]
+# Operating system specific arguments
+windows_args_link=["-lws2_32"]
+linux_args_link=["-lrt"]
+macos_args_link=[]
+```
+
+
+## Editors / IDEs
+
+<Status status="in-progress">
+### IntelliJ / PyCharm / CLion
+</Status>
+
+This is more advanced compared to other two plugins. 
+
+<Note mode="mascot">
+* Support auto completion.
+* Support <kbd class="kbd kbd-sm">ctrl / ⌘</kbd> + <kbd class="kbd kbd-sm">🖱️ Click</kbd> navigation
+* Find usages.
+</Note>
+
+<Status status="in-progress">
+### Visual Studio Code
+</Status>
+
+<Status status="in-progress">
+### Notepad++
+</Status>
+
+<Status status="not-started">
+### Vim
+</Status>
+
+<Status status="not-started">
+### Emacs
+</Status>

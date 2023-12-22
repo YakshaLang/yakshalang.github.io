@@ -24,7 +24,7 @@ export default defineConfig({
         name: 'yaksha',
         scopeName: 'source.yaksha',
         ...yakshaGrammar
-      }, "c", "bash", "scheme", "python", "lisp"]
+      }, "c", "bash", "scheme", "python", "lisp", "toml"]
     }
   }
 });
