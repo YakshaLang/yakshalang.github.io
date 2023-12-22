@@ -15,7 +15,7 @@ Assignment would follow same casting style, except lhs needs to be wider.
 
 Bitwise operations would require manual casting to same data type.
 
-```text
+```plaintext
     .-------------. 
     |    bool     | 
     '.-----------.' 

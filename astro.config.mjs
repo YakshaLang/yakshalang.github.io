@@ -18,11 +18,13 @@ export default defineConfig({
   markdown: {
     shikiConfig: {
       wrap: true,
+      gfm: true,
+      smartypants: true,
       langs: [{
         name: 'yaksha',
         scopeName: 'source.yaksha',
         ...yakshaGrammar
-      }, "c", "bash", "scheme", "python"]
+      }, "c", "bash", "scheme", "python", "lisp"]
     }
   }
 });
