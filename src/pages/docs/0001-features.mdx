@@ -32,7 +32,6 @@ my_sr = "Hello World"
 another_sr: sr = "Hello World"
 ```
 
----
 
 <Status status="done">
 ### String literals
@@ -45,8 +44,6 @@ String literals are efficient and does not require any additional memory allocat
 If you `+` two string literals that will be done at compile time.
 
 String literals are automatically converted to `sr` or `str`.
-
----
 
 <Status status="done">
 ### (Semi)Managed Strings
@@ -74,7 +71,6 @@ a: str = "hello world"
 println(a)
 ```
 
----
 
 <Status status="done">
 ### Standard integers 
@@ -91,7 +87,6 @@ print("Four =")
 println(a)
 ```
 
----
 
 <Status status="in-progress">
 ### Integer types
@@ -116,7 +111,6 @@ i: u32 = 4u32    # datatype ✅ | literal ✅
 j: u64 = 5u64    # datatype ✅ | literal ✅
 ```
 
----
 
 <Status status="done">
 ### Float types
@@ -133,7 +127,6 @@ b: f64 = 2.0     # datatype ✅ | literal ✅
 c: float = 3.0f  # datatype ✅ | literal ✅
 ```
 
----
 
 ## Syntax features
 
@@ -154,7 +147,6 @@ def main() -> int:
     return 0
 ```
 
----
 
 <Status status="done">
 ### Basic Functions
@@ -169,7 +161,6 @@ def main() -> int:
     return 0
 ```
 
----
 
 <Status status="done">
 ### Exposing C functions
@@ -179,7 +170,6 @@ def main() -> int:
 * 💀 `@nativexxx` functions cannot call each other or normal functions.
 
 
----
 
 #### @native - native functions
 ```yaksha
@@ -204,8 +194,6 @@ yk__sds yy__get_global_arg(int32_t nn__n)
 ```
 </details>
 
----
-
 ### @nativemacro - macros with arguments
 
 ```yaksha
@@ -226,7 +214,6 @@ def max_int(a: int, b:int) -> int:
 ```
 </details>
 
----
 
 ### @nativedefine - simple #define
 
@@ -242,7 +229,6 @@ def banana(a: int, b: int, c:int) -> int:
 ```
 </details>
 
----
 
 ### @varargs - variable argument functions
 
@@ -262,8 +248,6 @@ def new(count: int, s: str) -> Array[str]:
 // yk__sds *yk__newsdsarray(size_t count, ...)
 ```
 </details>
-
----
 
 <Status status="not-started">
 ### Template functions
@@ -291,7 +275,6 @@ def hmget(a: HashMap[K,V], key: K) -> V:
     pass
 ```
 
----
 
 <Status status="not-started">
 ### GPU/OpenCL device functions
@@ -304,7 +287,6 @@ def calculate(n: int) -> int:
    return 1 + 1 
 ```
 
----
 
 <Status status="done">
 ### Defer statement
@@ -339,7 +321,7 @@ Hello World
 All done
 ```
 
----
+
 
 <Status status="in-progress">
 ### Del statement
@@ -360,7 +342,6 @@ def main() -> int:
 ```
 <Note mode="icon">Compiles to `free` or other runtime functions.</Note>
 
----
 
 <Status status="in-progress">
 ### Class statement
@@ -382,7 +363,7 @@ class Teacher:
     address: str
 ```
 
----
+
 
 #### Creating and freeing objects
 
@@ -421,7 +402,7 @@ def main() -> int:
     return 0
 ```
 
----
+
 
 #### Exposing native structures
 
@@ -446,7 +427,7 @@ class Color:
 ```
 </details>
 
----
+
 
 <Status status="in-progress">
 ### Import statement
@@ -471,7 +452,7 @@ def main() -> int:
 
 <Note mode="icon">Name mangling takes place for this.</Note>
 
----
+
 
 <Status status="done">
 ### While loop
@@ -488,7 +469,7 @@ def main() -> int:
     return 0
 ```
 
----
+
 
 <Status status="done">
 ### Foreach loop
@@ -510,7 +491,7 @@ def main() -> int:
     return 0
 ```
 
----
+
 
 <Status status="done">
 ### Endless for loop
@@ -529,7 +510,7 @@ def main() -> int:
     return 0
 ```
 
----
+
 
 <Status status="done">
 ### C-For loop
@@ -564,7 +545,7 @@ def main() -> int:
 * This is why `add` function does not have a return statement.
 </Note>
 
----
+
 
 <Status status="in-progress">
 ## Builtin Functions
@@ -603,12 +584,12 @@ def main() -> int:
 
 <Note mode="icon">Builtin functions may call different implementations based on input.</Note>
 
----
+
 
 ## Non primitive data types
 This section describes other essential types of builtin structures.
 
----
+
 
 <Status status="in-progress">
 ### Dynamic Arrays
@@ -628,7 +609,7 @@ def main() -> int:
 
 <Note mode="icon">Must ensure array elements are freed. `int` need not be deleted as they are primitive types.</Note>
 
----
+
 
 <Status status="in-progress">
 ### String Hash Map
@@ -653,7 +634,7 @@ def main() -> int:
 * `len` will give the total number of elements of the String Hash Map.
 </Note>
 
----
+
 
 <Status status="in-progress">
 ### Hash Map
@@ -666,7 +647,7 @@ Simple single key single value hashmaps.
 * key and value both need to be deleted.
 </Note>
 
----
+
 
 <Status status="in-progress">
 ## Macros & YakshaLisp
@@ -682,7 +663,7 @@ It has it's own built in functions, can use `import`, read/write files and even 
 * So you can meta-program while you meta-program.
 </Note>
 
----
+
 
 ### Philosophy?
 YakshaLisp provide the ability to write token-list to token-list conversion macros. One can use `my_macro!{t t t}` style expansion to achieve this. So why YakshaLisp? because it needs to process a list of tokens. 
@@ -690,7 +671,7 @@ Additionally, Yaksha and YakshaLisp are polar opposites of each other, therefore
 
 <Note mode="icon">Think Yin-Yang!</Note>
 
----
+
 
 #### What are the differences?
 
@@ -757,7 +738,7 @@ Additionally, Yaksha and YakshaLisp are polar opposites of each other, therefore
   </tbody>
 </table> 
 
----
+
 
 <Status status="done">
 ### Builtin functions, values & prelude
@@ -795,7 +776,7 @@ All below listed functions are available at the moment.
 * `random` - random number between given range
 * `time` - unix time as number
 
----
+
 
 ### Macro environments
 
@@ -807,7 +788,7 @@ During garbage collection, mark phase will start marking from `builtins_root` an
 
 Environment is an unordered_map with string keys. Environments and maps use same data type internally.
 
----
+
 
 ### How does it look like
 
