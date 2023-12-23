@@ -4,12 +4,29 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout title="Yaksha | Home">
 	<div class="flex justify-center gap-8 pt-16 pb-8 px-8 md:px-0">
-		<p class="font-mono text-xl my-auto md:text-3xl">
-			A <a class="font-bold text-primary">manual</a> memory managed,</br>
-			compiled to C99,</br>
-			<span class="text-xs md:text-lg">programing language with <a class="font-black text-secondary">off-side rule</a> syntax.</span>
-		</p>
-	
+		<div>
+			<div class="divide-y divide-none">
+				<p class="font-mono text-xl my-auto md:text-3xl">
+					A <a class="font-bold text-primary">manual</a> memory managed,</br>
+					compiled to C99,</br>
+					<span class="text-xs md:text-lg">programming language with <a class="font-black text-secondary">off-side rule</a> syntax,</span>
+				    </br>
+					<span class="text-xs md:text-lg">and <a class="font-black text-secondary">YakshaLisp</a> sublanguage.</span>
+					
+				</p>
+				<p>
+					<div class="pt-8">
+						<a href="https://github.com/YakshaLang/Yaksha/releases" target="_blank" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-download" viewBox="0 0 16 16">
+							<path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/>
+							<path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+						  </svg> Downloads</a>	
+						<a href="https://github.com/YakshaLang" target="_blank" class="btn btn-secondary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lightbulb-fill" viewBox="0 0 16 16">
+							<path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6m3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5"/>
+						  </svg> Source Code (GPLv3)</a>	
+					</div>	
+				</p>
+			</div>
+		</div>
 		<img src="/imgs/typing_code_yaksha.gif" class="h-44 rounded-xl md:h-96"/>
 	</div>
 
@@ -18,14 +35,14 @@ import Layout from '../layouts/Layout.astro';
 	<div class="flex justify-center gap-8 py-8 px-8 md:px-0">
 		<img src="/imgs/code_scroll_yaksha.gif" class="h-44 rounded-xl md:h-96"/>
 
-		<div class="divide-y divide-dotted">
+		<div class="divide-y divide-none">
 			<p class="font-mono text-xl my-auto pb-4 md:text-4xl">
 				Simple. Strict. Speedy.		
 			</p>
 			<p class="text-sm pt-3 max-w-96">
-				Language syntax is minimalistic and has similarities to Python.</br>
+				Language syntax is <a class="font-black text-primary">minimalistic</a> and has similarities to Python.</br>
 				Manual memory management is required.</br>
-				New developers should be able to pick up the full syntax in a few hours.</br>
+				Use <a class="font-black text-secondary">YakshaLisp</a> to create <a class="font-black text-secondary">macros</a> (Hygenic, Non-hygenic, or non-hygenic metamacros).</br>
 			</p>
 		</div>
 	</div>
@@ -34,7 +51,7 @@ import Layout from '../layouts/Layout.astro';
 
 	<div class="flex justify-center gap-8 py-8 px-8 md:px-0">
 		<div>
-			<div class="divide-y divide-dotted">
+			<div class="divide-y divide-none">
 				<p class="font-mono text-xl my-auto pb-2 md:text-4xl">
 					All <a class="font-bold text-primary">Fury</a>, No <a class="font-bold text-secondary">Fuss</a>.
 				</p>
@@ -45,7 +62,12 @@ import Layout from '../layouts/Layout.astro';
 			</div>
 			
 			<div class="pt-8">
-				<a href="/demos" class="btn btn-primary">View the demos</a>	
+				<a href="/demos" class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-play-circle-fill" viewBox="0 0 16 16">
+					<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M6.79 5.093A.5.5 0 0 0 6 5.5v5a.5.5 0 0 0 .79.407l3.5-2.5a.5.5 0 0 0 0-.814l-3.5-2.5"/>
+				  </svg> View the demos</a>	
+				<a href="https://yaksha.pages.dev/" target="_blank" class="btn btn-secondary"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-lightbulb-fill" viewBox="0 0 16 16">
+					<path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6m3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5"/>
+				  </svg> Playground</a>	
 			</div>
 		</div>
 
@@ -57,7 +79,7 @@ import Layout from '../layouts/Layout.astro';
 
 	<div class="flex justify-center gap-8 pt-8 pb-16 px-8 md:px-0">
 		<img src="/imgs/carpntr_tool_run.gif" class="h-44 rounded-xl md:h-96"/>
-		<div class="divide-y divide-dotted">
+		<div class="divide-y divide-none">
 			<p class="font-mono text-xl my-auto pb-2 md:text-4xl">
 				A versatile new tool
 			</p>
