@@ -181,7 +181,9 @@ def get_arg(n: int) -> str:
 def get_global_arg(n: int) -> str:
     ccode "yk__sdsdup(global_args[yy__n])"
 ```
-<Note mode="icon">If `ccode` is there instead of an argument, then it is used as the message body.</Note>
+<Note mode="mascot">
+* If `ccode` is there instead of an argument, then it is used as the message body.
+</Note>
 
 <details>
 <summary>Click to see output C code</summary>
@@ -572,7 +574,40 @@ def main() -> int:
 * ✅ `hmget(Array[MEntry[K,T]], K) -> T` - Get item from an `Array[MEntry[K,T]]`
 * ✅ `hmgeti(Array[MEntry[K,T]], K) -> int` - Get item index from an `Array[MEntry[K,T]]` (-1 if not found)
 * ✅ `cast("T", X) -> T` - Data type casting builtin
-* ✅ `qsort(Array[T],Function[In[Const[AnyPtrToConst],Const[AnyPtrToConst]],Out[int]]) -> bool` - Sort an array, returns True if successful
+* ✅ `qsort(Array[T], COMP) -> bool` - Sort an array, returns True if successful
+
+```yaksha
+
+# Comparision is a function of type:
+# Function[In[Const[AnyPtrToConst],Const[AnyPtrToConst]],Out[int]])
+#
+# Example:
+def cmp_int(a: Const[AnyPtrToConst], b: Const[AnyPtrToConst]) -> int:
+    # Compare two given integers
+    val_a: int = unref(cast("Ptr[int]", a))
+    val_b: int = unref(cast("Ptr[int]", b))
+    return val_b - val_a
+
+def print_array(x: Array[int]) -> None:
+    print("len=")
+    println(len(x))
+    pos = 0
+    length: int = len(x)
+    while pos < length:
+        print(x[pos])
+        print(" ")
+        pos = pos + 1
+    println("")
+
+def main() -> int:
+    x1 = array("int", 1, 2, 3, 3, 2, 1, 5, 4)
+    println("before x1:")
+    print_array(x1)
+    qsort(x1, cmp_int)
+    println("after x1:")
+    print_array(x1)
+```
+
 * ✅ `iif(bool, T, T) -> T` - Ternary functionality
 * ✅ `foreach(Array[T],Function[In[T,V],Out[bool]],V) -> bool` - For each element in array execute given function
 * ✅ `countif(Array[T],Function[In[T,V],Out[bool]],V) -> int` - For each element in array count if function returns true
@@ -582,7 +617,9 @@ def main() -> int:
 * ✅ `make("T") -> Ptr[T]` - Allocate a single object.
 * ✅ `inlinec("T", "code") -> T` - Inline `C` code resulting in `T` data type. Example - `inlinec("int", "sizeof(char)")`
 
-<Note mode="icon">Builtin functions may call different implementations based on input.</Note>
+<Note mode="mascot">
+* Builtin functions may call different implementations based on input.
+</Note>
 
 
 
@@ -607,7 +644,9 @@ def main() -> int:
     return 0
 ```
 
-<Note mode="icon">Must ensure array elements are freed. `int` need not be deleted as they are primitive types.</Note>
+<Note mode="mascot">
+* Must ensure array elements are freed. `int` need not be deleted as they are primitive types.
+</Note>
 
 
 
