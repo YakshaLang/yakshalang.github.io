@@ -8,7 +8,7 @@ const posts = await Astro.glob('./demos/*.mdx');
     <div class="flex justify-center text-center gap-8 pt-16 pb-8 px-8 md:px-0">
         <div>
             <h1 class="font-mono text-xl my-auto md:text-3xl">Demos</h1>
-            
+            <p>All demos here run natively in you browser using Webassembly (WASM)</p>
             <div class="divide-y divide-dotted pt-4">
                 {posts.map(post => 
                 <a href={post.url} class="flex flex-col gap-2 py-4 group">
