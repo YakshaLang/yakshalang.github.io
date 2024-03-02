@@ -7,7 +7,7 @@ layout: '../../layouts/YamaPostLayout.astro'
 # YAMA 0009 - Strings revisited
 
 - Author(s): Bhathiya Perera
-- Status   : Draft
+- Status   : ✅
 
 Strings in programming languages are tough to design. You can make things simple by using it like a value type (Copying and deleting it). However, value like strings come at a cost as it does large number of alloc/dealloc resulting in fragmented memory. In WASM4 or embedded (potential future scenario) cases, this kind of alloc/dealloc is not acceptable.
 

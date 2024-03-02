@@ -37,7 +37,6 @@ typedef enum
 
 Currently we can use something like
 
-<!-- Note using Python for syntax highlighting, below is Yaksha code -->
 
 ```yaksha
 SOMETHING: Const[int] = 0

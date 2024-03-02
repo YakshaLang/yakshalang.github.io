@@ -9,8 +9,6 @@ layout: '../../layouts/YamaPostLayout.astro'
 - Author(s): Bhathiya Perera
 - Status   : Draft
 
-<!-- different languages for code blocks are used to get maximum syntax matching for free, please ignore -->
-
 ## Problem
 
 We would like to introduce support for iterators, such that it allows Yaksha to simply iterate arbitrary content. 

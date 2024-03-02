@@ -7,7 +7,7 @@ layout: '../../layouts/YamaPostLayout.astro'
 # YAMA 0007 - Additional features for structs
 
 - Author(s): Bhathiya Perera
-- Status   : In Progress
+- Status   : ✅
 
 Structures are at the moment can be created as follows
 
@@ -23,7 +23,7 @@ class Orange:
     origin: int
 ```
 
-## Item 1 - Allocate single object on heap
+## Item 1 - Allocate single object on heap ✅
 
 ```yaksha
 a: Ptr[Banana] = make("Banana")
@@ -31,7 +31,7 @@ a: Ptr[Banana] = make("Banana")
 b: Orange = make("Orange")
 ```
 
-## Item 2 - Create structures or classes ✅
+## Item 2 - Create structures or classes 
 
 ```yaksha
 a: Banana = Banana {color: YELLOW, origin: SRI_LANKA}

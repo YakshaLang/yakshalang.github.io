@@ -9,7 +9,6 @@ layout: '../../layouts/YamaPostLayout.astro'
 - Author(s): Bhathiya Perera
 - Status   : In Progress
 
-<!-- different languages for code blocks are used to get maximum syntax matching for free, please ignore -->
 
 ## Problem
 
