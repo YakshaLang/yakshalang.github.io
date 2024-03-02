@@ -10,6 +10,7 @@ Core library can be accessed by importing `libs`.
 
 <Note> This import name is subject to change.  </Note>
 
+
 ## libs
 ```yaksha
 def version() -> str
@@ -76,18 +77,27 @@ def usage(argp: ArgParse) -> None
 
 ## libs.c
 ```yaksha
+macro char!
+# c.char!{"a"} --> create a char --> inlinec("Const[Char]", "'a'")
+macro const_str!
+# c.const_str!{"Hi"} --> create a const char * const --> inlinec("Const[Ptr[Const[Char]]]", "\"Hi\"")
+macro cstr!
+# c.cstr!{"Hi"} --> create a c.CStr
 class CBool
 class CChar
 class CDouble
 class CFloat
 class CInt
 class CLong
+class CLongLong
+class CSChar
 class CShort
 class CStr
 # A char* string
 class CUChar
 class CUInt
 class CULong
+class CULongLong
 class CUShort
 class Size
 # size_t in C code
@@ -102,6 +112,7 @@ def calloc(n: Size, size: Size) -> VoidPtr
 def ceil(x: CDouble) -> CDouble
 def cos(x: CDouble) -> CDouble
 def cosh(x: CDouble) -> CDouble
+def cstrlen(s: CStr) -> Size
 def fabs(x: CDouble) -> CDouble
 def floor(x: CDouble) -> CDouble
 def fmod(x: CDouble, y: CDouble) -> CDouble
@@ -147,28 +158,28 @@ WHITE: Const[int]
 # Apply white foreground color
 YELLOW: Const[int]
 # Apply yellow foreground color
-def blue(x: str) -> None
+def blue(x: sr) -> None
 # Print text in console, in blue color
 def clear() -> None
 # Clear console
-def color_print(color: int, x: str) -> None
+def color_print(color: int, x: sr) -> None
 # Print in given color and then rewind
-def cyan(x: str) -> None
+def cyan(x: sr) -> None
 # Print text in console, in cyan color
 def getch() -> int
 # Get a single character / key press
-# Can be used as a pause
-def green(x: str) -> None
+#   Can be used as a pause
+def green(x: sr) -> None
 # Print text in console, in green color
-def purple(x: str) -> None
+def purple(x: sr) -> None
 # Print text in console, in purple color
-def red(x: str) -> None
+def red(x: sr) -> None
 # Print text in console, in red color
 def set_color(c: int) -> None
 # Set given color
-def white(x: str) -> None
+def white(x: sr) -> None
 # Print text in console, in white color
-def yellow(x: str) -> None
+def yellow(x: sr) -> None
 # Print text in console, in yellow color
 ```
 
@@ -178,9 +189,9 @@ class Ini
 # INI Object
 def del_ini(object: Ini) -> None
 # Delete INI object
-def from_str(ini_data: str) -> Ini
+def from_str(ini_data: sr) -> Ini
 # Parse INI file from given string data
-def get(object: Ini, section: str, property: str) -> str
+def get(object: Ini, section: sr, property: sr) -> str
 # Get a property in given section
 # Empty string is returned if we cannot find the section
 ```
@@ -200,25 +211,25 @@ def bool_at_default(x: TomlArray, pos: int, default: bool) -> bool
 # Get bool from array at location or given default
 def del_table(x: Table) -> None
 # Delete a table. Note that you do not need to delete child tables
-def from_str(x: str) -> Table
+def from_str(x: sr) -> Table
 # Parse to a TOML Table from given string
-def get_array(x: Table, name: str) -> TomlArray
+def get_array(x: Table, name: sr) -> TomlArray
 # Get any array from table object
-def get_bool(x: Table, name: str) -> bool
+def get_bool(x: Table, name: sr) -> bool
 # Get a bool from table or false if fails
-def get_bool_default(x: Table, name: str, default: bool) -> bool
+def get_bool_default(x: Table, name: sr, default: bool) -> bool
 # Get a bool from table or given default
-def get_int(x: Table, name: str) -> int
+def get_int(x: Table, name: sr) -> int
 # Get an int from table or 0 if fails
-def get_int_default(x: Table, name: str, default: int) -> int
+def get_int_default(x: Table, name: sr, default: int) -> int
 # Get an int from table or given default
-def get_string(x: Table, name: str) -> str
+def get_string(x: Table, name: sr) -> str
 # Get a string from table or empty if fails
-def get_string_array(x: Table, name: str) -> Array[str]
+def get_string_array(x: Table, name: sr) -> Array[str]
 # Get an array as native string array
-def get_string_default(x: Table, name: str, default: str) -> str
+def get_string_default(x: Table, name: sr, default: sr) -> str
 # Get a string from table or given default
-def get_table(x: Table, name: str) -> Table
+def get_table(x: Table, name: sr) -> Table
 # Get a Table from given name
 def int_at(x: TomlArray, pos: int) -> int
 # Get int from array at location or 0
@@ -226,7 +237,7 @@ def int_at_default(x: TomlArray, pos: int, default: int) -> int
 # Get int from array at locaiton or given default
 def string_at(x: TomlArray, pos: int) -> str
 # Get string from array at location or empty
-def string_at_default(x: TomlArray, pos: int, default: str) -> str
+def string_at_default(x: TomlArray, pos: int, default: sr) -> str
 # Get string from array at location or given default
 def valid_array(x: TomlArray) -> bool
 # Is this a valid array?
@@ -236,8 +247,71 @@ def valid_table(x: Table) -> bool
 
 ## libs.io
 ```yaksha
+MAP_ANON: Const[int]
+MAP_ANONYMOUS: Const[int]
+MAP_FAILED: Const[int]
+MAP_FILE: Const[int]
+MAP_FIXED: Const[int]
+MAP_PRIVATE: Const[int]
+MAP_SHARED: Const[int]
+MAP_TYPE: Const[int]
+MS_ASYNC: Const[int]
+MS_INVALIDATE: Const[int]
+MS_SYNC: Const[int]
+O_APPEND: Const[int]
+O_ASYNC: Const[int]
+O_CLOEXEC: Const[int]
+O_CREAT: Const[int]
+O_EXCL: Const[int]
+O_NONBLOCK: Const[int]
+O_RDONLY: Const[int]
+O_RDWR: Const[int]
+O_TMPFILE: Const[int]
+O_WRONLY: Const[int]
+PROT_EXEC: Const[int]
+PROT_NONE: Const[int]
+PROT_READ: Const[int]
+PROT_WRITE: Const[int]
+class File
+class FilePos
+def clear_error(stream: Ptr[File]) -> None
+# Clear eof and error
+def close(file: libs.c.CInt) -> bool
+def fclose(stream: Ptr[File]) -> bool
+# Close a file using given FILE*
+def fflush(stream: Ptr[File]) -> bool
+def fflush_all() -> bool
+def fopen(fname: str, mode: str) -> Ptr[File]
+# Open a file
+def fread(buffer: AnyPtr, size: libs.c.Size, count: libs.c.Size, stream: Ptr[File]) -> libs.c.Size
+def fseek_begin(stream: Ptr[File], offset: i64) -> bool
+# Seek from begining
+def fseek_end(stream: Ptr[File], offset: i64) -> bool
+# Seek from end
+def fseek_relative(stream: Ptr[File], offset: i64) -> bool
+# Seem from current location
+def ftell(stream: Ptr[File]) -> i64
+def fwrite(buffer: AnyPtr, size: libs.c.Size, count: libs.c.Size, stream: Ptr[File]) -> libs.c.Size
+def has_error(stream: Ptr[File]) -> bool
+# Has error?
+def is_eof(stream: Ptr[File]) -> bool
+# Is end of file?
+def mlock(address: AnyPtr, length: libs.c.Size) -> int
+def mmap(address: AnyPtr, length: libs.c.Size, protection: int, flags: int, file_descriptor: libs.c.CInt, offset: i64) -> AnyPtr
+def mprotect(address: AnyPtr, length: libs.c.Size, protection: int) -> int
+def msync(address: AnyPtr, length: libs.c.Size, flags: int) -> int
+def munlock(address: AnyPtr, length: libs.c.Size) -> int
+def munmap(address: AnyPtr, length: libs.c.Size) -> int
+def open(path: str, mode: int) -> libs.c.CInt
 def readfile(fname: str) -> str
 # Read a file to as string, on error returns empty
+def rewind(stream: Ptr[File]) -> None
+# Set the position as begining of file
+def stderr() -> Ptr[File]
+def stdin() -> Ptr[File]
+def stdout() -> Ptr[File]
+def valid(stream: Ptr[File]) -> bool
+# Did we succesfully opened a file?
 def writefile(fname: str, data: str) -> bool
 # Write a file
 ```
@@ -263,6 +337,12 @@ def f2i(a: float) -> int
 # f32 (single precision) to int/i32
 # Warning: value is truncated
 def f2uu(a: float) -> u64
+def from_be16(a: u16) -> u16
+def from_be32(a: u32) -> u32
+def from_be64(a: u64) -> u64
+def from_le16(a: u16) -> u16
+def from_le32(a: u32) -> u32
+def from_le64(a: u64) -> u64
 def i2d(a: int) -> f64
 # int/i32 to f64 (double precision)
 def i2f(a: int) -> float
@@ -272,6 +352,15 @@ def i2u(a: int) -> u32
 def i2uu(a: int) -> u64
 def s2i(s: str) -> int
 # Convert a str to integer
+def swap_16(a: u16) -> u16
+def swap_32(a: u32) -> u32
+def swap_64(a: u64) -> u64
+def to_be16(a: u16) -> u16
+def to_be32(a: u32) -> u32
+def to_be64(a: u64) -> u64
+def to_le16(a: u16) -> u16
+def to_le32(a: u32) -> u32
+def to_le64(a: u64) -> u64
 def u2i(a: u32) -> int
 def uu2d(a: u64) -> f64
 def uu2f(a: u64) -> float
@@ -287,10 +376,12 @@ class Arguments
     argv: Array[str]
 class ProcessResult
 # Results of run() execution
-# Must be deleted: 
+#   Must be deleted: 
     ok: bool
     output: str
     return_code: int
+def chdir(path: str) -> bool
+# Change current working directory
 def cwd() -> str
 # Get current working directory, or empty string (if failed) on return
 def del_process_result(pr: ProcessResult) -> None
@@ -312,9 +403,9 @@ def run(args: Array[str]) -> ProcessResult
 def which(binary: str) -> str
 # Try to find full path to binary in $PATH, no need .exe for windows
 # If we cannot find in $PATH, This will fallback to current path and exe path as well
-# 
+#
 # Example find zig compiler path:
-# 
+#
 # os.which("zig")
 ```
 
@@ -335,9 +426,9 @@ def basename(p: str) -> str
 # Get just the filename of given path
 def dirname(p: str) -> str
 # Get dir name of given path
-def end_with_dot(a: str) -> bool
+def end_with_dot(a: sr) -> bool
 # Does the given string end with slash?
-def end_with_slash(a: str) -> bool
+def end_with_slash(a: sr) -> bool
 # Does the given string end with slash?
 def executable(p: str) -> bool
 # Is an executable?
@@ -346,7 +437,7 @@ def exists(p: str) -> bool
 def forward_slash() -> bool
 # Are we using forward slash or not?
 # Same as using libs.os.is_windows()
-def join(a: str, b: str) -> str
+def join(a: sr, b: sr) -> str
 # Do a path join
 def mkdir(p: str) -> bool
 # Create given folder. (Linux uses 0755 permissions)
@@ -467,7 +558,7 @@ def join(values: Array[str], sep: str) -> str
 def new(count: int, s: str) -> Array[str]
 # Create new string array
 # Example:
-# 
+#
 # import libs.strings.array as sarr
 # my_array: Array[str] = sarr.new(4, "A", "B", "C", "D")
 def prefix(sa: Array[str], prefix_str: str) -> Array[str]
@@ -480,20 +571,36 @@ def suffix(sa: Array[str], suffix_str: str) -> Array[str]
 ```yaksha
 class StringBuffer
 # String buffer object
-def append(buf: StringBuffer, v: str) -> None
+def append(buf: StringBuffer, v: sr) -> None
 # Append a string to string buffer
 def del_buf(buf: StringBuffer) -> None
 # Delete string buffer object
-def join(buf: StringBuffer, values: Array[str], sep: str) -> None
+def join(buf: StringBuffer, values: Array[str], sep: sr) -> None
 # Join given values in array with provided seperator and append this to string
+def join_sr(buf: StringBuffer, values: Array[sr], sep: sr) -> None
+# Join given values in array with provided seperator and append this to string buffer
 def new() -> StringBuffer
 # Create a new empty string buffer
 def new_size(s: int) -> StringBuffer
 # Create a string buffer with capacity s
-def prepend(buf: StringBuffer, v: str) -> None
+def prepend(buf: StringBuffer, v: sr) -> None
 # Prepend a string to string buffer
+def to_sr(buf: StringBuffer) -> sr
+# Get a string reference out of string buffer
 def to_str(buf: StringBuffer) -> str
-# Get a new string out of string buffer
+# Get a new string copy out of string buffer
+```
+
+## libs.strings.refs
+```yaksha
+def unwrap(a: sr) -> Const[libs.c.CStr]
+# Get internal string reference from sr
+def wrap(s: sr) -> sr
+# Wrap a str/literal/sr (if a sr is passed in reference is not wrapped again) as sr
+# This takes advantage of the auto-casting
+def wrap_cstr(s: libs.c.CStr, length: int) -> sr
+# Wrap a c.CStr as a sr
+def wrap_cstr_z(s: libs.c.CStr) -> sr
 ```
 
 ## libs.strings.utf8
@@ -508,7 +615,7 @@ def del_iter(s: Utf8IterateState) -> None
 def iterate(s: Utf8IterateState) -> bool
 # Go to next character
 # Returns false if nothing to read or we ran out of length of string
-def new_iter(s: str) -> Utf8IterateState
+def new_iter(s: sr) -> Utf8IterateState
 # Create a new iterator from given string
 ```
 
@@ -659,10 +766,39 @@ def lessser(a: TimeSpec, b: TimeSpec) -> bool
 def now() -> TimeSpec
 ```
 
+## libs.unittest
+```yaksha
+macro assert_false!
+# unittest.assert_false!{"description" x} - assert that this is false
+macro assert_true!
+# unittest.assert_true!{"description" x} - assert that this is true
+macro end_test_case!
+# see unittest.test_case example above
+macro run_all!
+# unittest.run_all!{} - put this at the end to run all unit tests you created
+macro test_case!
+# unittest.test_case!{"name"}: - start a test case definition
+#
+# # --- Ensure you use below imports as is ---
+#
+# import libs.unittest as u
+# import libs.console as console
+#
+# u.test_case!{"assumptions"}:
+#     u.assert_true!{"char is 1 byte" (1 == inlinec("int", "sizeof(char)"))}
+#     x = 1
+#     u.assert_true!{"int is 4 byte" (4 == inlinec("int", "sizeof(yy__x)"))}
+#     u.end_test_case!{}
+#
+# u.run_all!{}
+```
+
+
 # Raylib
 Raylib can be accessed by importing `raylib`.
 <Note>raylib is created by Ramon Santamaria and contributors.</Note>
 <Note>Yaksha wraps raylib using a generator script.</Note>
+
 
 ## raylib
 ```yaksha
@@ -3599,7 +3735,7 @@ def vector2_zero() -> raylib.Vector2
 def vector3_add(v1: raylib.Vector3, v2: raylib.Vector3) -> raylib.Vector3
 def vector3_add_value(v: raylib.Vector3, add: float) -> raylib.Vector3
 def vector3_angle(v1: raylib.Vector3, v2: raylib.Vector3) -> float
-def vector3_barycenter(p: raylib.Vector3, a: raylib.Vector3, b: raylib.Vector3, c: raylib.Vector3) -> raylib.Vector3
+def vector3_barycenter(p: raylib.Vector3, a: raylib.Vector3, b: raylib.Vector3, c_arg: raylib.Vector3) -> raylib.Vector3
 def vector3_clamp(v: raylib.Vector3, min: raylib.Vector3, max: raylib.Vector3) -> raylib.Vector3
 def vector3_clamp_value(v: raylib.Vector3, min: float, max: float) -> raylib.Vector3
 def vector3_cross_product(v1: raylib.Vector3, v2: raylib.Vector3) -> raylib.Vector3
@@ -3663,6 +3799,7 @@ def tan_deg(x: float) -> float
 def todeg(radians: float) -> float
 def torad(degrees: float) -> float
 ```
+
 
 # WASM4
 Support for WASM4 fantasy console. 
@@ -3764,3 +3901,4 @@ def trace_u8(text_data: Ptr[Const[u8]]) -> None
 def vline(x: int, y: int, length: u32) -> None
 # Draws a vertical line
 ```
+
