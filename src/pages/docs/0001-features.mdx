@@ -251,6 +251,129 @@ def new(count: int, s: str) -> Array[str]:
 ```
 </details>
 
+<Status status="in-progress">
+### Compiler Directives
+</Status>
+
+Compiler directives control how the Yaksha compiler generates C code and handles compilation. They provide fine-grained control over the compilation process.
+
+**Supported directives**: `no_main`, `no_stdlib`, `apply_nativedefine`, `ccode`
+
+#### directive ccode
+
+Embeds raw C code directly into the generated C output before the compiled Yaksha code. Essential for integrating with existing C libraries or defining custom utility functions.
+
+```yaksha
+directive ccode """
+#include <stdio.h>
+
+static int global_counter = 0;
+
+int increment_counter() {
+    return ++global_counter;
+}
+"""
+
+@nativedefine("increment_counter")
+def increment() -> int:
+    pass
+
+def main() -> int:
+    count: int = increment()  # Calls C function
+    return 0
+```
+
+**Compilation**: `yaksha build -R filename.yaka`
+
+<details>
+<summary>Click to see output C code</summary>
+```c
+#include "yk__system.h"
+#include "yk__lib.h"
+#define yy__increment increment_counter
+
+#include <stdio.h>
+
+static int global_counter = 0;
+
+int increment_counter() {
+    return ++global_counter;
+}
+
+int32_t yy__main() {
+    int32_t yy__count = yy__increment();
+    return INT32_C(0);
+}
+```
+</details>
+
+#### directive no_main
+
+Prevents generation of the default main function wrapper. Useful for creating library-style compilation units that can be called from external C code.
+
+```yaksha
+directive no_main
+
+def library_function(x: int) -> int:
+    return x * 2
+```
+
+**Compilation**: `yaksha compile filename.yaka /path/to/libs` (cannot use `-R` flag - no main function to run)
+
+**Generated C**: Only the library function without main wrapper, suitable for linking with other C programs.
+
+#### directive no_stdlib
+
+Excludes the standard Yaksha library from being included in the generated C code. Creates minimal, standalone compilation units.
+
+```yaksha
+directive no_stdlib
+
+def simple_add(a: int, b: int) -> int:
+    return a + b
+
+def main() -> int:
+    result: int = simple_add(5, 3)
+    return 0
+```
+
+**Compilation**: `yaksha build -R filename.yaka` (works with main function)
+
+**Effect**: Generated C code excludes `#include "yk__lib.h"` and produces minimal output.
+
+#### directive apply_nativedefine
+
+Ensures that functions decorated with `@nativedefine` are properly inlined and their calls are replaced with direct C function calls.
+
+```yaksha
+directive apply_nativedefine
+
+directive ccode """
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+"""
+
+@nativedefine("MAX")
+def max_val(a: int, b: int) -> int:
+    pass
+
+def main() -> int:
+    result: int = max_val(10, 20)  # Direct call to MAX macro
+    return 0
+```
+
+**Compilation**: `yaksha build -R filename.yaka` (works with main function)
+
+**Compilation Modes**:
+- **Standard Mode**: `yaksha build -R` - Full Yaksha library + main wrapper
+- **Minimal Mode**: `yaksha compile` - Combined `no_main` + `no_stdlib` + `apply_nativedefine` for embedded/library use  
+- **Hybrid Mode**: `yaksha build -R` - Custom C code with full Yaksha runtime
+
+<Note mode="mascot">
+* Use `yaksha build -R filename.yaka` for programs with main functions
+* Use `yaksha compile filename.yaka /path/to/libs` for library functions without main
+* The `-R` flag runs the program after compilation - only works with main function
+</Note>
+
 <Status status="not-started">
 ### Template functions
 </Status>
