@@ -1,6 +1,8 @@
 ---
 title: Sugar methods
 author: Bhathiya Perera
+status: draft
+description: "Method call syntax sugar using arrow notation for cleaner struct operations."
 layout: '../../layouts/YamaPostLayout.astro'
 ---
 

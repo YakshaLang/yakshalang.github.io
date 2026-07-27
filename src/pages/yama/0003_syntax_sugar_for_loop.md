@@ -1,6 +1,8 @@
 ---
 title: For loop / loop
 author: Bhathiya Perera
+status: accepted
+description: "Add for loop syntax sugar as a more familiar alternative to foreach and while."
 layout: '../../layouts/YamaPostLayout.astro'
 ---
 

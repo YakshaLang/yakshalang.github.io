@@ -1,0 +1,17 @@
+---
+interface Props {
+	status: "accepted" | "in-progress" | "draft";
+}
+
+const { status } = Astro.props;
+
+const config = {
+	accepted: { label: "Accepted", class: "badge-success" },
+	"in-progress": { label: "In Progress", class: "badge-warning" },
+	draft: { label: "Draft", class: "badge-ghost" },
+} as const;
+
+const { label, class: badgeClass } = config[status];
+---
+
+<span class={`badge ${badgeClass} font-mono text-xs`}>{label}</span>

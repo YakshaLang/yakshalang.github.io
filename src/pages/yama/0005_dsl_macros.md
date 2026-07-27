@@ -1,6 +1,8 @@
 ---
 title: DSL macros for Yaksha
 author: Bhathiya Perera
+status: in-progress
+description: "A compile time DSL macro system built on YakshaLisp, replacing reliance on C macros."
 layout: '../../layouts/YamaPostLayout.astro'
 ---
 

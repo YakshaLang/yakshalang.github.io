@@ -1,6 +1,8 @@
 ---
 title: Exposing C enums/#defines/consts
 author: Bhathiya Perera
+status: accepted
+description: "Expose C enums, #defines, and consts to Yaksha with a unified import syntax."
 layout: '../../layouts/YamaPostLayout.astro'
 ---
 

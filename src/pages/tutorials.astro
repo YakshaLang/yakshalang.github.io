@@ -1,21 +1,39 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import ContentCard from '../components/ContentCard.astro';
+import { sortByFilename, extractExcerpt } from '../utils/content';
 
-const tutorials = await Astro.glob('./tutorials/*.md');
+const rawTutorials = sortByFilename(await Astro.glob('./tutorials/*.md'));
+const tutorials = await Promise.all(
+	rawTutorials.map(async (tutorial) => ({
+		url: tutorial.url,
+		title: tutorial.frontmatter.title,
+		author: tutorial.frontmatter.author,
+		excerpt:
+			tutorial.frontmatter.description ??
+			extractExcerpt(await tutorial.rawContent()),
+	})),
+);
 ---
 
 <Layout title="Yaksha | Tutorials">
-    <div class="flex justify-center text-center gap-8 pt-16 pb-8 px-8 md:px-0">
-        <div>
-            <h1 class="font-mono text-xl my-auto md:text-3xl">Tutorials</h1>
-            
-            <div class="divide-y divide-dotted pt-4">
-                {tutorials.map(tutorial => 
-                <a href={tutorial.url} class="flex flex-col gap-2 py-4 group">
-                    <h2 class="font-mono text-lg md:text-2xl group-hover:text-primary">{tutorial.frontmatter.title}</h2>
-                    <p class="font-mono text-sm md:text-base group-hover:text-secondary">{tutorial.frontmatter.author}</p>
-                </a>)}
-            </div>
-        </div>
+	<div class="max-w-3xl mx-auto px-6 md:px-8 pt-16 pb-16">
+		<SectionHeader
+			title="Tutorials"
+			description="Step-by-step guides to get you up and running with Yaksha."
+			count={tutorials.length}
+		/>
+		<div class="grid gap-6">
+			{tutorials.map((tutorial, index) => (
+				<ContentCard
+					href={tutorial.url}
+					title={tutorial.title}
+					excerpt={tutorial.excerpt}
+					author={tutorial.author}
+					meta={`Step ${index + 1}`}
+				/>
+			))}
+		</div>
 	</div>
 </Layout>

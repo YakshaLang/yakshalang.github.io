@@ -1,0 +1,91 @@
+---
+import type { ContentBadge } from "../utils/content";
+
+interface Props {
+	href: string;
+	title: string;
+	excerpt?: string;
+	author?: string;
+	date?: string;
+	thumbnail?: string;
+	badges?: ContentBadge[];
+	meta?: string;
+	horizontal?: boolean;
+}
+
+const {
+	href,
+	title,
+	excerpt,
+	author,
+	date,
+	thumbnail,
+	badges = [],
+	meta,
+	horizontal = false,
+} = Astro.props;
+
+const badgeClass = (variant?: ContentBadge["variant"]) => {
+	switch (variant) {
+		case "primary":
+			return "badge-primary";
+		case "secondary":
+			return "badge-secondary";
+		case "accent":
+			return "badge-accent";
+		case "info":
+			return "badge-info";
+		default:
+			return "badge-neutral";
+	}
+};
+---
+
+<a
+	href={href}
+	class:list={[
+		"card bg-base-100 shadow-md hover:shadow-lg transition-shadow group",
+		horizontal && "card-side flex-col md:flex-row",
+	]}
+>
+	{thumbnail && (
+		<figure class:list={[horizontal ? "md:w-48 shrink-0" : ""]}>
+			<img
+				src={thumbnail}
+				alt=""
+				class:list={[
+					"object-cover w-full",
+					horizontal ? "h-32 md:h-full" : "aspect-video",
+				]}
+				loading="lazy"
+			/>
+		</figure>
+	)}
+	<div class="card-body gap-2">
+		<div class="flex flex-wrap items-center gap-2">
+			{meta && (
+				<span class="badge badge-outline font-mono text-xs">{meta}</span>
+			)}
+			{badges.map((badge) => (
+				<span class={`badge ${badgeClass(badge.variant)} font-mono text-xs`}>
+					{badge.label}
+				</span>
+			))}
+		</div>
+		<h2 class="card-title font-mono text-lg md:text-xl group-hover:text-primary transition-colors">
+			{title}
+		</h2>
+		{excerpt && (
+			<p class="text-sm text-base-content/70 line-clamp-2">{excerpt}</p>
+		)}
+		{(author || date) && (
+			<div class="card-actions justify-start mt-1">
+				<p class="font-mono text-xs text-base-content/50">
+					{date && <span>{date}</span>}
+					{date && author && <span> · </span>}
+					{author && <span>{author}</span>}
+				</p>
+			</div>
+		)}
+	</div>
+</a>

@@ -2,6 +2,7 @@
 title: Initial Post
 author: Bhathiya Perera
 pubDate: 2022-12-10
+description: "Website infrastructure updates, a new sr string feature, and more YAMA articles on the same site."
 layout: '../../layouts/BlogPostLayout.astro'
 ---
 

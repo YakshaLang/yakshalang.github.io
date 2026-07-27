@@ -1,6 +1,7 @@
 ---
 title: Getting started
 author: Bhathiya Perera
+description: "Download, install, and write your first Yaksha programs: from Hello World to the basics."
 layout: '../../layouts/TutorialLayout.astro'
 ---
 

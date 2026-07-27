@@ -1,6 +1,8 @@
 ---
 title: Additional features for structs
 author: Bhathiya Perera
+status: accepted
+description: "Extend structs with copy semantics, default values, and improved memory handling."
 layout: '../../layouts/YamaPostLayout.astro'
 ---
 

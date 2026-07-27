@@ -1,6 +1,8 @@
 ---
 title: Introducing a Package Management System for Yaksha
 author: Dean Hunter
+status: draft
+description: "A package management system."
 layout: '../../layouts/YamaPostLayout.astro'
 ---
 

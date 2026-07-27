@@ -1,6 +1,8 @@
 ---
 title: Fixed size arrays
 author: Bhathiya Perera
+status: draft
+description: "Stack allocated fixed size arrays with size as part of the type (FixedArr[T, N])."
 layout: '../../layouts/YamaPostLayout.astro'
 ---
 

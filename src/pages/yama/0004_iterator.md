@@ -1,6 +1,8 @@
 ---
 title: Iterators
 author: Bhathiya Perera
+status: draft
+description: "Introduce iterators and iterables so Yaksha can iterate over arbitrary content."
 layout: '../../layouts/YamaPostLayout.astro'
 ---
 

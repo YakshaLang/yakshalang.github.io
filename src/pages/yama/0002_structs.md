@@ -1,6 +1,8 @@
 ---
 title: Adding support for stack allocated structs
 author: Bhathiya Perera
+status: accepted
+description: "Add stack-allocated structs with @onstack annotation for value-type semantics."
 layout: '../../layouts/YamaPostLayout.astro'
 ---
 

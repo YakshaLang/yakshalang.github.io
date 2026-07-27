@@ -1,6 +1,8 @@
 ---
 title: Numbers auto casting when widening
 author: Bhathiya Perera
+status: accepted
+description: "Automatic numeric type widening for binary math operations and assignments."
 layout: '../../layouts/YamaPostLayout.astro'
 ---
 

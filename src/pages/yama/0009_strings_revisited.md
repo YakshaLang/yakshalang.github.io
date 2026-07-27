@@ -1,6 +1,8 @@
 ---
 title: Strings revisited
 author: Bhathiya Perera
+status: accepted
+description: "Redesign string handling with sr references to reduce alloc/dealloc overhead."
 layout: '../../layouts/YamaPostLayout.astro'
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: YakshaLisp and macros in Yaksha
 author: Bhathiya Perera
+description: "Learn YakshaLisp basics, builtin functions, and how to write macros in Yaksha."
 layout: '../../layouts/TutorialLayout.astro'
 ---
 

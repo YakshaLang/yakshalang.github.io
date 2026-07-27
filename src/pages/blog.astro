@@ -1,21 +1,42 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import ContentCard from '../components/ContentCard.astro';
+import { sortByDate, formatDate, extractExcerpt } from '../utils/content';
 
-const posts = await Astro.glob('./blog/*.{md,mdx}');
+const rawPosts = sortByDate(await Astro.glob('./blog/*.{md,mdx}'));
+const posts = await Promise.all(
+	rawPosts.map(async (post) => ({
+		url: post.url,
+		title: post.frontmatter.title,
+		author: post.frontmatter.author,
+		excerpt:
+			post.frontmatter.description ??
+			extractExcerpt(await post.rawContent()),
+		date: post.frontmatter.pubDate
+			? formatDate(post.frontmatter.pubDate)
+			: undefined,
+	})),
+);
 ---
 
 <Layout title="Yaksha | Blog">
-    <div class="flex justify-center text-center gap-8 pt-16 pb-8 px-8 md:px-0">
-        <div>
-            <h1 class="font-mono text-xl my-auto md:text-3xl">Posts</h1>
-            
-            <div class="divide-y divide-dotted pt-4">
-                {posts.map(post => 
-                <a href={post.url} class="flex flex-col gap-2 py-4 group">
-                    <h2 class="font-mono text-lg md:text-2xl group-hover:text-primary">{post.frontmatter.title}</h2>
-                    <p class="font-mono text-sm md:text-base group-hover:text-secondary">{post.frontmatter.author}</p>
-                </a>)}
-            </div>
-        </div>
+	<div class="max-w-3xl mx-auto px-6 md:px-8 pt-16 pb-16">
+		<SectionHeader
+			title="Blog"
+			description="News, updates, and notes from the Yaksha project."
+			count={posts.length}
+		/>
+		<div class="grid gap-6">
+			{posts.map((post) => (
+				<ContentCard
+					href={post.url}
+					title={post.title}
+					excerpt={post.excerpt}
+					author={post.author}
+					date={post.date}
+				/>
+			))}
+		</div>
 	</div>
 </Layout>
