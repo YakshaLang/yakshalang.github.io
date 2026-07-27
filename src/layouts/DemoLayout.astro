@@ -12,9 +12,51 @@ const {frontmatter} = Astro.props;
     <div class="py-4">
       { frontmatter.demoJs != undefined &&
         <>
-          <canvas class="rounded-lg w-full" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1 />
+          <canvas class="rounded-lg w-full focus:outline focus:outline-2 focus:outline-primary" id="canvas" oncontextmenu="event.preventDefault()" tabindex="0" />
           <script is:inline>
               var Module = { canvas: document.getElementById("canvas") };
+
+              (function () {
+                  var canvas = Module.canvas;
+                  var gameKeys = {
+                      ArrowUp: true,
+                      ArrowDown: true,
+                      ArrowLeft: true,
+                      ArrowRight: true,
+                      " ": true,
+                      Enter: true,
+                  };
+                  var gameKeyCodes = {
+                      ArrowUp: true,
+                      ArrowDown: true,
+                      ArrowLeft: true,
+                      ArrowRight: true,
+                      Space: true,
+                      Enter: true,
+                  };
+
+                  function shouldCaptureKey(event) {
+                      return gameKeys[event.key] || gameKeyCodes[event.code];
+                  }
+
+                  function preventGameKeyScroll(event) {
+                      if (document.activeElement === canvas && shouldCaptureKey(event)) {
+                          event.preventDefault();
+                      }
+                  }
+
+                  canvas.addEventListener("click", function () {
+                      canvas.focus();
+                  });
+
+                  canvas.addEventListener("keydown", function (event) {
+                      if (shouldCaptureKey(event)) {
+                          event.preventDefault();
+                      }
+                  });
+
+                  window.addEventListener("keydown", preventGameKeyScroll, { capture: true });
+              })();
           </script>
       
           <script async src={frontmatter.demoJs} />
